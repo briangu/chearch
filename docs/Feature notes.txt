@@ -1,0 +1,205 @@
+Feature notes:
+
+....
+
+  // can't yield inside on in 1.11.0
+  // 
+  // iter documentIdsForWord(word: string) {
+  //   var entry = entryForWord(word);
+  //   if (entry != nil) {
+  //     on entry {
+  //       var node = entry.documentIdNode;
+  //       while (node != nil) {
+  //         var startIdx = node.documents.size - node.documentCount.read();
+  //         for i in startIdx..node.documents.size-1 {
+  //           var docId = node.documents[i];
+  //           if (docId > 0) {
+  //             yield docId;
+  //           }
+  //         }
+  //         node = node.next;
+  //       }
+  //     }
+  //   }
+  // }
+
+...
+
+export CHPL_TARGET_ARCH=native
+
+/home/ubuntu/src/chapel-1.11.0/runtime/etc/Makefile.comm-gasnet:19: /home/ubuntu/src/chapel-1.11.0/third-party/gasnet/install/linux32-gnu-native/seg-everything/nodbg/include/udp-conduit/udp-par.mak: No such file or directory
+make: *** No rule to make target `/home/ubuntu/src/chapel-1.11.0/third-party/gasnet/install/linux32-gnu-native/seg-everything/nodbg/include/udp-conduit/udp-par.mak'.  Stop.
+error: compiling generated source
+
+...
+
+--fast
+
+warning: --specialize was set, but CHPL_TARGET_ARCH is 'unknown'. If you want any specialization to occur please set CHPL_TARGET_ARCH to a proper value.
+
+....
+
+/*
+
+determine number of locales
+create map from hash to locale
+
+read a list of words
+for each word:
+  find hash
+  map hash to a locale
+  send word to mapped locale
+
+via repl:
+  ask for a word
+  find hash
+  map hash to a locale
+  get word info (e.g. count) from locale
+  print word info
+
+*/
+
+....
+
+Collision between ev_loop struct and function name:
+
+
+In file included from /tmp/chpl-bguarraci-91221.deleteme/_main.c:1:
+/tmp/chpl-bguarraci-91221.deleteme/chpl__header.h:237:9: error: must use 'struct' tag to refer to type 'ev_loop'
+typedef ev_loop *c_ptr_ev_loop;
+        ^
+        struct
+/opt/local/Cellar/libev/4.15/include/ev.h:826:20: note: struct 'ev_loop' is hidden by a non-type declaration of 'ev_loop' here
+    EV_INLINE void ev_loop   (EV_P_ int flags) { ev_run   (EV_A_ flags); }
+                   ^
+In file included from /tmp/chpl-bguarraci-91221.deleteme/_main.c:1:
+/tmp/chpl-bguarraci-91221.deleteme/chpl__header.h:269:9: error: must use 'struct' tag to refer to type 'ev_loop'
+typedef ev_loop *_ref_ev_loop;
+        ^
+        struct
+/opt/local/Cellar/libev/4.15/include/ev.h:826:20: note: struct 'ev_loop' is hidden by a non-type declaration of 'ev_loop' here
+    EV_INLINE void ev_loop   (EV_P_ int flags) { ev_run   (EV_A_ flags); }
+                   ^
+2 errors generated.
+make[1]: *** [/tmp/chpl-bguarraci-91221.deleteme/chpl_tcp_server.tmp] Error 1
+error: compiling generated source [mysystem.cpp:43]
+make: *** [chpl_tcp_server] Error 1
+
+...
+
+  // $CHPL_HOME/modules/internal/ChapelArray.chpl:2534: error: cannot iterate over values of type int(64) [functionResolution.cpp:2401]
+  for i in word.length {
+    // BUG: $CHPL_HOME/modules/internal/ChapelArray.chpl:2534: error: cannot iterate over values of type int(64) [functionResolution.cpp:2401]
+
+    writeln("ch: ", word.substring(i));
+  }
+
+  for i in word.length {
+    // BUG: $CHPL_HOME/modules/internal/ChapelArray.chpl:2534: error: cannot iterate over values of type int(64) [functionResolution.cpp:2401]
+
+    writeln("ch: ", substring(i));
+  }
+
+  for i in word.length {
+    writeln("ch: ", word[i];
+  }
+
+...
+
+associative array domains:
+do associative array domains automatically get added?
+is adding to an associative array thread/task safe?
+
+
+...
+
+$CHPL_HOME/modules/standard/IO.chpl:1691: error: sync/single variables cannot currently be written - apply readFE/readFF() to those variables first
+
+var count$: sync int = 0;
+
+coforall i in 1..1000 {
+  writeln(i, " => ", count$);
+  count$ += 1;
+}
+
+....
+
+count is treated as a constant
+
+var indexing$: sync bool = false;
+var count: int = 0;
+
+coforall i in 1..1000 {
+  var baton = indexing$;
+  writeln(i, " => ", count);
+  count = count + 1;
+  indexing$ = true;
+}
+
+....
+  // segv
+  iter readFromBuff() {
+    var ind = 0,              
+        nextVal = buff$(0);
+
+    while (nextVal != nil) {
+      yield nextVal;
+
+      ind = (ind + 1) % buffersize;
+      var state = buff$(ind).readXX();
+      if state != nil {
+        writeln("buff(", ind ,") = ", state);
+      } else {
+        writeln("buff(", ind ,") = ", "nil");
+      }
+      nextVal = buff$(ind);
+    }
+
+    release$ = true;
+  }
+
+...
+
+name collision not obvious
+
+module Logging {
+  
+  config const debug = false;
+  config const info = true;
+
+  proc debug(args ...?k) {
+    // if (debug) {
+    //   write(here.id, "\t");
+    //   writeln((...args));
+    // }
+  }
+
+  proc info(args ...?k) {
+    // if (info) {
+      // write(here.id, "\t");
+      // writeln((...args));
+    // }
+  }
+
+  proc error(args ...?k) {
+    // write(here.id, "\tERROR\t");
+    // writeln((...args));
+  }
+}
+
+use Logging;
+
+// proc info(args...?k) {
+//   writeln((...args));
+// }
+
+proc main() {
+  info("hello ", 1, " this is ", 2);
+
+  for i in 0..numLocales-1 {
+    on Locales[i] {
+      info("index [", i, "] is mapped to partition ", here.id);
+    }
+  }
+}
+
