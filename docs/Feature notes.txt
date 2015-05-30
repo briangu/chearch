@@ -1,12 +1,151 @@
 Feature notes:
 
+const value is on Locale that instantiated it (likely 0)
+
+
+...
+
+causes scan of all partitions??
+
+  var totalCounts = 0;
+  for loc in Locales {
+      var outerResults: [0] QueryResult;
+      var preCounts = totalCounts;
+
+      on loc {
+        writeln("querying locale: ", here.id);
+  
+        var localResults: [0] QueryResult;
+        var lq: Query = new Query();
+        lq.term = query.term;
+        var count = 0;
+        var partFound = 0;
+        local {
+          for i in Partitions.domain {
+            var mgrIndex = Partitions[i].read();
+            if (mgrIndex != -1) {
+              var preScan = count;
+              for res in PartitionManagerStorage[i].query(lq) {
+                localResults[count] = res;
+                count += 1;
+              }
+              if (preScan != count) {
+                partFound += 1;
+              }
+            }
+          }
+        }
+        if (count > 0) {
+          writeln("count: ", count);
+          writeln("partFound: ", partFound);
+          outerResults.domain = localResults.domain;
+          for i in localResults.domain {
+            outerResults[i] = localResults[i];
+            totalCounts += 1;
+          }
+        }
+      }
+
+      if (preCounts < totalCounts) {
+        for res in outerResults {
+          // localeResults[totalCounts] = res;
+          // totalCounts += 1;
+          yield res;
+        }
+      }
+    }
+
+    // for res in localeResults {
+    //   yield res;
+    // }
+  }
+
+
+querying for 3
+search.chpl:557: error: halt reached - zippered associative array does not match the iterated domain
+
+...
+
+search.chpl:519: In iterator 'query':
+search.chpl:537: error: invalid use of 'yield' within 'on' in serial iterator
+make: *** [chearch] Error 1
+
+....
+
+running locally with one host requires inernet
+time ./bin/chearch -nl 1
+
+[tw-mbp-bguarraci chearch (_bg_numeric)]$ time ./bin/chearch -nl 1
+AMUDP sendPacket returning an error code: AM_ERR_RESOURCE (Problem with requested resource)
+  from function sendPacket
+  at /Users/bguarraci/src/chapel-1.11.0/third-party/gasnet/GASNet-1.24.0/other/amudp/amudp_reqrep.cpp:97
+  reason: No route to host
+initializing index
+AMUDP AMUDP_RequestGeneric returning an error code: AM_ERR_RESOURCE (Problem with requested resource)
+  at /Users/bguarraci/src/chapel-1.11.0/third-party/gasnet/GASNet-1.24.0/other/amudp/amudp_reqrep.cpp:1214
+
+GASNet gasnetc_AMRequestMediumM encountered an AM Error: AM_ERR_RESOURCE(3)
+  at /Users/bguarraci/src/chapel-1.11.0/third-party/gasnet/GASNet-1.24.0/udp-conduit/gasnet_core.c:690
+GASNet gasnetc_AMRequestMediumM returning an error code: GASNET_ERR_RESOURCE (Problem with requested resource)
+  at /Users/bguarraci/src/chapel-1.11.0/third-party/gasnet/GASNet-1.24.0/udp-conduit/gasnet_core.c:694
+ERROR calling: gasnet_AMRequestMedium0(node, FORK, info, info_size)
+ at: comm-gasnet.c:989
+ error: GASNET_ERR_RESOURCE (Problem with requested resource)
+
+....
+
+  crashes with ?D in body
+  
+  proc query(query: Query, ref results: [?D] QueryResult) {
+    var localeResults: [Locales.domain] [?D] QueryResult;
+
+    coforall loc in Locales {
+      on loc {
+        var localResults: [?D] QueryResult;
+        var lq: Query = new Query();
+        lq.term = query.term;
+        local {
+          for i in Partitions.domain {
+            var mgr = Partitions[i];
+            if (mgr != nil) {
+              var localResults: [1] QueryResult;
+              mgr.query(lq, localResults);
+            }
+          }
+        }
+        localeResults[here.id] = localResults;
+      }
+    }
+
+    var count = 0;
+    for resList in localeResults {
+      for res in resList {
+        results[count] = res;
+        count += 1;
+      }
+    }
+  }
+
+...
+
+search.chpl:312: error: 'TermEntry' used before defined (first used here)
+
+    inline proc sortTermsByDocumentIdCount(termA: TermEntry, termB, TermEntry): (TermEntry, TermEntry) {
+      var smaller = if (termA.documentIdCount.read() < termB.documentIdCount.read()) then termA else termB;
+      var larger = if (smaller == termA) then termB else termA;
+      return (smaller, larger);
+    }
+
+
+.....
+
 // BUG: declaring use IO, Memory here causes chpl compiler segv
 
 
 ....
 
   // can't yield inside on in 1.11.0
-  // 
+  //
   // iter documentIdsForWord(word: string) {
   //   var entry = entryForWord(word);
   //   if (entry != nil) {
@@ -142,7 +281,7 @@ coforall i in 1..1000 {
 ....
   // segv
   iter readFromBuff() {
-    var ind = 0,              
+    var ind = 0,
         nextVal = buff$(0);
 
     while (nextVal != nil) {
@@ -166,7 +305,7 @@ coforall i in 1..1000 {
 name collision not obvious
 
 module Logging {
-  
+
   config const debug = false;
   config const info = true;
 

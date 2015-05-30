@@ -35,3 +35,7 @@ RUN
 
     ./bin/chearch
 
+TEST
+
+    make chearch_test
+    ./bin/chearch_test
