@@ -6,6 +6,11 @@ module Indexer {
   config const testAfterIndex: bool = true;
   config const batchSize = 128;
 
+  class IndexRequest {
+    var word: string;
+    var docId: DocId;
+  }
+
   class PartitionIndexer {
     var partition: int;
     var buff$: [0..buffersize-1] sync IndexRequest;

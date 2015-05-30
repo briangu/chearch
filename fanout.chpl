@@ -1,4 +1,4 @@
-use Common, Logging, IO, Partitions;
+use Logging, IO, Partitions;
 
 config const buffersize = 1024;
 config const dir_prefix = "/ssd/words";

@@ -1,4 +1,4 @@
-use Common, GenHashKey64, Logging, Memory, IO, Partitions, Time;
+use GenHashKey64, Logging, Memory, IO, Partitions, Time;
 
 config const default_lfh_size: uint = 1024 * 64;
 config const max_doc_node_size = 1024 * 64;
