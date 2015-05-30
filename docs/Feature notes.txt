@@ -1,5 +1,8 @@
 Feature notes:
 
+// BUG: declaring use IO, Memory here causes chpl compiler segv
+
+
 ....
 
   // can't yield inside on in 1.11.0

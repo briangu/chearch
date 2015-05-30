@@ -1,5 +1,3 @@
-// BUG: declaring use IO, Memory here causes chpl compiler segv
-
 module Search {
   
   use Logging, Common, Memory, GenHashKey64, Partitions, Time;

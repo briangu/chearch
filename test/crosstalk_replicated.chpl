@@ -10,16 +10,6 @@ class Node {
 class PartitionInfo {
   var head: Node;
   var count: atomic int;
-
-  var writerLock: atomicflag;
-
-  inline proc lockWriter() {
-    while writerLock.testAndSet() do chpl_task_yield();
-  }
-
-  inline proc unlockWriter() {
-    writerLock.clear();
-  }
 }
 
 // Separate the search parition strategy from locales.
@@ -94,10 +84,10 @@ proc indexWord(word: WordType) {
     local {
       var info = partitionInfoForWord(word);
       var newNode = new Node(word); // do allocation outside of lock
-      info.lockWriter();
-      newNode.next = info.head;
-      info.head = newNode;
-      info.unlockWriter();
+      atomic {
+        newNode.next = info.head;
+        info.head = newNode;
+      }
       info.count.add(1);
       debug(Partitions);
     }

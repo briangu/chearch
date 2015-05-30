@@ -15,6 +15,15 @@ inline proc genHashKey(h: Word): Word {
   return k;
 }
 
+class BucketEntry {
+  var index: Word;
+  var next: BucketEntry;
+}
+
+record HashEntry {
+  var index: Word;
+  var next: BucketEntry;
+}
 
 proc exercise(arr: [?D] Word, iterations: int, seed: int){
 

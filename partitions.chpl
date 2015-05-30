@@ -19,7 +19,8 @@ module Partitions {
     var t: Timer;
     t.start();
 
-    // this code ensures that given a set of hosts, they are consistently ordered between boots in the same partition order.
+    // This code ensures that given a set of hosts, 
+    // they are consistently ordered between boots in the same partition order.
     var hostDomain: domain(string);
     var hostMap: [hostDomain] locale;
     for loc in Locales {

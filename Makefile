@@ -20,7 +20,7 @@ crosstalk_hash:
 	chpl --fast --print-passes -o bin/crosstalk_hash crosstalk_hash.chpl common.chpl logging.chpl partitions.chpl genhashkey32.chpl genhashkey64.chpl 
 
 crosstalk_replicated:
-	chpl --fast --print-passes -o bin/crosstalk_replicated crosstalk_replicated.chpl common.chpl logging.chpl partitions.chpl genhashkey32.chpl
+	chpl --fast --print-passes -o bin/crosstalk_replicated test/crosstalk_replicated.chpl common.chpl logging.chpl partitions.chpl genhashkey32.chpl
 
 fanout:
 	chpl --fast --print-passes -o bin/fanout fanout.chpl common.chpl logging.chpl partitions.chpl genhashkey32.chpl
