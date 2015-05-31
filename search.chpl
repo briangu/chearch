@@ -78,15 +78,131 @@ module Search {
     }
   }
 
-  class TermEntryIterator {
-    var term: TermEntry;
-    var node: DocumentIdNode;
-    var nodeIdx: uint;
+  type OperandValue = uint;
 
-    proc TermEntryIterator() {
-      node = term.documentIdNode;
-      nodeIdx = node.nodeSize - node.documentIdCount.read();
+  class Operand {
+    proc hasValue(): bool {
+      return false;
     }
+
+    proc getValue(): OperandValue {
+      if (!hasValue()) {
+        halt("iterated too far");
+      }
+      return 0;
+    }
+
+    proc advance() {
+      if (!hasValue()) {
+        halt("iterated too far");
+      }
+    }
+
+    iter evaluate() {
+      while (hasValue()) {
+        yield getValue();
+        advance();
+      }
+    }
+  }
+
+  class UnionOperand : Operand {
+    var opA: Operand;
+    var opB: Operand;
+    var curOp: Operand = nextOperand();
+
+    proc nextOperand(): Operand {
+      var op: Operand = nil;
+
+      if (opA.hasValue() && opB.hasValue()) {
+        if (opA.getValue() > opB.getValue()) {
+          op = opA;
+        } else if (opA.getValue() == opB.getValue()) {
+          opB.advance(); // skip over duplicate value
+          op = opA;
+        } else {
+          op = opB;
+        }
+      } else if (opA.hasValue()) {
+        op = opA;
+      } else if (opB.hasValue()) {
+        op = opB;
+      }
+
+      return op;
+    }
+
+    proc hasValue(): bool {
+      return curOp != nil;
+    }
+
+    proc getValue(): OperandValue {
+      if (!hasValue()) {
+        halt("union iterated past end of operands ", opA, opB);
+      }
+
+      return curOp.getValue();
+    }
+
+    proc advance() {
+      if (!hasValue()) {
+        halt("union iterated past end of operands ", opA, opB);
+      }
+
+      curOp.advance();
+      curOp = nextOperand();
+    }
+  }
+
+  class IntersectionOperand : Operand {
+    var opA: Operand;
+    var opB: Operand;
+    var curOp: Operand = nextOperand();
+
+    proc nextOperand(): Operand {
+      var op: Operand = nil;
+
+      while(opA.hasValue() && opB.hasValue()) {
+        if (opA.getValue() > opB.getValue()) {
+          opA.advance();
+        } else if (opA.getValue() == opB.getValue()) {
+          writeln(" found intersection");
+          opB.advance(); // skip over duplicate value
+          op = opA;
+          break;
+        } else { // A > B
+          opB.advance();
+        }
+      }
+
+      return op;
+    }
+
+    proc hasValue(): bool {
+      return curOp != nil;
+    }
+
+    proc getValue(): OperandValue {
+      if (!hasValue()) {
+        halt("intersection iterated past end of operands ", opA, opB);
+      }
+
+      return curOp.getValue();
+    }
+
+    proc advance() {
+      if (!hasValue()) {
+        halt("intersection iterated past end of operands ", opA, opB);
+      }
+
+      curOp = nextOperand();
+    }
+  }
+
+  class TermEntryOperand: Operand {
+    var term: TermEntry;
+    var node: DocumentIdNode = term.documentIdNode;
+    var nodeIdx: uint = node.nodeSize - node.documentIdCount.read();
 
     inline proc hasValue(): bool {
       return node != nil;
@@ -102,6 +218,11 @@ module Search {
 
     proc documentIndex(): uint {
       return documentIndexFromDocId(docId());
+    }
+
+    proc getValue(): OperandValue {
+      var x = documentIndex();
+      return x;
     }
 
     proc advance() {
@@ -275,6 +396,8 @@ module Search {
       documents[documentIndex] = documentIndex + 100;
 
       while (reader.readln(term)) {
+        writeln(term, documentIndex); // for diag
+
         var textLocation: uint(32) = count;
         var docId = createDocId(documentIndex, textLocation);
         addTermForDocument(term, docId);
@@ -290,6 +413,7 @@ module Search {
       t.stop();
       timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
+      // self-test
       var totalTerms: uint = 0;
       for i in termHashTable.domain {
         var entry = termHashTable[i].head;
@@ -309,61 +433,24 @@ module Search {
       return true;
     }
 
-    inline proc sortTermsByDocumentIdCount(termA: TermEntry, termB: TermEntry): (TermEntry, TermEntry) {
-      var smaller = if (termA.documentIdCount.read() < termB.documentIdCount.read()) then termA else termB;
-      var larger = if (smaller == termA) then termB else termA;
-      return (smaller, larger);
-    }
-
-    iter intersectDocumentIds(termA: TermEntryIterator, termB: TermEntryIterator) {
-      while(termA.hasValue()) {
-        var outerDocumentIndex = termB.documentIndex();
-        while (termB.hasValue()) {
-          var innerDocumentIndex = termB.documentIndex();
-          if (outerDocumentIndex == innerDocumentIndex) {
-            while (termA.hasValue() && termA.documentIndex() == outerDocumentIndex) {
-              yield termA.docId();
-              termA.advance();
-            }
-            while (termB.hasValue() && termB.documentIndex() == outerDocumentIndex) {
-              yield termB.docId();
-              termB.advance();
-            }
-          } else if (outerDocumentIndex > innerDocumentIndex) {
-            termB.advance();
-          } else {
-            break; // let termA.advance();
-          }
-        }
-        termA.advance();
-      }
-    }
-
-    // iter unionDocumentIds(termA: TermEntry, termB, TermEntry) {
-    //   var (smaller, larger) = sortTermsByDocumentIdCount(termA, termB);
-    //   for docId in smaller.unionDocumentIds(larger) {
-    //     yield docId;
-    //   }
-    // }
-
     proc query(query: Query, ref results: [?D] QueryResult) {
       // Capture maxDocId.  Any documents added to the index after this capture will be ignored for this call.
       var readerMaxDocId = maxDocumentId.read();
 
       // ignore all docIds > readerMaxDocId
+      writeln("running query on loc ", here.id);
       var termA = getTerm("hello");
       var termB = getTerm("world");
-      var (smaller, larger) = sortTermsByDocumentIdCount(termA, termB);
-
-      var si = new TermEntryIterator(smaller);
-      var li = new TermEntryIterator(larger);
-      for docId in intersectDocumentIds(si, li) {
-        if (docId < readerMaxDocId) {
-          //
+      writeln("hello: ", termA != nil, " world: ", termB != nil);
+      if (termA != nil && termB != nil) {
+        writeln("found both terms");
+        var termAOp = new TermEntryOperand(termA);
+        var termBOp = new TermEntryOperand(termB);
+        var op = new IntersectionOperand(termAOp, termBOp);
+        for documentIndex in termAOp.evaluate() {
+          writeln(documentIndex);
         }
       }
-      delete si;
-      delete li;
     }
   }
 
