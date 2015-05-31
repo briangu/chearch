@@ -53,7 +53,7 @@ proc main() {
   var searchIndex: Index = new Index();
   searchIndex.initPartitions();
   searchIndex.addDocument("hello, world!", 1);
-  //searchIndex.query("hello");
+  searchIndex.query();
 
 	// writeln("initializing event loop...");
 

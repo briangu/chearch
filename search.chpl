@@ -80,6 +80,17 @@ module Search {
 
     // keep track of read count to perform Move-To-Front optimization
     var readCount: atomic uint;
+
+    iter documentIds() {
+      var node = documentIdNode;
+      while (node != nil) {
+        var startIdx = node.nodeSize - node.documentCount.read();
+        for id in node.documents[startIdx..node.nodeSize-1] {
+          yield node.documents[id];
+        }
+        node = node.next;
+      }
+    }
   }
 
   // A segment is a set of documents that can be searched over.
@@ -98,7 +109,7 @@ module Search {
     var termHashTable: [0..termHashTableSize-1] TermEntry;
 
     inline proc tableIndexForTerm(term: string): uint {
-      return genHashKey32(term) % termHashTable.size;
+      return genHashKey32(term) % termHashTable.size: uint(32);
     }
 
     inline proc isSegmentFull(): bool {
@@ -126,9 +137,6 @@ module Search {
       if (entry == nil) {
         // no term in this table position, so need to add one
 
-        // documentIdNode.documents[documentIdNode.documentIdIndex()] = docId;
-        // documentIdNode.documentCount.write(1);
-
         // TODO: insert at tail
         var head = termHashTable[tableIndexForTerm(term)];
         var documentIdNode = new DocumentIdNode();
@@ -155,6 +163,8 @@ module Search {
 
       entry.documentCount.write(1);
       entry.maxDocumentId.write(docId);
+
+      writeln(entry);
     }
 
     proc getTerm(term: string): TermEntry {
@@ -180,23 +190,45 @@ module Search {
         return false;
       }
 
-      var term = "hello";
-      var textPosition = 0;
-      var docId = createDocId(documentCount.read(), 0);
-      addTermForDocument(term, docId);
+      // store the external document id and map it to our internal document index
+      // NOTE: this assumes we are going to succeed in adding the document 
+      var documentIndex = documentCount.fetchAdd(1);
+   
+      documents[documentIndex] = externalDocId;
+
+      {
+        var term = "hello";
+        var textPosition: uint(32) = 0;
+        var docId = createDocId(documentIndex, textPosition);
+        addTermForDocument(term, docId);
+        maxDocumentId.write(docId);
+      }
+      {
+        var term = "world";
+        var textPosition: uint(32) = 10;
+        var docId = createDocId(documentIndex, textPosition);
+        addTermForDocument(term, docId);
+        maxDocumentId.write(docId);
+      }
 
       // segment document text and infer all terms and text locations
       // update all terms in the termHashTable
       // update global maxDocId
-      maxDocumentId.write(docId);
 
       return true;
     }
 
     proc query() {
+      var term = "hello";
       // capture maxDocId
       var readerMaxDocId = maxDocumentId.read();
       // remove all docIds > readerMaxDocId
+      var entry = getTerm(term);
+      if (entry != nil) {
+        for id in entry.documentIds() {
+          writeln(id);
+        }
+      }
     }
   }
 
@@ -212,7 +244,8 @@ module Search {
     }
 
     proc query() {
-
+      // TODO: handle multiple segments
+      segment.query();
     }
   }
 
@@ -239,22 +272,22 @@ module Search {
       timing("initialized index in ",t.elapsed(TimeUnits.microseconds), " microseconds");
     }
 
-    inline proc partitionIdForWord(document: string): int {
+    inline proc partitionIdForDocument(document: string): int {
       return genHashKey32(document) % partitionDimensions;
     } 
 
     inline proc localeForDocument(document: string): locale {
-      return Locales[partitionIdForWord(document) % Locales.size];
+      return Locales[partitionIdForDocument(document) % Locales.size];
     }
 
     inline proc partitionManagerForDocument(document: string): PartitionManager {
-      return Partitions[partitionIdForWord(document)];
+      return Partitions[partitionIdForDocument(document)];
     }
 
     proc addDocument(document: string, externalDocId: uint) {
       // first move the locale that should have the document.
       on localeForDocument(document) {
-        // locally operate on the partition
+        // locally operate in the locale, which has one or more partitions.
         local {
           var mgr = partitionManagerForDocument(document);
           mgr.addDocument(document, externalDocId);
@@ -263,7 +296,18 @@ module Search {
     }
 
     proc query() {
-
+      coforall loc in Locales {
+        on loc {
+          local {
+            for i in Partitions.domain {
+              var mgr = Partitions[i];
+              if (mgr != nil) {
+                mgr.query();
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
