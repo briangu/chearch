@@ -229,10 +229,14 @@ module Search {
         halt("iterated past end of document ids", term);
       }
 
-      nodeIdx += 1;
-      if (nodeIdx >= node.nodeSize) {
-        node = node.next;
-        nodeIdx = 0;
+      // skip duplicates
+      var currentValue = getValue();
+      while (hasValue() && (getValue() == currentValue)) {
+        nodeIdx += 1;
+        if (nodeIdx >= node.nodeSize) {
+          node = node.next;
+          nodeIdx = 0;
+        }
       }
     }
   }
