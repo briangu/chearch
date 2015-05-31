@@ -441,13 +441,15 @@ module Search {
       writeln("running query on loc ", here.id);
       var termA = getTerm("hello");
       var termB = getTerm("world");
-      writeln("hello: ", termA != nil, " world: ", termB != nil);
-      if (termA != nil && termB != nil) {
-        writeln("found both terms");
+      var termC = getTerm("series");
+      writeln("hello: ", termA != nil, " ", "world: ", termB != nil, " ", "series: ", termC != nil);
+      if (termA != nil && termB != nil && termC != nil) {
         var termAOp = new TermEntryOperand(termA);
         var termBOp = new TermEntryOperand(termB);
-        var op = new IntersectionOperand(termAOp, termBOp);
-        for documentIndex in termAOp.evaluate() {
+        var and = new IntersectionOperand(termAOp, termBOp);
+        var termCOp = new TermEntryOperand(termC);
+        var op = new UnionOperand(and, termCOp);
+        for documentIndex in op.evaluate() {
           writeln(documentIndex);
         }
       }
