@@ -42,15 +42,6 @@ module Search {
 
   config const termHashTableSize: uint = 1024 * 32;
 
-  class Query {
-    var term: string;
-  }
-
-  class QueryResult {
-    var externalDocId: uint;
-    var textLocation: uint(32);
-  }
-
   class DocumentIdNode {
 
     // controls the size of this document list
@@ -104,6 +95,15 @@ module Search {
         advance();
       }
     }
+  }
+
+  class Query {
+    var term: string;
+  }
+
+  class QueryResult {
+    var externalDocId: uint;
+    var textLocation: uint(32);
   }
 
   class UnionOperand : Operand {
@@ -166,7 +166,6 @@ module Search {
         if (opA.getValue() > opB.getValue()) {
           opA.advance();
         } else if (opA.getValue() == opB.getValue()) {
-          writeln(" found intersection");
           opB.advance(); // skip over duplicate value
           op = opA;
           break;
@@ -396,8 +395,6 @@ module Search {
       documents[documentIndex] = documentIndex + 100;
 
       while (reader.readln(term)) {
-        writeln(term, documentIndex); // for diag
-
         var textLocation: uint(32) = count;
         var docId = createDocId(documentIndex, textLocation);
         addTermForDocument(term, docId);
@@ -414,17 +411,19 @@ module Search {
       timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
       // self-test
-      var totalTerms: uint = 0;
-      for i in termHashTable.domain {
-        var entry = termHashTable[i].head;
-        while (entry != nil) {
-          // writeln(entry);
-          totalTerms += entry.documentIdCount.read();
-          entry = entry.next;
+      if (false) {
+        var totalTerms: uint = 0;
+        for i in termHashTable.domain {
+          var entry = termHashTable[i].head;
+          while (entry != nil) {
+            // writeln(entry);
+            totalTerms += entry.documentIdCount.read();
+            entry = entry.next;
+          }
         }
+        writeln("totalTerms: ", totalTerms);
+        writeln("count: ", count);
       }
-      writeln("totalTerms: ", totalTerms);
-      writeln("count: ", count);
 
       // segment document text and infer all terms and text locations
       // update all terms in the termHashTable
@@ -438,11 +437,11 @@ module Search {
       var readerMaxDocId = maxDocumentId.read();
 
       // ignore all docIds > readerMaxDocId
-      writeln("running query on loc ", here.id);
+      // writeln("running query on loc ", here.id);
       var termA = getTerm("hello");
       var termB = getTerm("world");
       var termC = getTerm("series");
-      writeln("hello: ", termA != nil, " ", "world: ", termB != nil, " ", "series: ", termC != nil);
+      // writeln("hello: ", termA != nil, " ", "world: ", termB != nil, " ", "series: ", termC != nil);
       if (termA != nil && termB != nil && termC != nil) {
         var termAOp = new TermEntryOperand(termA);
         var termBOp = new TermEntryOperand(termB);
