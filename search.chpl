@@ -42,18 +42,18 @@ module Search {
     var next: DocumentIdNode;
 
     // list of documents
-    var documents: [0..nodeSize-1] DocId;
+    var documentIds: [0..nodeSize-1] DocId;
 
     // number of documents in this node's list
-    var documentCount: atomic uint;
+    var documentIdCount: atomic uint;
 
     // Gets the document id index to use to add a new document id.  documentCount should be incremented after using this index.
     proc documentIdIndex() {
-      return nodeSize - documentCount.read() - 1;
+      return nodeSize - documentIdCount.read() - 1;
     }
 
     proc nextDocumentIdNodeSize() {
-      if (documents.size >= maxDocumentIdNodeSize) {
+      if (documentIds.size >= maxDocumentIdNodeSize) {
         return nodeSize;
       } else {
         return nodeSize * 2;
@@ -76,7 +76,7 @@ module Search {
     var maxDocumentId: atomic uint;
 
     // total number of documents this term appears in
-    var documentCount: atomic uint;
+    var documentIdCount: atomic uint;
 
     // keep track of read count to perform Move-To-Front optimization
     var readCount: atomic uint;
@@ -84,9 +84,9 @@ module Search {
     iter documentIds() {
       var node = documentIdNode;
       while (node != nil) {
-        var startIdx = node.nodeSize - node.documentCount.read();
-        for id in node.documents[startIdx..node.nodeSize-1] {
-          yield node.documents[id];
+        var startIdx = node.nodeSize - node.documentIdCount.read();
+        for id in node.documentIds[startIdx..node.nodeSize-1] {
+          yield node.documentIds[id];
         }
         node = node.next;
       }
@@ -155,27 +155,27 @@ module Search {
         var tableEntry = termHashTable[tableIndexForTerm(term)];
         tableEntry.lockHead();
         entry = new TermEntry(term, documentIdNode, tableEntry.head);
-        tableEntry.head = entry;
+        termHashTable[tableIndexForTerm(term)].head = entry;
         tableEntry.unlockHead();
       }
 
       var docNode = entry.documentIdNode;
-      var docCount = docNode.documentCount.read();
+      var docCount = docNode.documentIdCount.read();
       if (docCount < docNode.nodeSize) {
-        docNode.documents[docNode.documentIdIndex()] = docId;
-        docNode.documentCount.add(1);
+        docNode.documentIds[docNode.documentIdIndex()] = docId;
+        docNode.documentIdCount.add(1);
       } else {
         docNode = new DocumentIdNode(docNode.nextDocumentIdNodeSize(), docNode);
         debug("adding new document id node of size ", docNode.nodeSize);
-        docNode.documents[docNode.documentIdIndex()] = docId;
-        docNode.documentCount.write(1);
+        docNode.documentIds[docNode.documentIdIndex()] = docId;
+        docNode.documentIdCount.write(1);
         entry.documentIdNode = docNode;
       }
 
-      entry.documentCount.write(1);
+      entry.documentIdCount.add(1);
       entry.maxDocumentId.write(docId);
 
-//      writeln(entry);
+      debug(entry);
     }
 
     proc getTerm(term: string): TermEntry {
@@ -233,7 +233,19 @@ module Search {
 
       t.stop();
       timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
-   
+
+      var totalTerms: uint = 0;
+      for i in termHashTable.domain {
+        var entry = termHashTable[i].head;
+        while (entry != nil) {
+          // writeln(entry);
+          totalTerms += entry.documentIdCount.read();
+          entry = entry.next;
+        }
+      }
+      writeln("totalTerms: ", totalTerms);
+      writeln("count: ", count);
+
       // segment document text and infer all terms and text locations
       // update all terms in the termHashTable
       // update global maxDocId
