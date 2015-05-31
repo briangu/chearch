@@ -125,36 +125,36 @@ module Search {
       var entry = getTerm(term);
       if (entry == nil) {
         // no term in this table position, so need to add one
+
+        // documentIdNode.documents[documentIdNode.documentIdIndex()] = docId;
+        // documentIdNode.documentCount.write(1);
+
+        // TODO: insert at tail
         var head = termHashTable[tableIndexForTerm(term)];
-
         var documentIdNode = new DocumentIdNode();
-        documentIdNode.documents[documentIdNode.documentIdIndex()] = docId;
-        documentIdNode.documentCount.write(1);
-
         entry = new TermEntry(term, documentIdNode, head);
-        entry.documentCount.write(1);
 
         // TODO: atomic needed?
         atomic {
-          // TODO: insert at tail
           termHashTable[tableIndexForTerm(term)] = entry;
         }
-      } else {
-        // add term to existing entry
-        var docNode = entry.documentIdNode;
-        var docCount = docNode.documentCount.read();
-        if (docCount < docNode.nodeSize) {
-          docNode.documents[docNode.documentIdIndex()] = docId;
-          docNode.documentCount.add(1);
-        } else {
-          docNode = new DocumentIdNode(docNode.nextDocumentIdNodeSize(), docNode);
-          debug("adding new document id node of size ", docNode.nodeSize);
-          docNode.documents[docNode.documentIdIndex()] = docId;
-          docNode.documentCount.write(1);
-          entry.documentIdNode = docNode;
-        }
-        entry.documentCount.add(1);
       }
+
+      var docNode = entry.documentIdNode;
+      var docCount = docNode.documentCount.read();
+      if (docCount < docNode.nodeSize) {
+        docNode.documents[docNode.documentIdIndex()] = docId;
+        docNode.documentCount.add(1);
+      } else {
+        docNode = new DocumentIdNode(docNode.nextDocumentIdNodeSize(), docNode);
+        debug("adding new document id node of size ", docNode.nodeSize);
+        docNode.documents[docNode.documentIdIndex()] = docId;
+        docNode.documentCount.write(1);
+        entry.documentIdNode = docNode;
+      }
+
+      entry.documentCount.write(1);
+      entry.maxDocumentId.write(docId);
     }
 
     proc getTerm(term: string): TermEntry {
@@ -180,17 +180,23 @@ module Search {
         return false;
       }
 
+      var term = "hello";
+      var textPosition = 0;
       var docId = createDocId(documentCount.read(), 0);
+      addTermForDocument(term, docId);
 
       // segment document text and infer all terms and text locations
       // update all terms in the termHashTable
-      // update all term maxDocIds in termHashTable
+      // update global maxDocId
+      maxDocumentId.write(docId);
 
       return true;
     }
 
     proc query() {
-
+      // capture maxDocId
+      var readerMaxDocId = maxDocumentId.read();
+      // remove all docIds > readerMaxDocId
     }
   }
 
