@@ -1,11 +1,11 @@
 module Search {
-  
+
   use Logging, Memory, GenHashKey32, ReplicatedDist, Time;
 
   /**
     A document id is the connection between a term and the external document it belongs to,
     providing both a reference to the external document as well as the term's text position within that document.
-    
+
     Since segments have a fixed upper-bound of documents, the document id can easily fit both the internal, relative,
     document id and the text position with in that document.
 
@@ -20,12 +20,12 @@ module Search {
   // it makes it easy to change locale counts without having to rebuild the partitions.
   //
   // Number of dimensions in the partition space.
-  // Each partition will be projected to a locale.  
-  // If the number of partitions exceeds the number of locales, 
+  // Each partition will be projected to a locale.
+  // If the number of partitions exceeds the number of locales,
   // then the locales will be over-subscribed with possibly more than one
   // partition per locale.
   //
-  config const partitionDimensions = 16;
+  config const partitionCount = 16;
 
   config const maxDocumentIdNodeSize: uint = 1024 * 32;
 
@@ -33,6 +33,15 @@ module Search {
   config const documentsPerSegment: uint = 1024 * 1024 * 1;
 
   config const termHashTableSize: uint = 1024 * 32;
+
+  class Query {
+    var term: string;
+  }
+
+  class QueryResult {
+    var externalDocId: uint;
+    var textPosition: uint(32);
+  }
 
   class DocumentIdNode {
 
@@ -70,7 +79,7 @@ module Search {
     // next term in the bucket chain
     var next: TermEntry;
 
-    // max document id in the document id node chain.  
+    // max document id in the document id node chain.
     // Any document id found during a read must be less-than-equal to this id.
     // if it is greather-than, then document is being currently indexed.
     var maxDocumentId: atomic uint;
@@ -195,9 +204,9 @@ module Search {
 
     proc addDocument(document: string, externalDocId: uint): bool {
       if (isSegmentFull()) {
-        // segment is full: 
-        // upon segment full, the segment manager should 
-        //    create a new segment 
+        // segment is full:
+        // upon segment full, the segment manager should
+        //    create a new segment
         //    append this to the new one
         //    flush the segment in the background
         //    replace this in-memory segment with a segment that references disk
@@ -214,7 +223,7 @@ module Search {
       var count: uint(32) = 0;
 
       // store the external document id and map it to our internal document index
-      // NOTE: this assumes we are going to succeed in adding the document 
+      // NOTE: this assumes we are going to succeed in adding the document
       var documentIndex = documentCount.fetchAdd(1);
       documents[documentIndex] = documentIndex + 100;
 
@@ -253,11 +262,10 @@ module Search {
       return true;
     }
 
-    proc query() {
-      var term = "hello";
+    proc query(query: Query, ref results: [?D] QueryResult) {
       // capture maxDocId
       var readerMaxDocId = maxDocumentId.read();
-      // remove all docIds > readerMaxDocId
+      // ignore all docIds > readerMaxDocId
       var entry = getTerm(term);
       if (entry != nil) {
         for id in entry.documentIds() {
@@ -282,16 +290,16 @@ module Search {
       return success;
     }
 
-    proc query() {
+    proc query(query: Query, ref results: [?D] QueryResult) {
       // TODO: handle multiple segments
-      segment.query();
+      return segment.query(query, results);
     }
   }
 
   class Index {
-    
+
     // Partition to locale mapping.  Zero-based to allow modulo to work conveniently.
-    const Space = {0..partitionDimensions-1};
+    const Space = {0..partitionCount-1};
     const ReplicatedSpace = Space dmapped ReplicatedDist();
     var Partitions: [ReplicatedSpace] PartitionManager;
 
@@ -312,8 +320,8 @@ module Search {
     }
 
     inline proc partitionIdForDocument(document: string): int {
-      return genHashKey32(document) % partitionDimensions;
-    } 
+      return genHashKey32(document) % partitionCount;
+    }
 
     inline proc localeForDocument(document: string): locale {
       return Locales[partitionIdForDocument(document) % Locales.size];
@@ -334,17 +342,20 @@ module Search {
       }
     }
 
-    proc query() {
+    proc query(query: Query, ref results: [?D] QueryResult) {
+      // var localeResults: [Locales.domain] domain;
+
       coforall loc in Locales {
         on loc {
           local {
             for i in Partitions.domain {
               var mgr = Partitions[i];
               if (mgr != nil) {
-                mgr.query();
+                var partitionResults = mgr.query(query);
               }
             }
           }
+          // localeResults[here.id] =
         }
       }
     }
