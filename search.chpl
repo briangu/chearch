@@ -93,6 +93,19 @@ module Search {
     }
   }
 
+  record TermHashTableEntry {
+    var head: TermEntry;
+    var headLock: atomicflag;
+
+    inline proc lockHead() {
+      while headLock.testAndSet() do chpl_task_yield();
+    }
+
+    inline proc unlockHead() {
+      headLock.clear();
+    }
+  }
+
   // A segment is a set of documents that can be searched over.
   // TODO: document deletes are not supported
   // TODO: document updates are not supported
@@ -106,7 +119,7 @@ module Search {
     // current maximum document id for all terms
     var maxDocumentId: atomic uint;
 
-    var termHashTable: [0..termHashTableSize-1] TermEntry;
+    var termHashTable: [0..termHashTableSize-1] TermHashTableEntry;
 
     inline proc tableIndexForTerm(term: string): uint {
       return genHashKey32(term) % termHashTable.size: uint(32);
@@ -138,14 +151,12 @@ module Search {
         // no term in this table position, so need to add one
 
         // TODO: insert at tail
-        var head = termHashTable[tableIndexForTerm(term)];
         var documentIdNode = new DocumentIdNode();
-        entry = new TermEntry(term, documentIdNode, head);
-
-        // TODO: atomic needed?
-        atomic {
-          termHashTable[tableIndexForTerm(term)] = entry;
-        }
+        var tableEntry = termHashTable[tableIndexForTerm(term)];
+        tableEntry.lockHead();
+        entry = new TermEntry(term, documentIdNode, tableEntry.head);
+        tableEntry.head = entry;
+        tableEntry.unlockHead();
       }
 
       var docNode = entry.documentIdNode;
@@ -164,12 +175,15 @@ module Search {
       entry.documentCount.write(1);
       entry.maxDocumentId.write(docId);
 
-      writeln(entry);
+//      writeln(entry);
     }
 
     proc getTerm(term: string): TermEntry {
       // iterate through the entries at this table position
-      var entry = termHashTable[tableIndexForTerm(term)];
+      var tableEntry = termHashTable[tableIndexForTerm(term)];
+      tableEntry.lockHead();
+      var entry = tableEntry.head;
+      tableEntry.unlockHead();
       while (entry != nil) {
         if (entry.term == term) {
           return entry;
@@ -190,27 +204,36 @@ module Search {
         return false;
       }
 
+      var t: Timer;
+      t.start();
+
+      var infile = open("words.txt", iomode.r);
+      var reader = infile.reader();
+      var term: string;
+      var docId: DocId = 1;
+      var count: uint(32) = 0;
+
       // store the external document id and map it to our internal document index
       // NOTE: this assumes we are going to succeed in adding the document 
       var documentIndex = documentCount.fetchAdd(1);
+      documents[documentIndex] = documentIndex + 100;
+
+      while (reader.readln(term)) {
+        var textPosition: uint(32) = count;
+        var docId = createDocId(documentIndex, textPosition);
+        addTermForDocument(term, docId);
+        maxDocumentId.write(docId);
+
+        count += 1;
+        if ((count + 1) % 1000 == 0) {
+          documentIndex = documentCount.fetchAdd(1);
+          documents[documentIndex] = documentIndex + 100;
+        }
+      }
+
+      t.stop();
+      timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
    
-      documents[documentIndex] = externalDocId;
-
-      {
-        var term = "hello";
-        var textPosition: uint(32) = 0;
-        var docId = createDocId(documentIndex, textPosition);
-        addTermForDocument(term, docId);
-        maxDocumentId.write(docId);
-      }
-      {
-        var term = "world";
-        var textPosition: uint(32) = 10;
-        var docId = createDocId(documentIndex, textPosition);
-        addTermForDocument(term, docId);
-        maxDocumentId.write(docId);
-      }
-
       // segment document text and infer all terms and text locations
       // update all terms in the termHashTable
       // update global maxDocId

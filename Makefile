@@ -11,7 +11,7 @@ tcp_server: tcp_server.o
 	$(CC) $(CFLAGS) -c -o bin/tcp_server.o tcp_server.c
 
 chearch: tcp_server
-	chpl --print-passes tcp_server.h bin/tcp_server.o callbacks.h callbacks.c -I$(IDIR) -L$(LDIR) $(LIBS) -o bin/chearch chearch.chpl search.chpl logging.chpl genhashkey32.chpl genhashkey64.chpl  libev.chpl
+	chpl --print-passes --fast tcp_server.h bin/tcp_server.o callbacks.h callbacks.c -I$(IDIR) -L$(LDIR) $(LIBS) -o bin/chearch chearch.chpl search.chpl logging.chpl genhashkey32.chpl genhashkey64.chpl  libev.chpl
 
 clean:
 	rm -f bin/*
