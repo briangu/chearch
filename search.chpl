@@ -226,7 +226,11 @@ module Search {
       var entry = getTerm(term);
       if (entry != nil) {
         for id in entry.documentIds() {
-          writeln(id);
+          if (id <= readerMaxDocId) {
+            writeln(id);
+          } else {
+            writeln("skipping id ", id);
+          }
         }
       }
     }
