@@ -15,6 +15,14 @@ module Search {
   */
   type DocId = uint(64);
 
+  inline proc documentIndexFromDocId(docId: DocId): uint {
+    return (docId >> 32): uint;
+  }
+
+  inline proc textLocationFromDocId(docId: DocId): uint(32) {
+    return (docId & (0xFFFFFFFF << 32)): uint(32); // TODO: can we just cast it to a uint(32)?
+  }
+
   // Separate the search parition strategy from locales.
   // The reason that it's worth keeping partitions separate from locales is that
   // it makes it easy to change locale counts without having to rebuild the partitions.
@@ -40,7 +48,7 @@ module Search {
 
   class QueryResult {
     var externalDocId: uint;
-    var textPosition: uint(32);
+    var textLocation: uint(32);
   }
 
   class DocumentIdNode {
@@ -66,6 +74,45 @@ module Search {
         return nodeSize;
       } else {
         return nodeSize * 2;
+      }
+    }
+  }
+
+  class TermEntryIterator {
+    var term: TermEntry;
+    var node: DocumentIdNode;
+    var nodeIdx: uint;
+
+    proc TermEntryIterator() {
+      node = term.documentIdNode;
+      nodeIdx = node.nodeSize - node.documentIdCount.read();
+    }
+
+    inline proc hasValue(): bool {
+      return node != nil;
+    }
+
+    proc docId(): DocId {
+      if (!hasValue()) {
+        halt("iterated past end of document ids", term);
+      }
+
+      return node.documentIds[nodeIdx];
+    }
+
+    proc documentIndex(): uint {
+      return documentIndexFromDocId(docId());
+    }
+
+    proc advance() {
+      if (!hasValue()) {
+        halt("iterated past end of document ids", term);
+      }
+
+      nodeIdx += 1;
+      if (nodeIdx >= node.nodeSize) {
+        node = node.next;
+        nodeIdx = 0;
       }
     }
   }
@@ -104,6 +151,10 @@ module Search {
 
   record TermHashTableEntry {
     var head: TermEntry;
+
+    // NOTE: this is a temporary solution, as it will hurt performance under "hot keys".
+    //       we can remove the lock if we can figure out how to use exlusive read / writes on the head pointer
+    //       or we can redesign the datastructure design to use atomit int's everywhere (may happen anyway for other reasons)
     var headLock: atomicflag;
 
     inline proc lockHead() {
@@ -142,12 +193,8 @@ module Search {
       return documents[documentIndexFromDocId(maxDocumentId.read())];
     }
 
-    inline proc documentIndexFromDocId(docId: DocId): uint {
-      return (docId >> 32): uint;
-    }
-
-    proc textPositionFromDocId(docId: DocId): uint(32) {
-      return (docId & (0xFFFFFFFF << 32)): uint(32);
+    inline proc splitDocId(docId: DocId): (uint, uint(32)) {
+      return (documentIndexFromDocId(docId), textLocation(docId));
     }
 
     inline proc createDocId(documentIndex: uint(32), textLocation: uint(32)): DocId {
@@ -228,8 +275,8 @@ module Search {
       documents[documentIndex] = documentIndex + 100;
 
       while (reader.readln(term)) {
-        var textPosition: uint(32) = count;
-        var docId = createDocId(documentIndex, textPosition);
+        var textLocation: uint(32) = count;
+        var docId = createDocId(documentIndex, textLocation);
         addTermForDocument(term, docId);
         maxDocumentId.write(docId);
 
@@ -262,20 +309,61 @@ module Search {
       return true;
     }
 
-    proc query(query: Query, ref results: [?D] QueryResult) {
-      // capture maxDocId
-      var readerMaxDocId = maxDocumentId.read();
-      // ignore all docIds > readerMaxDocId
-      var entry = getTerm(term);
-      if (entry != nil) {
-        for id in entry.documentIds() {
-          if (id <= readerMaxDocId) {
-            writeln(id);
+    inline proc sortTermsByDocumentIdCount(termA: TermEntry, termB: TermEntry): (TermEntry, TermEntry) {
+      var smaller = if (termA.documentIdCount.read() < termB.documentIdCount.read()) then termA else termB;
+      var larger = if (smaller == termA) then termB else termA;
+      return (smaller, larger);
+    }
+
+    iter intersectDocumentIds(termA: TermEntryIterator, termB: TermEntryIterator) {
+      while(termA.hasValue()) {
+        var outerDocumentIndex = termB.documentIndex();
+        while (termB.hasValue()) {
+          var innerDocumentIndex = termB.documentIndex();
+          if (outerDocumentIndex == innerDocumentIndex) {
+            while (termA.hasValue() && termA.documentIndex() == outerDocumentIndex) {
+              yield termA.docId();
+              termA.advance();
+            }
+            while (termB.hasValue() && termB.documentIndex() == outerDocumentIndex) {
+              yield termB.docId();
+              termB.advance();
+            }
+          } else if (outerDocumentIndex > innerDocumentIndex) {
+            termB.advance();
           } else {
-            writeln("skipping id ", id);
+            break; // let termA.advance();
           }
         }
+        termA.advance();
       }
+    }
+
+    // iter unionDocumentIds(termA: TermEntry, termB, TermEntry) {
+    //   var (smaller, larger) = sortTermsByDocumentIdCount(termA, termB);
+    //   for docId in smaller.unionDocumentIds(larger) {
+    //     yield docId;
+    //   }
+    // }
+
+    proc query(query: Query, ref results: [?D] QueryResult) {
+      // Capture maxDocId.  Any documents added to the index after this capture will be ignored for this call.
+      var readerMaxDocId = maxDocumentId.read();
+
+      // ignore all docIds > readerMaxDocId
+      var termA = getTerm("hello");
+      var termB = getTerm("world");
+      var (smaller, larger) = sortTermsByDocumentIdCount(termA, termB);
+
+      var si = new TermEntryIterator(smaller);
+      var li = new TermEntryIterator(larger);
+      for docId in intersectDocumentIds(si, li) {
+        if (docId < readerMaxDocId) {
+          //
+        }
+      }
+      delete si;
+      delete li;
     }
   }
 
@@ -292,7 +380,7 @@ module Search {
 
     proc query(query: Query, ref results: [?D] QueryResult) {
       // TODO: handle multiple segments
-      return segment.query(query, results);
+      segment.query(query, results);
     }
   }
 
@@ -351,7 +439,8 @@ module Search {
             for i in Partitions.domain {
               var mgr = Partitions[i];
               if (mgr != nil) {
-                var partitionResults = mgr.query(query);
+                var localResults: [1] QueryResult;
+                mgr.query(query, localResults);
               }
             }
           }

@@ -1,12 +1,23 @@
 Feature notes:
 
+search.chpl:312: error: 'TermEntry' used before defined (first used here)
+
+    inline proc sortTermsByDocumentIdCount(termA: TermEntry, termB, TermEntry): (TermEntry, TermEntry) {
+      var smaller = if (termA.documentIdCount.read() < termB.documentIdCount.read()) then termA else termB;
+      var larger = if (smaller == termA) then termB else termA;
+      return (smaller, larger);
+    }
+
+
+.....
+
 // BUG: declaring use IO, Memory here causes chpl compiler segv
 
 
 ....
 
   // can't yield inside on in 1.11.0
-  // 
+  //
   // iter documentIdsForWord(word: string) {
   //   var entry = entryForWord(word);
   //   if (entry != nil) {
@@ -142,7 +153,7 @@ coforall i in 1..1000 {
 ....
   // segv
   iter readFromBuff() {
-    var ind = 0,              
+    var ind = 0,
         nextVal = buff$(0);
 
     while (nextVal != nil) {
@@ -166,7 +177,7 @@ coforall i in 1..1000 {
 name collision not obvious
 
 module Logging {
-  
+
   config const debug = false;
   config const info = true;
 

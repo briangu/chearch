@@ -53,7 +53,10 @@ proc main() {
   var searchIndex: Index = new Index();
   searchIndex.initPartitions();
   searchIndex.addDocument("hello, world!", 1);
-  searchIndex.query();
+  var query = new Query();
+  var results: [1] QueryResult;
+  searchIndex.query(query, results);
+  delete query;
 
 	// writeln("initializing event loop...");
 
