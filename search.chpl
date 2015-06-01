@@ -97,15 +97,6 @@ module Search {
     }
   }
 
-  class Query {
-    var term: string;
-  }
-
-  class QueryResult {
-    var externalDocId: uint;
-    var textLocation: uint(32);
-  }
-
   class UnionOperand : Operand {
     var opA: Operand;
     var opB: Operand;
@@ -200,7 +191,7 @@ module Search {
 
   class TermEntryOperand: Operand {
     var term: TermEntry;
-    var node: DocumentIdNode = term.documentIdNode;
+    var node: DocumentIdNode;
     var nodeIdx: uint = node.nodeSize - node.documentIdCount.read();
 
     inline proc hasValue(): bool {
@@ -245,10 +236,23 @@ module Search {
     var term: string;
 
     // pointer to the node which has the most recently index documents
-    var documentIdNode: DocumentIdNode;
+    var head: DocumentIdNode;
 
     // next term in the bucket chain
     var next: TermEntry;
+
+    // NOTE: this is a temporary solution.
+    //       we can remove the lock if we can figure out how to use exlusive read / writes on the head pointer
+    //       or we can redesign the datastructure design to use atomit int's everywhere (may happen anyway for other reasons)
+    var headLock: atomicflag;
+
+    inline proc lockHead() {
+      while headLock.testAndSet() do chpl_task_yield();
+    }
+
+    inline proc unlockHead() {
+      headLock.clear();
+    }
 
     // max document id in the document id node chain.
     // Any document id found during a read must be less-than-equal to this id.
@@ -262,7 +266,9 @@ module Search {
     var readCount: atomic uint;
 
     iter documentIds() {
-      var node = documentIdNode;
+      headLock();
+      var node = head;
+      headUnlock(); 
       while (node != nil) {
         var startIdx = node.nodeSize - node.documentIdCount.read();
         for id in node.documentIds[startIdx..node.nodeSize-1] {
@@ -270,6 +276,15 @@ module Search {
         }
         node = node.next;
       }
+    }
+
+    proc getAsOperand(): TermEntryOperand {
+      var documentIdNode: DocumentIdNode;
+      // UGH.
+      headLock();
+      documentIdNode = head;
+      headUnlock(); 
+      return new TermEntryOperand(this, documentIdNode);
     }
   }
 
@@ -339,7 +354,9 @@ module Search {
         tableEntry.unlockHead();
       }
 
-      var docNode = entry.documentIdNode;
+      entry.lockHead();
+      var docNode = entry.head;
+      entry.unlockHead();
       var docCount = docNode.documentIdCount.read();
       if (docCount < docNode.nodeSize) {
         docNode.documentIds[docNode.documentIdIndex()] = docId;
@@ -349,7 +366,9 @@ module Search {
         debug("adding new document id node of size ", docNode.nodeSize);
         docNode.documentIds[docNode.documentIdIndex()] = docId;
         docNode.documentIdCount.write(1);
-        entry.documentIdNode = docNode;
+        entry.lockHead();
+        entry.head = docNode;
+        entry.unlockHead();
       }
 
       entry.documentIdCount.add(1);
@@ -373,7 +392,7 @@ module Search {
       return nil;
     }
 
-    proc addDocument(document: string, externalDocId: uint): bool {
+    proc addDocument(terms: [?D] IndexTerm, externalDocId: uint): bool {
       if (isSegmentFull()) {
         // segment is full:
         // upon segment full, the segment manager should
@@ -390,11 +409,12 @@ module Search {
 
       documents[documentIndex] = externalDocId;
 
-      var textLocation: uint(32) = 0;
-      var docId = createDocId(documentIndex, textLocation);
-      addTermForDocument(document, docId);
-      maxDocumentId.write(docId);
-
+      for term in terms {
+        var docId = createDocId(documentIndex, term.textLocation);
+        addTermForDocument(term.term, docId);
+        maxDocumentId.write(docId);
+      }
+ 
       return true;
     }
 
@@ -425,8 +445,8 @@ module Search {
   class PartitionManager {
     var segment: Segment;
 
-    proc addDocument(document: string, externalDocId: uint): bool {
-      var success = segment.addDocument(document, externalDocId);
+    proc addDocument(terms: [?D] IndexTerm, externalDocId: uint): bool {
+      var success = segment.addDocument(terms, externalDocId);
       if (!success) {
         // TODO: handle segmentFull scenario
       }
@@ -438,6 +458,21 @@ module Search {
       segment.query(query, results);
     }
   }
+
+  class Query {
+    var term: string;
+  }
+
+  class QueryResult {
+    var externalDocId: uint;
+    var textLocation: uint(32);
+  }
+
+  record IndexTerm {
+    var term: string; // TODO: use integer ref to string table
+    var textLocation: uint(32);
+  }
+
 
   // Partition to locale mapping.  Zero-based to allow modulo to work conveniently.
   const Space = {0..partitionCount-1};
@@ -462,25 +497,13 @@ module Search {
     timing("initialized index in ",t.elapsed(TimeUnits.microseconds), " microseconds");
   }
 
-  inline proc partitionIdForDocument(document: string): int {
-    return genHashKey32(document) % partitionCount;
-  }
-
-  inline proc localeForDocument(document: string): locale {
-    return Locales[partitionIdForDocument(document) % Locales.size];
-  }
-
-  inline proc partitionManagerForDocument(document: string): PartitionManager {
-    return Partitions[partitionIdForDocument(document)];
-  }
-
-  proc addDocument(document: string, externalDocId: uint) {
+  proc addDocument(docHash: uint(32), terms: [?D] IndexTerm, externalDocId: uint) {
     // first move the locale that should have the document.
-    on localeForDocument(document) {
+    on Locales[docHash % Locales.size] {
       // locally operate in the locale, which has one or more partitions.
       local {
-        var mgr = partitionManagerForDocument(document);
-        mgr.addDocument(document, externalDocId);
+        var mgr = Partitions[docHash % partitionCount];
+        mgr.addDocument(terms, externalDocId);
       }
     }
   }

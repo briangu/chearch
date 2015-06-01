@@ -1,4 +1,4 @@
-use Logging, Memory, LibEv, IO, Search, Time;
+use Logging, Memory, LibEv, IO, Random, Search, Time;
 
 // TODO: port to pure chapel
 extern proc initialize_socket(port: c_int): c_int;
@@ -56,16 +56,41 @@ proc main() {
   var t: Timer;
   t.start();
 
-  var infile = open("words.txt", iomode.r);
-  var reader = infile.reader();
-  var term: string;
-  var externalDocId: uint = 0;
-  var count: uint(32) = 0;
+  for loc in Locales {
+    on loc {
+      var infile = open("words.txt", iomode.r);
+      local {
+        var term: string;
+        var externalDocId: uint = 0;
+        var count: uint(32) = 0;
 
-  while (reader.readln(term)) {
-    addDocument(term, externalDocId);
+        var seed = 17;
+        var randStreamSeeded: RandomStream = new RandomStream(seed);
+        var docSize = randStreamSeeded.getNext(): int % 1000;
+        var terms: [1..docSize] IndexTerm;
 
-    count += 1;
+        for term in infile.lines() {
+          if (count < docSize) {
+            terms[count].term = term;
+            terms[count].textLocation = count; // fake
+            count += 1;
+          } else {
+            if (externalDocId: uint(32) % Locales.size == here.id) {
+              addDocument(externalDocId: uint(32), terms, externalDocId); // HACK: use externalDocId as doc hash
+            }
+            docSize = randStreamSeeded.getNext(): int % 1000;
+            terms.domain = {1..docSize};
+            count = 0;
+            externalDocId += 1;
+          }
+        }
+
+        if (count > 0 && count <= docSize) {
+          terms.domain = {1..count:int};
+          addDocument(externalDocId: uint(32), terms, externalDocId);
+        }
+      }
+    }
   }
 
   t.stop();
