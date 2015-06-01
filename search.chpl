@@ -38,7 +38,7 @@ module Search {
   config const maxDocumentIdNodeSize: uint = 1024 * 32;
 
   // NOTE: documentsPerSegment must fit in an unsigned 32-bit integer
-  config const documentsPerSegment: uint = 1024 * 1024 * 1;
+  config const documentsPerSegment: uint = 1024 * 512;
 
   config const termHashTableSize: uint = 1024 * 32;
 
@@ -384,54 +384,16 @@ module Search {
         return false;
       }
 
-      var t: Timer;
-      t.start();
-
-      var infile = open("words.txt", iomode.r);
-      var reader = infile.reader();
-      var term: string;
-      var docId: DocId = 1;
-      var count: uint(32) = 0;
-
       // store the external document id and map it to our internal document index
       // NOTE: this assumes we are going to succeed in adding the document
       var documentIndex = documentCount.fetchAdd(1);
-      documents[documentIndex] = documentIndex + 100;
 
-      while (reader.readln(term)) {
-        var textLocation: uint(32) = count;
-        var docId = createDocId(documentIndex, textLocation);
-        addTermForDocument(term, docId);
-        maxDocumentId.write(docId);
+      documents[documentIndex] = externalDocId;
 
-        count += 1;
-        if ((count + 1) % 1000 == 0) {
-          documentIndex = documentCount.fetchAdd(1);
-          documents[documentIndex] = documentIndex + 100;
-        }
-      }
-
-      t.stop();
-      timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
-
-      // self-test
-      if (false) {
-        var totalTerms: uint = 0;
-        for i in termHashTable.domain {
-          var entry = termHashTable[i].head;
-          while (entry != nil) {
-            // writeln(entry);
-            totalTerms += entry.documentIdCount.read();
-            entry = entry.next;
-          }
-        }
-        writeln("totalTerms: ", totalTerms);
-        writeln("count: ", count);
-      }
-
-      // segment document text and infer all terms and text locations
-      // update all terms in the termHashTable
-      // update global maxDocId
+      var textLocation: uint(32) = 0;
+      var docId = createDocId(documentIndex, textLocation);
+      addTermForDocument(document, docId);
+      maxDocumentId.write(docId);
 
       return true;
     }
@@ -453,7 +415,8 @@ module Search {
         var termCOp = new TermEntryOperand(termC);
         var op = new UnionOperand(and, termCOp);
         for documentIndex in op.evaluate() {
-          writeln(documentIndex);
+          // LOCAL exception
+          // writeln(documentIndex);
         }
       }
     }
@@ -476,68 +439,67 @@ module Search {
     }
   }
 
-  class Index {
+  // Partition to locale mapping.  Zero-based to allow modulo to work conveniently.
+  const Space = {0..partitionCount-1};
+  const ReplicatedSpace = Space dmapped ReplicatedDist();
+  var Partitions: [ReplicatedSpace] PartitionManager;
 
-    // Partition to locale mapping.  Zero-based to allow modulo to work conveniently.
-    const Space = {0..partitionCount-1};
-    const ReplicatedSpace = Space dmapped ReplicatedDist();
-    var Partitions: [ReplicatedSpace] PartitionManager;
+  proc initPartitions() {
+    var t: Timer;
+    t.start();
 
-    proc initPartitions() {
-      var t: Timer;
-      t.start();
-
-      for loc in Locales {
-        on loc {
+    for loc in Locales {
+      on loc {
+        local {
           for i in Partitions.domain {
             Partitions[i] = new PartitionManager(new Segment());
           }
         }
       }
-
-      t.stop();
-      timing("initialized index in ",t.elapsed(TimeUnits.microseconds), " microseconds");
     }
 
-    inline proc partitionIdForDocument(document: string): int {
-      return genHashKey32(document) % partitionCount;
-    }
+    t.stop();
+    timing("initialized index in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+  }
 
-    inline proc localeForDocument(document: string): locale {
-      return Locales[partitionIdForDocument(document) % Locales.size];
-    }
+  inline proc partitionIdForDocument(document: string): int {
+    return genHashKey32(document) % partitionCount;
+  }
 
-    inline proc partitionManagerForDocument(document: string): PartitionManager {
-      return Partitions[partitionIdForDocument(document)];
-    }
+  inline proc localeForDocument(document: string): locale {
+    return Locales[partitionIdForDocument(document) % Locales.size];
+  }
 
-    proc addDocument(document: string, externalDocId: uint) {
-      // first move the locale that should have the document.
-      on localeForDocument(document) {
-        // locally operate in the locale, which has one or more partitions.
-        local {
-          var mgr = partitionManagerForDocument(document);
-          mgr.addDocument(document, externalDocId);
-        }
+  inline proc partitionManagerForDocument(document: string): PartitionManager {
+    return Partitions[partitionIdForDocument(document)];
+  }
+
+  proc addDocument(document: string, externalDocId: uint) {
+    // first move the locale that should have the document.
+    on localeForDocument(document) {
+      // locally operate in the locale, which has one or more partitions.
+      local {
+        var mgr = partitionManagerForDocument(document);
+        mgr.addDocument(document, externalDocId);
       }
     }
+  }
 
-    proc query(query: Query, ref results: [?D] QueryResult) {
-      // var localeResults: [Locales.domain] domain;
+  proc query(query: Query, ref results: [?D] QueryResult) {
+    // var localeResults: [Locales.domain] domain;
 
-      coforall loc in Locales {
-        on loc {
-          local {
-            for i in Partitions.domain {
-              var mgr = Partitions[i];
-              if (mgr != nil) {
-                var localResults: [1] QueryResult;
-                mgr.query(query, localResults);
-              }
+    coforall loc in Locales {
+      on loc {
+        local {
+          for i in Partitions.domain {
+            var mgr = Partitions[i];
+            if (mgr != nil) {
+              var localResults: [1] QueryResult;
+              mgr.query(query, localResults);
             }
           }
-          // localeResults[here.id] =
         }
+        // localeResults[here.id] =
       }
     }
   }

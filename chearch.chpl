@@ -50,13 +50,33 @@ proc main() {
 	// }
 
   writeln("initializing index");
-  var searchIndex: Index = new Index();
-  searchIndex.initPartitions();
-  searchIndex.addDocument("hello, world!", 1);
-  var query = new Query();
+  initPartitions();
+
+  // POPULATE THE INDEX
+  var t: Timer;
+  t.start();
+
+  var infile = open("words.txt", iomode.r);
+  var reader = infile.reader();
+  var term: string;
+  var externalDocId: uint = 0;
+  var count: uint(32) = 0;
+
+  while (reader.readln(term)) {
+    addDocument(term, externalDocId);
+
+    count += 1;
+  }
+
+  t.stop();
+  timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+
+  // ISSUE SOME QUERY
+
+  var q = new Query();
   var results: [1] QueryResult;
-  searchIndex.query(query, results);
-  delete query;
+  query(q, results);
+  delete q;
 
 	// writeln("initializing event loop...");
 
