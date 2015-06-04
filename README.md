@@ -10,11 +10,13 @@ such as locales, and how to minimize RPC traffic through features such as local.
 Features of the search engine
 =============================
 
-* document-based hash partitioning (in-progress)
-* boolean queries (in progress)
+* document-based hash partitioning
+* lock-free, using atomic operations for all appropriate operations
+* string-free, the entire engine is integer-based.  This minimizes memory footprint while improves processing speed
+* boolean queries (in progress) using a FORTH-like integer-based (no strings, remember?) query language
 * distributed loads of indexes from storage (in-progress)
 * online query and indexing support via libev-backed TCP connection (in-progress)
-* support for in-memory and on-disk index segments (future)
+* support for in-memory and on-disk (future) index segments
 
 SETUP
 =====
