@@ -30,6 +30,7 @@ Sample Query
     var buffer = new InstructionBuffer(1024);
 
     // write the CHASM code to implement the query    
+    var writer = new InstructionWriter(buffer);
     writer.write_push();
     writer.write_term(3);
     writer.write_push();
