@@ -15,8 +15,8 @@ Features of the search engine
 * boolean queries (in progress) using a FORTH-like integer-based (no strings, remember?) query language
 * document-based hash partitioning
 * distributed loads of indexes from storage (in-progress)
-** async queue indexer
-** batch load indexer
+	* async queue indexer
+	* batch load indexer
 * online query and indexing support via libev-backed TCP connection (in-progress)
 * support for in-memory and on-disk (future) index segments
 
