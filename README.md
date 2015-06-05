@@ -13,7 +13,7 @@ Features of the search engine
 
 * lock-free, using atomic operations for all appropriate operations
 * string-free, the entire engine is integer-based.  This minimizes memory footprint while improves processing speed
-* boolean queries (in progress) using a FORTH-like integer-based (no strings, remember?) query language
+* boolean queries, using an integer-based (no strings, remember?) query language called CHASM (Chearch Assembly)
 * document-based hash partitioning
 * distributed loads of indexes from storage (in-progress)
 	* async queue indexer
