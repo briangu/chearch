@@ -292,7 +292,8 @@ module MemorySegment {
     }
 
     proc operandForTerm(term: Term): Operand {
-      return new TermEntryOperand(this, getTerm(term));
+      var entry = getTerm(term);
+      return if (entry != nil) then new TermEntryOperand(this, entry) else NullOperand[here.id];
     }
   }
 }

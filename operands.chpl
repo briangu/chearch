@@ -6,7 +6,7 @@ module Operands {
   */
   type OperandValue = uint;
 
-  // "Abstract" Operand base class
+  // Operand base class.  Also serves as Null / empty Operand
   class Operand {
     proc hasValue(): bool {
       return false;

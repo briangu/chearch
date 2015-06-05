@@ -59,4 +59,23 @@ proc main() {
   writeln("count = ", count);
   t.stop();
   timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+
+  writeln("querying for missing term");
+  t.clear();
+  t.start();
+
+  buffer.rewind();
+  writer.write_push();
+  writer.write_term(20000);
+
+  count = 0;
+  for result in query(new Query(buffer)) {
+    if (result.term != 20000) {
+      halt();
+    }
+    count += 1;
+  }
+  writeln("count = ", count);
+  t.stop();
+  timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 }

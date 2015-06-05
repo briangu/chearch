@@ -34,16 +34,16 @@ module SearchIndex {
     for loc in Locales {
       on loc {
         local {
-          for i in Partitions.domain {
-            // TODO: handle multiple segments
-            Partitions[i] = new PartitionManager(new MemorySegment());
+          // TODO: handle multiple segments
+          Partitions[here.id] = new PartitionManager(new MemorySegment());
 
-            // ADD DUMMY to fill term 0
-            var dummy: [0..0] IndexTerm;
-            dummy[0].term = 0xFFFFFFFF;
-            dummy[0].textLocation = 0;
-            Partitions[i].addDocument(dummy, 1);
-          }
+          // ADD DUMMY to fill term 0
+          var dummy: [0..0] IndexTerm;
+          dummy[0].term = 0xFFFFFFFF;
+          dummy[0].textLocation = 0;
+          Partitions[here.id].addDocument(dummy, 1);
+
+          NullOperand[here.id] = new Operand();
         }
       }
     }

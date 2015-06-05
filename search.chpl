@@ -1,13 +1,18 @@
 module Search {
 
-  use Chasm, DocumentId, Operands;
+  use Chasm, DocumentId, Operands, ReplicatedDist;
 
   // reference in a string table
   type Term = uint(32);
 
   type ExternalDocId = uint;
 
-  class Query {
+  // Globally reusable Null / empty singleton operand
+  const Space = {0..Locales.size-1};
+  const ReplicatedSpace = Space dmapped ReplicatedDist();
+  var NullOperand: [ReplicatedSpace] Operand;
+
+  record Query {
     var instructionBuffer: InstructionBuffer;
 
     proc Query(query: Query) {
