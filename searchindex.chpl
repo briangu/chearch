@@ -88,8 +88,8 @@ module SearchIndex {
         var innerResults: [0..2047] QueryResult;
         var innerCount = 0;
 
-        var lq: Query = new Query();
-        lq.term = query.term;
+        // copy query into locale
+        var lq: Query = new Query(query);
 
         local {
           for res in localQuery(lq) {

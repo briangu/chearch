@@ -1,6 +1,6 @@
 module Search {
 
-  use DocumentId;
+  use Chasm, DocumentId, Operands;
 
   // reference in a string table
   type Term = uint(32);
@@ -8,7 +8,14 @@ module Search {
   type ExternalDocId = uint;
 
   class Query {
-    var term: Term;
+    var instructionBuffer: InstructionBuffer;
+
+    proc Query(query: Query) {
+      instructionBuffer = new InstructionBuffer(query.instructionBuffer.count);
+      for i in 0..instructionBuffer.count-1 {
+        instructionBuffer.buffer[i] = query.instructionBuffer.buffer[i];
+      }
+    }
   }
 
   record QueryResult {
@@ -22,7 +29,7 @@ module Search {
     var textLocation: TextLocation;
   }
 
-    // A segment is a set of documents that can be searched over.
+  // A segment is a set of documents that can be searched over.
   // TODO: document deletes are not supported
   // TODO: document updates are not supported
   class Segment {
@@ -39,6 +46,11 @@ module Search {
     iter query(query: Query): QueryResult {
       halt("not implemented");
       yield new QueryResult();
+    }
+
+    proc operandForTerm(term: Term): Operand {
+      halt("not implemented");
+      return new Operand();
     }
   }
 }

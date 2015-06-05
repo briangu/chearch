@@ -1,5 +1,25 @@
 Feature notes:
 
+doesn't work with read after select
+
+    while (!reader.atEnd()) {
+      var op = reader.read();
+      select op {
+        when CHASM_HALT do break;
+        when CHASM_PUSH {
+          writeln("CHASM_PUSH");
+          var term = reader.readTerm();
+          writeln("pushing term ", term);
+          push(segment.operandForTerm(term));
+        }
+        when CHASM_AND  do push(new IntersectionOperand(pop(), pop()));
+        when CHASM_OR   do push(new UnionOperand(pop(), pop()));
+      }
+    }
+
+
+...
+
 const value is on Locale that instantiated it (likely 0)
 
 

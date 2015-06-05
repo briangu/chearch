@@ -1,6 +1,6 @@
 module MemorySegment {
 
-  use DocumentId, DocumentIdPool, GenHashKey32, Logging, Operands, Search, Time;
+  use Chasm, DocumentId, DocumentIdPool, GenHashKey32, Logging, Search, Time;
 
   config const termHashTableSize: uint = 1024 * 32;
 
@@ -279,19 +279,9 @@ module MemorySegment {
       // Capture maxDocId.  Any documents added to the index after this capture will be ignored for this call.
       var readerMaxDocId = maxDocumentId.read();
 
-      // ignore all docIds > readerMaxDocId
-      var termA = getTerm(query.term);
-      // var termB = getTerm(1);
-      // var termC = getTerm(2);
-      // writeln("hello: ", termA != nil, " ", "world: ", termB != nil, " ", "series: ", termC != nil);
-      // if (termA != nil && termB != nil && termC != nil) {
-      if (termA != nil) {
-        var termAOp = new TermEntryOperand(this, termA);
-        // var termBOp = new TermEntryOperand(termB);
-        // var and = new IntersectionOperand(termAOp, termBOp);
-        // var termCOp = new TermEntryOperand(termC);
-        // var op = new UnionOperand(and, termCOp);
-        var op = termAOp;
+      // TODO: ignore all docIds > readerMaxDocId
+      var op = chasm_interpret(this, query);
+      if (op != nil) {
         for opValue in op.evaluate() {
           var term = (opValue >> 32): uint(32);
           var docId = opValue: uint(32);
@@ -299,6 +289,10 @@ module MemorySegment {
           yield new QueryResult(term, textLocation, externalDocumentIdFromDocumentIndex(documentIndex));
         }
       }
+    }
+
+    proc operandForTerm(term: Term): Operand {
+      return new TermEntryOperand(this, getTerm(term));
     }
   }
 }

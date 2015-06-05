@@ -22,8 +22,14 @@ proc main() {
   writeln("querying for 2");
   t.clear();
   t.start();
+
+  var buffer = new InstructionBuffer(1024);
+  var writer = new InstructionWriter(buffer);
+  writer.write_push();
+  writer.write_term(2);
+
   var count = 0;
-  for result in localQuery(new Query(2)) {
+  for result in localQuery(new Query(buffer)) {
     // writeln(result);
     if (result.term != 2) {
       halt();
@@ -38,8 +44,13 @@ proc main() {
   writeln("querying for 3");
   t.clear();
   t.start();
+
+  buffer.rewind();
+  writer.write_push();
+  writer.write_term(3);
+
   count = 0;
-  for result in query(new Query(3)) {
+  for result in query(new Query(buffer)) {
     if (result.term != 3) {
       halt();
     }

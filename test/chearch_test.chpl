@@ -1,4 +1,4 @@
-use Logging, SearchIndex;
+use Chasm, Logging, SearchIndex;
 
 config const testSerialization = true;
 config const testMemorySegment = true;
@@ -89,6 +89,27 @@ class TestMemorySegment : MemorySegment {
   //   }
   // }
 
+proc testChasm() {
+  var expectedTerm = 10: Term;
+
+  var buffer = new InstructionBuffer(1024);
+
+  var writer = new InstructionWriter(buffer);
+  writer.write_push();
+  writer.write_term(expectedTerm);
+
+  buffer.rewind();
+  var reader = new InstructionReader(buffer);
+  var op: ChasmOp;
+  var term: Term;
+  op = reader.read(); 
+  if (op != CHASM_PUSH) then halt("opcode should have been CHASM_PUSH: ", " got ", op, " ", reader);
+  term = reader.readTerm();
+  if (term != expectedTerm) then halt("term should have been ", expectedTerm, " got ", term, " ", reader);
+
+  delete buffer;
+}
+
 proc main() {
   if (testSerialization) {
     writeln("Testing serialization");
@@ -102,4 +123,6 @@ proc main() {
     memSegment.testAddDocId();
     delete memSegment;
   }
+
+  testChasm();
 }
