@@ -53,7 +53,7 @@ Chapel (http://chapel.cray.com/download.html)
 
 	brea install chapel
 
-COMPLING
+COMPILING
 
     make
 
