@@ -1,5 +1,5 @@
 /**
-  Chasm is the Chearch query assembly language (that helps you cross the search query chasm.)
+  CHASM: (Chearch Assembly) is the Chearch query assembly language (that helps you cross the search query chasm.)
 */
 module Chasm {
   
