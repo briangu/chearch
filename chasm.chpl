@@ -17,14 +17,6 @@ module Chasm {
     var buffer: [0..count-1] ChasmOp;
     var offset: uint = 0: uint;
 
-    // proc InstructionBuffer(count: uint, buffer: [?D] ChasmOp) {
-    //   this.count = count;
-    //   this.buffer.domain = {0..count-1};
-    //   for i in this.buffer.domain {
-    //     this.buffer[i] = buffer[i];
-    //   }
-    // }
-
     inline proc atEnd(): bool {
       return (offset >= count);
     }
@@ -33,8 +25,17 @@ module Chasm {
       offset = 0;
     }
 
+    inline proc clear() {
+      buffer = 0;
+      offset = 0;
+    }
+
     inline proc advance() {
       offset += 1;
+    }
+
+    inline proc canAdvance(increment: uint): bool {
+      return (offset + increment) <= count;
     }
 
     inline proc read(): ChasmOp {
@@ -48,7 +49,7 @@ module Chasm {
     }
 
     inline proc write(op: ChasmOp): bool {
-      if (offset >= count) {
+      if (atEnd()) {
         error("write is out of instruction space at offset ", offset, " for op code ", op);
         return false;
       }
@@ -91,7 +92,7 @@ module Chasm {
     var instructions: InstructionBuffer;
 
     proc write_term(term: Term): bool {
-      if (instructions.offset + 4 >= instructions.count) {
+      if (!instructions.canAdvance(4)) {
         error("write_push is out of instruction space for term: ", term, " at offset ", instructions.offset);
         return false;
       }
@@ -105,8 +106,8 @@ module Chasm {
     }
 
     proc write_push(): bool {
-      if (instructions.offset + 1 >= instructions.count) {
-        error("write_and is out of instruction space for CHASM_AND at offset ", instructions.offset);
+      if (!instructions.canAdvance(1)) {
+        error("write_and is out of instruction space for CHASM_PUSH at offset ", instructions.offset);
         return false;
       }
 
@@ -114,7 +115,7 @@ module Chasm {
     }
 
     proc write_and(): bool {
-      if (instructions.offset + 1 >= instructions.count) {
+      if (!instructions.canAdvance(1)) {
         error("write_and is out of instruction space for CHASM_AND at offset ", instructions.offset);
         return false;
       }
@@ -123,7 +124,7 @@ module Chasm {
     }
 
     proc write_or(): bool {
-      if (instructions.offset + 1 >= instructions.count) {
+      if (!instructions.canAdvance(1)) {
         error("write_or is out of instruction space for CHASM_OR at offset ", instructions.offset);
         return false;
       }
