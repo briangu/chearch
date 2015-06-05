@@ -2,10 +2,11 @@
 
 Chearch is a simple search engine written in Cray's Chapel language.
 
-Primary website: http://chearch.pw (church pew)
-
 This application demonstrates how to use various important features of Chapel,
-such as locales, and how to minimize RPC traffic through features such as local.
+such as locales, and how to minimize RPC traffic through features such as local. 
+It also shows how to build a simple, efficient, inverted index using only integer represesentions.
+
+Project link to this page: http://chearch.pw (church pew)
 
 Features of the search engine
 =============================
