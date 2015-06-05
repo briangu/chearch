@@ -23,8 +23,12 @@ Features of the search engine
 Sample Query
 ============
 
-    writeln("querying for 3 AND 2");
+    writeln("querying for term IDs 3 AND 2");
+    
+    // allocate the instruction buffer
     var buffer = new InstructionBuffer(1024);
+
+    // write the CHASM code to implement the query    
     writer.write_push();
     writer.write_term(3);
     writer.write_push();
@@ -34,6 +38,8 @@ Sample Query
     for result in query(new Query(buffer)) {
       writeln(result);
     }
+
+    delete buffer;
 
 SETUP
 =====
