@@ -135,15 +135,15 @@ module Chasm {
   /**
     Intepret a query instruction sequence into a query AST object tree.
   */
-  proc chasm_interpret(segment: Segment, query: Query): Operand {
+  proc chasm_interpret(segment: Segment, instructionBuffer: InstructionBuffer): Operand {
 
-    var reader = new InstructionReader(query.instructionBuffer);
+    var reader = new InstructionReader(instructionBuffer);
     var stack: [0..1023] Operand;
     var stackPtr = stack.domain.high + 1;
 
     inline proc push(op: Operand) {
       if (stackPtr <= 0) {
-        error("pushing out of stack space @ ", reader, " for query ", query);
+        error("pushing out of stack space @ ", reader, " for buffer ", instructionBuffer);
         return;
       }
       stackPtr -= 1;
@@ -152,7 +152,7 @@ module Chasm {
 
     inline proc pop(): Operand {
       if (stackPtr > stack.domain.high) {
-        error("popping out of stack space @ ", reader, " for query ", query);
+        error("popping out of stack space @ ", reader, " for buffer ", instructionBuffer);
         return new Operand();
       }
       var op = stack[stackPtr];

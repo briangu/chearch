@@ -280,7 +280,7 @@ module MemorySegment {
       var readerMaxDocId = maxDocumentId.read();
 
       // TODO: ignore all docIds > readerMaxDocId
-      var op = chasm_interpret(this, query);
+      var op = chasm_interpret(this, query.instructionBuffer);
       if (op != nil) {
         for opValue in op.evaluate() {
           var term = (opValue >> 32): uint(32);

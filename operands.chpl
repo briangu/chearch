@@ -3,6 +3,21 @@ module Operands {
   use DocumentId;
 
   /**
+    Operand value is the value that represents the run-time, internal search results.
+    After the query processing is complete, it is converted to a QueryResult which has 
+    the resolved external document id instead of the internal document index.
+
+    An operand value is a partitioned uint(64) value that contains the following fields:
+
+    | term id (32-bit) | DocId (32-bit) |
+
+    which expands to 
+
+    | term id (32-bit) | text location (8-bit) | document index (24-bit) |
+
+    Note that we keep the document index on the LSB side so that we can mask it out 
+    and use it for document equivalent comparision between Operand values.
+
   */
   type OperandValue = uint;
 
