@@ -36,12 +36,21 @@ A simple example (from test/helloworld.chpl) which indexes a document (id 10) wi
 
         writeln("add document id 10 with terms 2 and 3");
 
-        var terms: [0..1] IndexTerm;
-        terms[0].term = 2;
-        terms[0].textLocation = 6;
-        terms[1].term = 3;
-        terms[1].textLocation = 15;
-        addDocument(terms, 10);
+        {
+            var terms: [0..1] IndexTerm;
+            terms[0].term = 2;
+            terms[0].textLocation = 6;
+            terms[1].term = 3;
+            terms[1].textLocation = 15;
+            addDocument(terms, 10);
+        }
+
+        {
+            var terms: [0..1] IndexTerm;
+            terms[0].term = 2;
+            terms[0].textLocation = 6;
+            addDocument(terms, 15);
+        }
 
         // create CHASM instruction buffer
         var buffer = new InstructionBuffer(1024);
@@ -70,21 +79,35 @@ A simple example (from test/helloworld.chpl) which indexes a document (id 10) wi
             writeln(result);
         }
 
+        writeln("querying for term IDs 2 AND 3");
+        buffer.clear();
+        writer.write_push_term(2);
+        writer.write_push_term(3);
+        writer.write_and();
+        for result in query(new Query(buffer)) {
+            writeln(result);
+        }
+
         delete buffer;
     }
+
 
 Output
 
     initialize search index
     add document id 10 with terms 2 and 3
     querying for term IDs 2
+    (term = 2, textLocation = 6, externalDocId = 15)
     (term = 2, textLocation = 6, externalDocId = 10)
     querying for term IDs 3
     (term = 3, textLocation = 15, externalDocId = 10)
     querying for term IDs 2 OR 3
+    (term = 2, textLocation = 6, externalDocId = 15)
     (term = 3, textLocation = 15, externalDocId = 10)
     (term = 2, textLocation = 6, externalDocId = 10)
-
+    querying for term IDs 2 AND 3
+    (term = 3, textLocation = 15, externalDocId = 10)
+    (term = 2, textLocation = 6, externalDocId = 10)
 
 SETUP
 =====
