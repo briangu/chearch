@@ -22,6 +22,14 @@ Features of the search engine
 * support for in-memory and on-disk (future) index segments
 * parallel scatter-gather across partitions using native Chapel forall support
 
+Performance
+===========
+
+Of course, one of the main motivations for all of this is performance.  While tuning and profiling are ongoing, initial results indicate:
+
+    single locale queries takes 10s of microseconds
+    cross-locale queries (scatter-gather) can be milliseconds
+
 Sample
 ============
 
