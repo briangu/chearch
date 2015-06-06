@@ -24,7 +24,7 @@ Features of the search engine
 Sample
 ============
 
-A simple example which indexes a document (id 10) with two terms: 2 and 3
+A simple example (from test/helloworld.chpl) which indexes a document (id 10) with two terms: 2 and 3
 
     use SearchIndex;
 
