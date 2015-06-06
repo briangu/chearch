@@ -107,7 +107,6 @@ module SearchIndex {
       }
     }
 
-    // IDEALLY: everything above was parellized but you can't parellelize in an iterator
     for i in 0..totalCounts-1 {
       yield outerResults[i];
     }
