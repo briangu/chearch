@@ -165,18 +165,17 @@ proc testOperands() {
 
   {
     writeln("start validating IntersectionOperand");
-    var fixedA = new FixedDataOperand(2);
-    fixedA.data[0] = assembleDocId(8, 6);
-    fixedA.data[1] = assembleDocId(10, 3);
+    var fixedA = new FixedDataOperand(1);
+    fixedA.data[0] = assembleDocId(10, 3);
 
     var fixedB = new FixedDataOperand(2);
-    fixedB.data[0] = assembleDocId(10, 15);
-    fixedB.data[1] = assembleDocId(12, 26);
+    fixedB.data[0] = assembleDocId(12, 26);
+    fixedB.data[1] = assembleDocId(10, 15);
 
     var op = new IntersectionOperand(fixedA, fixedB);
     var count = 0;
     for result in op.evaluate() {
-      if (result != fixedA.data[1] && result != fixedB.data[0]) {
+      if (result != fixedA.data[0] && result != fixedB.data[1]) {
         halt("result not expected: ", result);
       }
       count += 1;
