@@ -22,6 +22,7 @@ module Operands {
   type OperandValue = uint;
 
   // Operand base class.  Also serves as Null / empty Operand
+  // TODO: convert Operands to be proper Chapel iterators so we can iterate through the AST in parallel
   class Operand {
     proc hasValue(): bool {
       return false;
