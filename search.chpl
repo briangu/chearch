@@ -19,6 +19,7 @@ module Search {
     proc Query(query: Query) {
       instructionBuffer = new InstructionBuffer(query.instructionBuffer.count);
       instructionBuffer.buffer = query.instructionBuffer.buffer;
+      partitionLimit = query.partitionLimit;
     }
   }
 

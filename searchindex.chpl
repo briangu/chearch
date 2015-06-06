@@ -80,15 +80,15 @@ module SearchIndex {
   iter query(query: Query) {
 
     var totalCounts = 0;
-    var outerResults: [0..(Locales.size * 2048)-1] QueryResult; // max results 2048 per locale
+    var outerResults: [0..(Locales.size * query.partitionLimit)-1] QueryResult;
     
     for loc in Locales {
       on loc {
-        var innerResults: [0..2047] QueryResult;
-        var innerCount = 0;
-
         // copy query into locale
         var lq: Query = new Query(query);
+
+        var innerResults: [0..lq.partitionLimit-1] QueryResult;
+        var innerCount = 0;
 
         local {
           for res in localQuery(lq) {
