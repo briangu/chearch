@@ -30,6 +30,11 @@ Of course, one of the main motivations for all of this is performance.  While tu
 * single locale queries takes 10s of microseconds
 * cross-locale queries (scatter-gather) can be milliseconds
 
+Storage
+=======
+
+The current implementation is configured to store Tweets:  Each segment can hold 16M documents and the max document length is 256 characters.  One full memory segment should be about 1GB RAM.
+
 Sample
 ============
 
