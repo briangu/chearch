@@ -81,7 +81,7 @@ module SearchIndex {
   iter query(query: Query) {
 
     var totalCounts = 0;
-    var outerResults: [0..(Locales.size * 2048)] QueryResult; // max results 2048 per locale
+    var outerResults: [0..(Locales.size * 2048)-1] QueryResult; // max results 2048 per locale
     
     for loc in Locales {
       on loc {
@@ -109,7 +109,6 @@ module SearchIndex {
     }
 
     // IDEALLY: everything above was parellized but you can't parellelize in an iterator
-
     for i in 0..totalCounts-1 {
       yield outerResults[i];
     }

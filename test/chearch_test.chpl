@@ -55,19 +55,6 @@ class TestMemorySegment : MemorySegment {
   }
 }
 
-  // on Locales[0] {
-  //   var terms: [0..0] IndexTerm;
-  //   terms[0].term = 3;
-  //   terms[0].textLocation = 6;
-  //   addDocument(0: uint(32), terms, 10);
-  // }
-
-  // on Locales[1] {
-  //   var terms: [0..0] IndexTerm;
-  //   terms[0].term = 3;
-  //   terms[0].textLocation = 15;
-  //   addDocument(2: uint(32), terms, 20);
-  // }
 
 
   // INTEGRATION TEST
@@ -110,6 +97,98 @@ proc testChasm() {
   delete buffer;
 }
 
+class FixedDataOperand : Operand {
+  var count: uint;
+  var data: [0..count-1] OperandValue;
+  var offset: uint = 0;
+
+  proc hasValue(): bool {
+    return offset <= data.domain.high;
+  }
+
+  proc getValue(): OperandValue {
+    if (!hasValue()) {
+      halt("iterated too far");
+    }
+    return data[offset];
+  }
+
+  proc advance() {
+    if (!hasValue()) {
+      halt("iterated too far");
+    }
+    offset += 1;
+  }
+}
+
+proc testOperands() {
+  {
+    writeln("start validating FixedDataOperand");
+    var fixed = new FixedDataOperand(1);
+    fixed.data[0] = assembleDocId(10, 6);
+    var count = 0;
+    for result in fixed.evaluate() {
+      if (result != fixed.data[0]) {
+        halt("result not expected: ", result);
+      }
+      count += 1;
+    }
+    if (count != 1) {
+      halt("count != 1 got ", count, fixed);
+    }
+    delete fixed;
+    writeln("stop validating FixedDataOperand");
+  }
+
+  {
+    writeln("start validating UnionOperand");
+    var fixedA = new FixedDataOperand(1);
+    fixedA.data[0] = assembleDocId(10, 6);
+
+    var fixedB = new FixedDataOperand(1);
+    fixedB.data[0] = assembleDocId(10, 15);
+
+    var op = new UnionOperand(fixedA, fixedB);
+    var count = 0;
+    for result in op.evaluate() {
+      if (result != fixedA.data[0] && result != fixedB.data[0]) {
+        halt("result not expected: ", result);
+      }
+      count += 1;
+    }
+    if (count != 2) {
+      halt("count != 2 got ", count, fixedA, fixedB);
+    }
+    delete op;
+    writeln("stop validating UnionOperand");
+  }
+
+  {
+    writeln("start validating IntersectionOperand");
+    var fixedA = new FixedDataOperand(2);
+    fixedA.data[0] = assembleDocId(8, 6);
+    fixedA.data[1] = assembleDocId(10, 3);
+
+    var fixedB = new FixedDataOperand(2);
+    fixedB.data[0] = assembleDocId(10, 15);
+    fixedB.data[1] = assembleDocId(12, 26);
+
+    var op = new IntersectionOperand(fixedA, fixedB);
+    var count = 0;
+    for result in op.evaluate() {
+      if (result != fixedA.data[1] && result != fixedB.data[0]) {
+        halt("result not expected: ", result);
+      }
+      count += 1;
+    }
+    if (count != 2) {
+      halt("count != 2 got ", count, fixedA, fixedB);
+    }
+    delete op;
+    writeln("stop validating UnionOperand");
+  }
+}
+
 proc main() {
   if (testSerialization) {
     writeln("Testing serialization");
@@ -125,4 +204,5 @@ proc main() {
   }
 
   testChasm();
+  testOperands();
 }

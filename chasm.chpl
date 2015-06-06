@@ -114,6 +114,17 @@ module Chasm {
       return instructions.write(CHASM_PUSH);
     }
 
+    proc write_push_term(term: Term): bool {
+      if (!instructions.canAdvance(2)) {
+        error("write_and is out of instruction space for CHASM_PUSH at offset ", instructions.offset);
+        return false;
+      }
+
+      write_push();
+      write_term(term);
+      return true;
+    }
+
     proc write_and(): bool {
       if (!instructions.canAdvance(1)) {
         error("write_and is out of instruction space for CHASM_AND at offset ", instructions.offset);

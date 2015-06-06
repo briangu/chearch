@@ -60,10 +60,9 @@ module Operands {
         var docIndexA = (opA.getValue(): uint(32)) & DocumentIndexDocIdMask;
         var docIndexB = (opB.getValue(): uint(32)) & DocumentIndexDocIdMask;
 
-        if (docIndexA > docIndexB) {
+        if (docIndexA < docIndexB) {
           op = opA;
         } else if (docIndexA == docIndexB) {
-          opB.advance(); // skip over duplicate value
           op = opA;
         } else {
           op = opB;
@@ -111,11 +110,20 @@ module Operands {
         var docIndexA = (opA.getValue(): uint(32)) & DocumentIndexDocIdMask;
         var docIndexB = (opB.getValue(): uint(32)) & DocumentIndexDocIdMask;
 
-        if (docIndexA > docIndexB) {
+        if (docIndexA < docIndexB) {
           opA.advance();
         } else if (docIndexA == docIndexB) {
-          opB.advance(); // skip over duplicate value
-          op = opA;
+          if (curOp != nil && (((curOp.getValue(): uint(32)) & DocumentIndexDocIdMask) == docIndexA)) {
+            if (curOp == opA) {
+              opA.advance(); 
+              op = opB;
+            } else {
+              opB.advance(); 
+              op = opA;
+            }
+          } else {
+            op = opA;
+          }
           break;
         } else { // A > B
           opB.advance();

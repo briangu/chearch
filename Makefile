@@ -6,6 +6,9 @@ LIBS=-lev
 
 all: chearch 
 
+helloworld:
+	chpl --print-passes --no-local -o bin/helloworld test/helloworld.chpl search.chpl
+
 chearch:
 	chpl --print-passes --no-local -o bin/chearch chearch.chpl search.chpl
 
