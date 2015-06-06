@@ -20,6 +20,7 @@ Features of the search engine
 	* batch load indexer
 * online query and indexing support via libev-backed TCP connection (in-progress)
 * support for in-memory and on-disk (future) index segments
+* parallel scatter-gather across partitions using native Chapel forall support
 
 Sample
 ============
@@ -59,14 +60,14 @@ A simple example (from test/helloworld.chpl) which indexes a document (id 10) wi
         // write the CHASM code to implement the query
         writeln("querying for term IDs 2");
         writer.write_push_term(2);
-        for result in query(new Query(buffer)) {
+        forall result in query(new Query(buffer)) {
             writeln(result);
         }
 
         writeln("querying for term IDs 3");
         buffer.clear();
         writer.write_push_term(3);
-        for result in query(new Query(buffer)) {
+        forall result in query(new Query(buffer)) {
             writeln(result);
         }
 
@@ -75,7 +76,7 @@ A simple example (from test/helloworld.chpl) which indexes a document (id 10) wi
         writer.write_push_term(2);
         writer.write_push_term(3);
         writer.write_or();
-        for result in query(new Query(buffer)) {
+        forall result in query(new Query(buffer)) {
             writeln(result);
         }
 
@@ -84,7 +85,7 @@ A simple example (from test/helloworld.chpl) which indexes a document (id 10) wi
         writer.write_push_term(2);
         writer.write_push_term(3);
         writer.write_and();
-        for result in query(new Query(buffer)) {
+        forall result in query(new Query(buffer)) {
             writeln(result);
         }
 

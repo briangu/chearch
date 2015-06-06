@@ -31,14 +31,14 @@ proc main() {
     // write the CHASM code to implement the query
     writeln("querying for term IDs 2");
     writer.write_push_term(2);
-    for result in query(new Query(buffer)) {
+    forall result in query(new Query(buffer)) {
         writeln(result);
     }
 
     writeln("querying for term IDs 3");
     buffer.clear();
     writer.write_push_term(3);
-    for result in query(new Query(buffer)) {
+    forall result in query(new Query(buffer)) {
         writeln(result);
     }
 
@@ -47,7 +47,7 @@ proc main() {
     writer.write_push_term(2);
     writer.write_push_term(3);
     writer.write_or();
-    for result in query(new Query(buffer)) {
+    forall result in query(new Query(buffer)) {
         writeln(result);
     }
 
@@ -56,7 +56,7 @@ proc main() {
     writer.write_push_term(2);
     writer.write_push_term(3);
     writer.write_and();
-    for result in query(new Query(buffer)) {
+    forall result in query(new Query(buffer)) {
         writeln(result);
     }
 
