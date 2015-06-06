@@ -76,8 +76,7 @@ module SearchIndex {
     }
   }
 
-  // TODO: how to parallelize locale lookups? (aka how to yield across "on" / locales?)
-  // this code is horrendsouly slow due to memory allocations and rpc. while just looking on one locale is about 22 usec.
+  // serial iterator
   iter query(query: Query) {
 
     var totalCounts = 0;
@@ -112,5 +111,54 @@ module SearchIndex {
     for i in 0..totalCounts-1 {
       yield outerResults[i];
     }
+  }
+
+  iter query(param tag: iterKind, query: Query)
+    where tag == iterKind.leader {
+      coforall loc in Locales {
+        on loc {
+          // copy query into locale
+          var lq: Query = new Query(query);
+
+          var count = 0;
+          local {
+            for res in localQuery(lq) {
+              yield res;
+              count += 1;
+              if (count > query.partitionLimit) {
+                break;
+              }
+            }
+          }
+        }
+    }
+  }
+
+  iter query(param tag: iterKind, query: Query, followThis)
+    where tag == iterKind.follower && followThis.size == 1 {
+      for i in followThis(1) {
+        yield i;
+      }
+  }
+
+  iter query(param tag: iterKind, query: Query)
+    where tag == iterKind.standalone {
+      coforall loc in Locales {
+        on loc {
+          // copy query into locale
+          var lq: Query = new Query(query);
+
+          // var count = 0;
+          local {
+            for res in localQuery(lq) {
+              yield res;
+              // count += 1;
+              // if (count > query.partitionLimit) {
+              //   break;
+              // }
+            }
+          }
+        }
+      }
   }
 }

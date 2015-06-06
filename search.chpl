@@ -14,12 +14,11 @@ module Search {
 
   record Query {
     var instructionBuffer: InstructionBuffer;
+    var partitionLimit: int = 2048;
 
     proc Query(query: Query) {
       instructionBuffer = new InstructionBuffer(query.instructionBuffer.count);
-      for i in 0..instructionBuffer.count-1 {
-        instructionBuffer.buffer[i] = query.instructionBuffer.buffer[i];
-      }
+      instructionBuffer.buffer = query.instructionBuffer.buffer;
     }
   }
 
@@ -35,7 +34,7 @@ module Search {
   }
 
   // A segment is a set of documents that can be searched over.
-  // TODO: document deletes are not supported
+  // TODO: document deletes are not supported 
   // TODO: document updates are not supported
   class Segment {
     inline proc isSegmentFull(): bool {

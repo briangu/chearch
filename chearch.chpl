@@ -24,7 +24,7 @@ proc main() {
   t.clear();
   t.start();
 
-  var buffer = new InstructionBuffer(1024);
+  var buffer = new InstructionBuffer(32);
 
   var writer = new InstructionWriter(buffer);
   writer.write_push();
@@ -50,14 +50,11 @@ proc main() {
   writer.write_push();
   writer.write_term(3);
 
-  count = 0;
-  for result in query(new Query(buffer)) {
+  forall result in query(new Query(buffer)) {
     if (result.term != 3) {
       halt("term not 3 ", result);
     }
-    count += 1;
   }
-  writeln("count = ", count);
   t.stop();
   timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
@@ -73,14 +70,11 @@ proc main() {
   writer.write_term(2);
   writer.write_and();
 
-  count = 0;
-  for result in query(new Query(buffer)) {
+  forall result in query(new Query(buffer)) {
     if ((result.term != 3) && (result.term != 2)) {
       halt("term not 3 or 2 ", result);
     }
-    count += 1;
   }
-  writeln("count = ", count);
   t.stop();
   timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
@@ -96,14 +90,11 @@ proc main() {
   writer.write_term(2);
   writer.write_or();
 
-  count = 0;
-  for result in query(new Query(buffer)) {
+  forall result in query(new Query(buffer)) {
     if ((result.term != 3) && (result.term != 2)) {
       halt("term not 3 or 2 ", result);
     }
-    count += 1;
   }
-  writeln("count = ", count);
   t.stop();
   timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
@@ -116,14 +107,11 @@ proc main() {
   writer.write_push();
   writer.write_term(20000);
 
-  count = 0;
-  for result in query(new Query(buffer)) {
+  forall result in query(new Query(buffer)) {
     if (result.term != 20000) {
       halt("should never find anything! ", result);
     }
-    count += 1;
   }
-  writeln("count = ", count);
   t.stop();
   timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
