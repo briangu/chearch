@@ -1,5 +1,19 @@
 Feature notes:
 
+./Operands.chpl:96: internal error: INL0175 chpl Version 1.11.0
+make: *** [helloworld] Error 1
+
+    inline proc advance() {
+      if (!hasValue()) {
+        halt("union iterated past end of operands ", opA, opB);
+      }
+
+      curOp.advance();
+      curOp = nextOperand();
+    }
+
+....
+
 doesn't work with read after select
 
     while (!reader.atEnd()) {

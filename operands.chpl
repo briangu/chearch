@@ -23,18 +23,18 @@ module Operands {
 
   // Operand base class.  Also serves as Null / empty Operand
   class Operand {
-    proc hasValue(): bool {
+    inline proc hasValue(): bool {
       return false;
     }
 
-    proc getValue(): OperandValue {
+    inline proc getValue(): OperandValue {
       if (!hasValue()) {
         halt("iterated too far");
       }
       return 0;
     }
 
-    proc advance() {
+    inline proc advance() {
       if (!hasValue()) {
         halt("iterated too far");
       }
@@ -76,11 +76,11 @@ module Operands {
       return op;
     }
 
-    proc hasValue(): bool {
+    inline proc hasValue(): bool {
       return curOp != nil;
     }
 
-    proc getValue(): OperandValue {
+    inline proc getValue(): OperandValue {
       if (!hasValue()) {
         halt("union iterated past end of operands ", opA, opB);
       }
@@ -103,17 +103,21 @@ module Operands {
     var opB: Operand;
     var curOp: Operand = nextOperand();
 
+    inline proc documentIndexFromOperand(op: Operand): uint(32) {
+      return (op.getValue(): uint(32)) & DocumentIndexDocIdMask;
+    }
+
     proc nextOperand(): Operand {
       var op: Operand = nil;
 
       while(opA.hasValue() && opB.hasValue()) {
-        var docIndexA = (opA.getValue(): uint(32)) & DocumentIndexDocIdMask;
-        var docIndexB = (opB.getValue(): uint(32)) & DocumentIndexDocIdMask;
+        var docIndexA = documentIndexFromOperand(opA);
+        var docIndexB = documentIndexFromOperand(opB);;
 
         if (docIndexA > docIndexB) {
           opA.advance();
         } else if (docIndexA == docIndexB) {
-          if (curOp != nil && (((curOp.getValue(): uint(32)) & DocumentIndexDocIdMask) == docIndexA)) {
+          if ((curOp != nil) && (documentIndexFromOperand(curOp) == docIndexA)) {
             if (curOp == opA) {
               opA.advance(); 
               op = opB;
@@ -133,11 +137,11 @@ module Operands {
       return op;
     }
 
-    proc hasValue(): bool {
+    inline proc hasValue(): bool {
       return curOp != nil;
     }
 
-    proc getValue(): OperandValue {
+    inline proc getValue(): OperandValue {
       if (!hasValue()) {
         halt("intersection iterated past end of operands ", opA, opB);
       }
@@ -145,7 +149,7 @@ module Operands {
       return curOp.getValue();
     }
 
-    proc advance() {
+    inline proc advance() {
       if (!hasValue()) {
         halt("intersection iterated past end of operands ", opA, opB);
       }

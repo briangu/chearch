@@ -148,14 +148,14 @@ module SearchIndex {
           // copy query into locale
           var lq: Query = new Query(query);
 
-          // var count = 0;
+          var count = 0;
           local {
             for res in localQuery(lq) {
               yield res;
-              // count += 1;
-              // if (count > query.partitionLimit) {
-              //   break;
-              // }
+              count += 1;
+              if (count > query.partitionLimit) {
+                break;
+              }
             }
           }
         }

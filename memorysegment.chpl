@@ -29,7 +29,7 @@ module MemorySegment {
       return entry != nil;
     }
 
-    proc getValue(): OperandValue {
+    inline proc getValue(): OperandValue {
       if (!hasValue()) {
         halt("iterated past end of document ids", term);
       }
@@ -38,7 +38,7 @@ module MemorySegment {
       return ((term.term: OperandValue) << 32) | (docId: OperandValue);
     }
 
-    proc advance() {
+    inline proc advance() {
       if (!hasValue()) {
         halt("iterated past end of document ids", term);
       }
@@ -117,11 +117,6 @@ module MemorySegment {
     // total documents stored in the segment (must be less-than MaxDocumentIndexCount)
     var documentCount: atomic uint(32);
 
-    // Current maximum document id for all terms.  
-    // Query readers will filter out all docuemnts above this index in a particular call.
-    // This prevents including partially index documents as they are being indexed.
-    var maxDocumentId: atomic DocId;
-
     // Master table from term -> TermEntry -> Document posting list
     // This is a lock-free table and uses atomic TermEntryPoolIndex values to point to allocatiosn in the TermEntryPool
     var termHashTable: [0..termHashTableSize-1] atomic TermEntryPoolIndex;
@@ -131,7 +126,7 @@ module MemorySegment {
     }
 
     inline proc isSegmentFull(): bool {
-      return documentIndexFromDocId(maxDocumentId.read()) >= MaxDocumentIndexCount;
+      return documentIndexFromDocId(documentCount.read()) >= MaxDocumentIndexCount;
     }
 
     inline proc externalDocumentIdFromDocId(docId: DocId): ExternalDocId {
@@ -262,31 +257,36 @@ module MemorySegment {
 
       // store the external document id and map it to our internal document index
       // NOTE: this assumes we are going to succeed in adding the document
-      var documentIndex = documentCount.fetchAdd(1);
+      var documentIndex = documentCount.read();
 
       externalDocumentIds[documentIndex] = externalDocId;
 
       for term in terms {
         var docId = assembleDocId(documentIndex, term.textLocation);
         addTermForDocument(term.term, docId);
-        maxDocumentId.write(docId);
       }
+
+      documentCount.add(1);
  
       return true;
     }
 
     iter query(query: Query): QueryResult {
-      // Capture maxDocId.  Any documents added to the index after this capture will be ignored for this call.
-      var readerMaxDocId = maxDocumentId.read();
+      // Since documents may be being added to the index while we query the index,
+      // we need a stable view of the index that prevents partial results.
+      // To do so, we capture current document index.
+      // Any documents added to the index after this capture will be ignored for this call.
+      var readerMaxDocumentIndex = documentCount.read();
 
-      // TODO: ignore all docIds > readerMaxDocId
       var op = chasm_interpret(this, query.instructionBuffer);
       if (op != nil) {
         for opValue in op.evaluate() {
-          var term = (opValue >> 32): uint(32);
           var docId = opValue: uint(32);
           var (documentIndex, textLocation) = splitDocId(docId); 
-          yield new QueryResult(term, textLocation, externalDocumentIdFromDocumentIndex(documentIndex));
+          if (documentIndex <= readerMaxDocumentIndex) {
+            var term = (opValue >> 32): uint(32);
+            yield new QueryResult(term, textLocation, externalDocumentIdFromDocumentIndex(documentIndex));
+          }
         }
       }
     }
