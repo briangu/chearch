@@ -27,8 +27,8 @@ Performance
 
 Of course, one of the main motivations for all of this is performance.  While tuning and profiling are ongoing, initial results indicate:
 
-    single locale queries takes 10s of microseconds
-    cross-locale queries (scatter-gather) can be milliseconds
+* single locale queries takes 10s of microseconds
+* cross-locale queries (scatter-gather) can be milliseconds
 
 Sample
 ============
