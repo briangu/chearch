@@ -38,6 +38,19 @@ module BatchIndexer {
           }
           addDocument(terms, externalDocId: uint);
         }
+
+        var localeKnownTermId = (here.id + 1024 * 1024) : Term;
+
+        for externalDocId in batchDocumentCount+1..#1024 {
+          var terms: [0..0] IndexTerm;
+          var textLocation: uint(8) = 0;
+          for termId in terms.domain {
+            terms[termId].term = localeKnownTermId;
+            terms[termId].textLocation = textLocation;
+            textLocation += 1;
+          }
+          addDocument(terms, externalDocId: uint);
+        }
       }
 
       release$ = true;

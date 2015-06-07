@@ -24,41 +24,71 @@ proc main() {
   t.stop();
   writeln("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
-  var counts = new Counter();
-
   writeln("---querying 2 on each locale");
   {
-    counts.count = 0;
-
     for loc in Locales {
       on loc {
-        var buffer = new InstructionBuffer(32);
-        var writer = new InstructionWriter(buffer);
-        buffer.clear();
-        writer.write_push();
-        writer.write_term(2);
+        var counts = new Counter();
+        var t: Timer;
+        local {
+          var buffer = new InstructionBuffer(32);
+          var writer = new InstructionWriter(buffer);
+          buffer.clear();
+          writer.write_push();
+          writer.write_term(2);
 
-        t.clear();
-        t.start();
-        for result in localQuery(new Query(buffer)) {
-          if (result.term != 2) {
-            halt("term not 2 ", result);
+          t.start();
+          for result in localQuery(new Query(buffer)) {
+            if (result.term != 2) {
+              halt("term not 2 ", result);
+            }
+            counts.count += 1;
           }
-          counts.count += 1;
-        }
-        t.stop();
-        writeln("A-", here.id, ",", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+          t.stop();
 
-        delete buffer;
+          delete buffer;
+        }
+        writeln("AL-", here.id, ",", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
       }
     }
   }
+
+  var counts = new Counter();
 
   // this will hold the query instruction
   var buffer = new InstructionBuffer(32);
 
   // perform sample queries
   var writer = new InstructionWriter(buffer);
+
+  writeln("---querying 2 on remote locales");
+  {
+    for loc in Locales {
+      if (loc.id == here.id) {
+        continue;
+      }
+
+      var localeKnownTermId = (loc.id + 1024 * 1024): Term;
+
+      counts.count = 0;
+
+      buffer.clear();
+      writer.write_push();
+      writer.write_term(localeKnownTermId);
+
+      t.clear();
+      t.start();
+      for result in query(new Query(buffer)) {
+        if (result.term != localeKnownTermId) {
+          halt("term not ", localeKnownTermId, " got ", result);
+        }
+        counts.count += 1;
+      }
+      t.stop();
+
+      writeln("AR-", here.id, ",", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    }
+  }
 
   writeln("---querying for 3");
   {
