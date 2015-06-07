@@ -1,5 +1,12 @@
 Feature notes:
 
+compiling on pi
+mkdir -p standard/gen/linux32-gnu
+cd standard/gen/linux32-gnu && ( /home/ubuntu/scm/chapel-1.11.0/util/config/makeSysBasicTypes > SysCTypes.chpl || { rm -f SysCTypes.chpl && false ; } )
+make[2]: [all] Error 1 (ignored)
+
+...
+
 ./Operands.chpl:96: internal error: INL0175 chpl Version 1.11.0
 make: *** [helloworld] Error 1
 

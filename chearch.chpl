@@ -5,6 +5,11 @@ use BatchIndexer, Logging, SearchIndex, Time;
 */
 proc main() {
 
+  // simple class to escape the const intents of forall
+  class Counter {
+    var count: uint;
+  }
+
   writeln("using ", Locales.size, " locales");
   writeln("initializing index");
   initPartitions();
@@ -17,104 +22,127 @@ proc main() {
   waitForBatchIndexers();
 
   t.stop();
-  timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+  writeln("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
-  // perform sample queries
+  var counts = new Counter();
 
-  writeln("querying for 2");
-  t.clear();
-  t.start();
-
+  // this will hold the query instruction
   var buffer = new InstructionBuffer(32);
 
+  // perform sample queries
   var writer = new InstructionWriter(buffer);
-  writer.write_push();
-  writer.write_term(2);
 
-  var count = 0;
-  for result in localQuery(new Query(buffer)) {
-    if (result.term != 2) {
-      halt("term not 2 ", result);
+  writeln("---querying for 2");
+  {
+    counts.count = 0;
+
+    buffer.clear();
+    writer.write_push();
+    writer.write_term(2);
+
+    t.clear();
+    t.start();
+    for result in localQuery(new Query(buffer)) {
+      if (result.term != 2) {
+        halt("term not 2 ", result);
+      }
+      counts.count += 1;
     }
-    count += 1;
+    t.stop();
+    writeln("count = ", counts.count);
+    writeln("local query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
   }
-  writeln("count = ", count);
-  t.stop();
-  timing("local query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
+  writeln("---querying for 3");
+  {
+    counts.count = 0;
 
-  writeln("querying for 3");
-  t.clear();
-  t.start();
+    buffer.clear();
+    writer.write_push();
+    writer.write_term(3);
 
-  buffer.clear();
-  writer.write_push();
-  writer.write_term(3);
-
-  forall result in query(new Query(buffer)) {
-    if (result.term != 3) {
-      halt("term not 3 ", result);
+    t.clear();
+    t.start();
+    forall result in query(new Query(buffer)) {
+      if (result.term != 3) {
+        halt("term not 3 ", result);
+      }
+      counts.count += 1;
     }
+    t.stop();
+    writeln("count = ", counts.count);
+    writeln("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
   }
-  t.stop();
-  timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
+  writeln("---querying for 3 AND 2");
+  {
+    counts.count = 0;
 
-  writeln("querying for 3 AND 2");
-  t.clear();
-  t.start();
+    buffer.clear();
+    writer.write_push();
+    writer.write_term(3);
+    writer.write_push();
+    writer.write_term(2);
+    writer.write_and();
 
-  buffer.clear();
-  writer.write_push();
-  writer.write_term(3);
-  writer.write_push();
-  writer.write_term(2);
-  writer.write_and();
-
-  forall result in query(new Query(buffer)) {
-    if ((result.term != 3) && (result.term != 2)) {
-      halt("term not 3 or 2 ", result);
+    t.clear();
+    t.start();
+    forall result in query(new Query(buffer)) {
+      if ((result.term != 3) && (result.term != 2)) {
+        halt("term not 3 or 2 ", result);
+      }
+      counts.count += 1;
     }
+    t.stop();
+    writeln("count = ", counts.count);
+    writeln("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
   }
-  t.stop();
-  timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
+  writeln("---querying for 3 OR 2");
+  {
+    counts.count = 0;
 
-  writeln("querying for 3 OR 2");
-  t.clear();
-  t.start();
+    buffer.clear();
+    writer.write_push();
+    writer.write_term(3);
+    writer.write_push();
+    writer.write_term(2);
+    writer.write_or();
 
-  buffer.clear();
-  writer.write_push();
-  writer.write_term(3);
-  writer.write_push();
-  writer.write_term(2);
-  writer.write_or();
-
-  forall result in query(new Query(buffer)) {
-    if ((result.term != 3) && (result.term != 2)) {
-      halt("term not 3 or 2 ", result);
+    t.clear();
+    t.start();
+    forall result in query(new Query(buffer)) {
+      if ((result.term != 3) && (result.term != 2)) {
+        halt("term not 3 or 2 ", result);
+      }
+      counts.count += 1;
     }
+    t.stop();
+    writeln("count = ", counts.count);
+    writeln("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
   }
-  t.stop();
-  timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
+  writeln("---querying for missing term");
+  {
+    counts.count = 0;
 
-  writeln("querying for missing term");
-  t.clear();
-  t.start();
+    buffer.clear();
+    writer.write_push();
+    writer.write_term(1024*1024 * 8);
 
-  buffer.clear();
-  writer.write_push();
-  writer.write_term(20000);
-
-  forall result in query(new Query(buffer)) {
-    if (result.term != 20000) {
-      halt("should never find anything! ", result);
+    t.clear();
+    t.start();
+    forall result in query(new Query(buffer)) {
+      writeln(result);
+      counts.count += 1;
     }
+    t.stop();
+    writeln("count = ", counts.count);
+    if (counts.count > 0) {
+      halt("counts > 0!");
+    }
+    writeln("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
   }
-  t.stop();
-  timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
   delete buffer;
 }
