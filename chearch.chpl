@@ -5,6 +5,7 @@ use BatchIndexer, Logging, SearchIndex, Time;
 */
 proc main() {
 
+  writeln("using ", Locales.size, " locales");
   writeln("initializing index");
   initPartitions();
 
