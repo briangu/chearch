@@ -47,7 +47,7 @@ proc main() {
           counts.count += 1;
         }
         t.stop();
-        writeln("A-", here.id, ",", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+        writeln("A-", here.id, ",", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
 
         delete buffer;
       }
@@ -77,7 +77,7 @@ proc main() {
       counts.count += 1;
     }
     t.stop();
-    writeln("B,", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    writeln("B,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
   }
 
   writeln("---querying for 3 AND 2");
@@ -100,7 +100,7 @@ proc main() {
       counts.count += 1;
     }
     t.stop();
-    writeln("C,", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    writeln("C,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
   }
 
   writeln("---querying for 3 OR 2");
@@ -123,7 +123,7 @@ proc main() {
       counts.count += 1;
     }
     t.stop();
-    writeln("D,", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    writeln("D,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
   }
 
   writeln("---querying for missing term");
@@ -144,7 +144,7 @@ proc main() {
     if (counts.count > 0) {
       halt("counts > 0!");
     }
-    writeln("E,", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    writeln("E,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
   }
 
   delete buffer;
