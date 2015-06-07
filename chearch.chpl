@@ -61,21 +61,23 @@ proc main() {
       if (loc.id == here.id) {
         continue;
       }
-      buffer.clear();
-      writer.write_push();
-      writer.write_term(2);
+      on loc {
+        buffer.clear();
+        writer.write_push();
+        writer.write_term(2);
 
-      t.clear();
-      t.start();
-      for result in localQuery(new Query(buffer)) {
-        if (result.term != 2) {
-          halt("term not 2 ", result);
+        t.clear();
+        t.start();
+        for result in localQuery(new Query(buffer)) {
+          if (result.term != 2) {
+            halt("term not 2 ", result);
+          }
+          counts.count += 1;
         }
-        counts.count += 1;
+        t.stop();
+        writeln("count = ", counts.count);
+        writeln("remote query on ",here.id," in ",t.elapsed(TimeUnits.microseconds), " microseconds");
       }
-      t.stop();
-      writeln("count = ", counts.count);
-      writeln("remote query on ",here.id," in ",t.elapsed(TimeUnits.microseconds), " microseconds");
     }
   }
 
