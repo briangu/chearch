@@ -26,42 +26,14 @@ proc main() {
 
   var counts = new Counter();
 
-  // this will hold the query instruction
-  var buffer = new InstructionBuffer(32);
-
-  // perform sample queries
-  var writer = new InstructionWriter(buffer);
-
-  writeln("---querying locally for 2");
-  {
-    counts.count = 0;
-
-    buffer.clear();
-    writer.write_push();
-    writer.write_term(2);
-
-    t.clear();
-    t.start();
-    for result in localQuery(new Query(buffer)) {
-      if (result.term != 2) {
-        halt("term not 2 ", result);
-      }
-      counts.count += 1;
-    }
-    t.stop();
-    writeln("count = ", counts.count);
-    writeln("local query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
-  }
-
-  writeln("---querying remotely for 2");
+  writeln("---querying 2 on each locale");
   {
     counts.count = 0;
 
     for loc in Locales {
-      if (loc.id == here.id) {
-        continue;
-      }
       on loc {
+        var buffer = new InstructionBuffer(32);
+        var writer = new InstructionWriter(buffer);
         buffer.clear();
         writer.write_push();
         writer.write_term(2);
@@ -75,11 +47,18 @@ proc main() {
           counts.count += 1;
         }
         t.stop();
-        writeln("count = ", counts.count);
-        writeln("remote query on ",here.id," in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+        writeln("A-", here.id, ",", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+
+        delete buffer;
       }
     }
   }
+
+  // this will hold the query instruction
+  var buffer = new InstructionBuffer(32);
+
+  // perform sample queries
+  var writer = new InstructionWriter(buffer);
 
   writeln("---querying for 3");
   {
@@ -98,8 +77,7 @@ proc main() {
       counts.count += 1;
     }
     t.stop();
-    writeln("count = ", counts.count);
-    writeln("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+    writeln("B,", t.elapsed(TimeUnits.microseconds), ",", counts.count);
   }
 
   writeln("---querying for 3 AND 2");
@@ -122,8 +100,7 @@ proc main() {
       counts.count += 1;
     }
     t.stop();
-    writeln("count = ", counts.count);
-    writeln("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+    writeln("C,", t.elapsed(TimeUnits.microseconds), ",", counts.count);
   }
 
   writeln("---querying for 3 OR 2");
@@ -146,8 +123,7 @@ proc main() {
       counts.count += 1;
     }
     t.stop();
-    writeln("count = ", counts.count);
-    writeln("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+    writeln("D,", t.elapsed(TimeUnits.microseconds), ",", counts.count);
   }
 
   writeln("---querying for missing term");
@@ -165,11 +141,10 @@ proc main() {
       counts.count += 1;
     }
     t.stop();
-    writeln("count = ", counts.count);
     if (counts.count > 0) {
       halt("counts > 0!");
     }
-    writeln("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+    writeln("E,", t.elapsed(TimeUnits.microseconds), ",", counts.count);
   }
 
   delete buffer;

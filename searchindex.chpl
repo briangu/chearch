@@ -69,8 +69,14 @@ module SearchIndex {
     NOTE: the caller could have already move execution to a locale of interest and then called this.
   */
   iter localQuery(query: Query) {
+    var lq: Query;
+    if (query.locale.id != here.id) {
+      var lq: Query = new Query(query);
+    } else {
+      lq = query;
+    }
     local {
-      for res in Partitions[here.id].query(query) {
+      for res in Partitions[here.id].query(lq) {
         yield res;
       }
     }
