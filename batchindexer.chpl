@@ -1,7 +1,11 @@
 module BatchIndexer {
 
-  use Logging, SearchIndex, Time;
+  use Logging, Random, SearchIndex, Time;
   
+  config const batchDocumentCount = 1024 * 1024; // FAKE document count for testing
+  config const maxTermsPerDocument = 10;
+  config const maxTermsIds = 16384; // max number of terms across all docs
+
   class BatchIndexer {
     var release$: single bool;
     var t: Timer;
@@ -19,43 +23,21 @@ module BatchIndexer {
     }
 
     proc worker() {
-      var infile = open("data/words.txt", iomode.r);
-
       local {
-        var term: string;
-        var externalDocId: uint = 0;
-        var count: uint(32) = 0;
-        var termCount: uint(32) = 1;
-        var textLocation: uint(8) = 0;
+        var seed = (17 * here.id * 2) + 1;
+        var randStreamSeeded: RandomStream = new RandomStream(seed);
 
-        // var seed = 17;
-        // var randStreamSeeded: RandomStream = new RandomStream(seed);
-        // var docSize = randStreamSeeded.getNext(): int % 1000;
-        var docSize = 100;
-        var terms: [0..docSize-1] IndexTerm;
-
-        for term in infile.lines() {
-          if (count < docSize) {
-            terms[count].term = termCount + 1;
-            terms[count].textLocation = textLocation;
-            count += 1;
+        for externalDocId in 1..batchDocumentCount {
+          var docSize = (randStreamSeeded.getNext() * maxTermsPerDocument): uint + 1;
+          var terms: [0..docSize-1] IndexTerm;
+          var textLocation: uint(8) = 0;
+          for termId in terms.domain {
+            terms[termId].term = (randStreamSeeded.getNext() * maxTermsIds): Term;
+            terms[termId].textLocation = textLocation;
             textLocation += 1;
-          } else {
-            addDocument(terms, externalDocId);
-
-            // docSize = randStreamSeeded.getNext(): int % 1000;
-            // terms.domain = {1..docSize};
-            count = 0;
-            externalDocId += 1;
           }
-          termCount = termCount % 10000;
-          termCount += 1;
+          addDocument(terms, externalDocId: uint);
         }
-
-        // if (count > 0) {
-        //   var subTerms = terms[0..count-1];
-        //   addDocument(subTerms, externalDocId);
-        // }
       }
 
       release$ = true;

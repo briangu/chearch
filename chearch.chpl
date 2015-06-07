@@ -39,7 +39,7 @@ proc main() {
   }
   writeln("count = ", count);
   t.stop();
-  timing("query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+  timing("local query in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
 
   writeln("querying for 3");
