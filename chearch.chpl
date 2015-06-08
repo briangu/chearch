@@ -1,4 +1,4 @@
-use BatchIndexer, Logging, SearchIndex, Time;
+use Logging, SearchIndex, SyntheticDataIndexer, Time;
 
 /**
   This is server-less mode of Chearch that should eventually have a repl
@@ -68,25 +68,29 @@ proc main() {
         continue;
       }
 
-      var localeKnownTermId = (loc.id + 1024 * 1024): Term;
+      var baselocaleKnownTermId = ((loc.id * 2048) + 1024 * 1024) : Term;
+      var queryTimes: [1..1024] real; 
 
-      counts.count = 0;
+      for termIdStep in queryTimes.domain {
+        counts.count = 0;
 
-      buffer.clear();
-      writer.write_push();
-      writer.write_term(localeKnownTermId);
+        var localeKnownTermId = (baselocaleKnownTermId + termIdStep - 1): Term;
 
-      t.clear();
-      t.start();
-      for result in query(new Query(buffer)) {
-        if (result.term != localeKnownTermId) {
-          halt("term not ", localeKnownTermId, " got ", result);
+        buffer.clear();
+        writer.write_push_term(localeKnownTermId);
+
+        t.clear();
+        t.start();
+        for result in query(new Query(buffer)) {
+          if (result.term != localeKnownTermId) {
+            halt("term not ", localeKnownTermId, " got ", result);
+          }
+          counts.count += 1;
         }
-        counts.count += 1;
+        t.stop();
+        queryTimes[termIdStep] = t.elapsed(TimeUnits.microseconds);
       }
-      t.stop();
-
-      writeln("AR-", here.id, ",", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+      writeln("AR-", here.id, ",", Locales.size, ", ", queryTimes);
     }
   }
 

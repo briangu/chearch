@@ -1,4 +1,7 @@
-module BatchIndexer {
+/**
+  This indexer is designed to provide synthetic data that can be used to do testing or profiling.
+*/
+module SyntheticDataIndexer {
 
   use Logging, Random, SearchIndex, Time;
   
@@ -39,17 +42,23 @@ module BatchIndexer {
           addDocument(terms, externalDocId: uint);
         }
 
-        var localeKnownTermId = (here.id + 1024 * 1024) : Term;
+        // create a range of documents and terms that only exist on a single locale
+        // using this fact, we can create precise remote lookup tests 
+        var baseExternalId = batchDocumentCount + 1;
+        var baseLocaleKnownTermId = ((here.id * 2048) + 1024 * 1024) : Term;
 
-        for externalDocId in batchDocumentCount+1..#1024 {
-          var terms: [0..0] IndexTerm;
-          var textLocation: uint(8) = 0;
-          for termId in terms.domain {
-            terms[termId].term = localeKnownTermId;
-            terms[termId].textLocation = textLocation;
-            textLocation += 1;
+        for termIdStep in 1..1024 {
+          for externalDocId in baseExternalId..#termIdStep {
+            var terms: [0..0] IndexTerm;
+            var textLocation: uint(8) = 0;
+            for termId in terms.domain {
+              terms[termId].term = (baseLocaleKnownTermId + (termIdStep - 1)): Term;
+              terms[termId].textLocation = textLocation;
+              textLocation += 1;
+            }
+            addDocument(terms, externalDocId: uint);
           }
-          addDocument(terms, externalDocId: uint);
+          baseExternalId += termIdStep;
         }
       }
 

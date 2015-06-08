@@ -4,7 +4,7 @@ IDIR=/opt/local/Cellar/libev/4.15/include
 CFLAGS=-I$(IDIR) -I.
 LIBS=-lev
 
-CHEARCH_FILES=chearch.chpl search.chpl batchindexer.chpl logging.chpl searchindex.chpl chasm.chpl documentid.chpl operands.chpl memorysegment.chpl documentidpool.chpl genhashkey32.chpl
+CHEARCH_FILES=chearch.chpl search.chpl synthdataindexer.chpl logging.chpl searchindex.chpl chasm.chpl documentid.chpl operands.chpl memorysegment.chpl documentidpool.chpl genhashkey32.chpl
 
 all: chearch 
 
