@@ -1,0 +1,336 @@
+using 1 locales
+initializing index
+0	initialized partitions in 798412.0 microseconds
+0	started batch indexers in 11.0 microseconds
+0	stopped batch indexers in 7.02813e+07 microseconds
+indexing complete in 7.02815e+07 microseconds
+---querying for 2
+count = 376
+local query in 554.0 microseconds
+---querying for 3
+count = 375
+query in 11353.0 microseconds
+---querying for 3 AND 2
+count = 0
+query in 262.0 microseconds
+---querying for 3 OR 2
+count = 751
+query in 742.0 microseconds
+---querying for missing term
+count = 0
+query in 616.0 microseconds
+using 2 locales
+initializing index
+0	initialized partitions in 2.33929e+06 microseconds
+0	started batch indexers in 13158.0 microseconds
+0	stopped batch indexers in 1.37002e+08 microseconds
+indexing complete in 1.37015e+08 microseconds
+---querying for 2
+count = 376
+local query in 572.0 microseconds
+---querying for 3
+count = 702
+query in 93355.0 microseconds
+---querying for 3 AND 2
+count = 0
+query in 3247.0 microseconds
+---querying for 3 OR 2
+count = 1422
+query in 183728.0 microseconds
+---querying for missing term
+count = 0
+query in 2733.0 microseconds
+using 3 locales
+initializing index
+0	initialized partitions in 4.66162e+06 microseconds
+0	started batch indexers in 4466.0 microseconds
+0	stopped batch indexers in 1.53038e+08 microseconds
+indexing complete in 1.53043e+08 microseconds
+---querying for 2
+count = 376
+local query in 569.0 microseconds
+---querying for 3
+count = 781
+query in 143121.0 microseconds
+---querying for 3 AND 2
+count = 3
+query in 4772.0 microseconds
+---querying for 3 OR 2
+count = 1542
+query in 275938.0 microseconds
+---querying for missing term
+count = 0
+query in 3780.0 microseconds
+using 4 locales
+initializing index
+0	initialized partitions in 6.13982e+06 microseconds
+0	started batch indexers in 5029.0 microseconds
+0	stopped batch indexers in 1.4709e+08 microseconds
+indexing complete in 1.47095e+08 microseconds
+---querying for 2
+count = 376
+local query in 553.0 microseconds
+---querying for 3
+count = 805
+query in 167527.0 microseconds
+---querying for 3 AND 2
+count = 3
+query in 5569.0 microseconds
+---querying for 3 OR 2
+count = 1628
+query in 312098.0 microseconds
+---querying for missing term
+count = 0
+query in 4002.0 microseconds
+using 5 locales
+initializing index
+0	initialized partitions in 8.54492e+06 microseconds
+0	started batch indexers in 6750.0 microseconds
+0	stopped batch indexers in 1.84156e+08 microseconds
+indexing complete in 1.84163e+08 microseconds
+---querying for 2
+count = 376
+local query in 549.0 microseconds
+---querying for 3
+count = 878
+query in 247599.0 microseconds
+---querying for 3 AND 2
+count = 3
+query in 6844.0 microseconds
+---querying for 3 OR 2
+count = 1723
+query in 466637.0 microseconds
+---querying for missing term
+count = 0
+query in 5677.0 microseconds
+using 6 locales
+initializing index
+0	initialized partitions in 1.21667e+07 microseconds
+0	started batch indexers in 6509.0 microseconds
+0	stopped batch indexers in 2.28727e+08 microseconds
+indexing complete in 2.28734e+08 microseconds
+---querying for 2
+count = 376
+local query in 555.0 microseconds
+---querying for 3
+count = 905
+query in 334448.0 microseconds
+---querying for 3 AND 2
+count = 3
+query in 8895.0 microseconds
+---querying for 3 OR 2
+count = 1494
+query in 640250.0 microseconds
+---querying for missing term
+count = 0
+query in 7952.0 microseconds
+using 7 locales
+initializing index
+0	initialized partitions in 1.42734e+07 microseconds
+0	started batch indexers in 55823.0 microseconds
+0	stopped batch indexers in 2.60059e+08 microseconds
+indexing complete in 2.60115e+08 microseconds
+---querying for 2
+count = 376
+local query in 527.0 microseconds
+---querying for 3
+count = 922
+query in 449433.0 microseconds
+---querying for 3 AND 2
+count = 3
+query in 11179.0 microseconds
+---querying for 3 OR 2
+count = 1847
+query in 877892.0 microseconds
+---querying for missing term
+count = 0
+query in 10159.0 microseconds
+using 8 locales
+initializing index
+0	initialized partitions in 1.57497e+07 microseconds
+0	started batch indexers in 27397.0 microseconds
+0	stopped batch indexers in 2.57619e+08 microseconds
+indexing complete in 2.57646e+08 microseconds
+---querying for 2
+count = 376
+local query in 567.0 microseconds
+---querying for 3
+count = 965
+query in 513629.0 microseconds
+---querying for 3 AND 2
+count = 3
+query in 12852.0 microseconds
+---querying for 3 OR 2
+count = 1897
+query in 1.0075e+06 microseconds
+---querying for missing term
+count = 0
+query in 23041.0 microseconds
+using 9 locales
+initializing index
+0	initialized partitions in 1.85875e+07 microseconds
+0	started batch indexers in 9379.0 microseconds
+0	stopped batch indexers in 3.32252e+08 microseconds
+indexing complete in 3.32262e+08 microseconds
+---querying for 2
+count = 376
+local query in 558.0 microseconds
+---querying for 3
+count = 975
+query in 795275.0 microseconds
+---querying for 3 AND 2
+count = 3
+query in 16320.0 microseconds
+---querying for 3 OR 2
+count = 1918
+query in 1.53592e+06 microseconds
+---querying for missing term
+count = 0
+query in 16341.0 microseconds
+using 10 locales
+initializing index
+0	initialized partitions in 1.79624e+07 microseconds
+0	started batch indexers in 9322.0 microseconds
+0	stopped batch indexers in 2.2081e+08 microseconds
+indexing complete in 2.2082e+08 microseconds
+---querying for 2
+count = 376
+local query in 545.0 microseconds
+---querying for 3
+count = 992
+query in 1.21363e+06 microseconds
+---querying for 3 AND 2
+count = 5
+query in 21770.0 microseconds
+---querying for 3 OR 2
+count = 1964
+query in 2.48015e+06 microseconds
+---querying for missing term
+count = 0
+query in 33050.0 microseconds
+using 11 locales
+initializing index
+0	initialized partitions in 2.28588e+07 microseconds
+0	started batch indexers in 11330.0 microseconds
+0	stopped batch indexers in 4.13373e+08 microseconds
+indexing complete in 4.13385e+08 microseconds
+---querying for 2
+count = 376
+local query in 566.0 microseconds
+---querying for 3
+count = 1006
+query in 1.98062e+06 microseconds
+---querying for 3 AND 2
+count = 4
+query in 32385.0 microseconds
+---querying for 3 OR 2
+count = 1980
+query in 3.96974e+06 microseconds
+---querying for missing term
+count = 0
+query in 27617.0 microseconds
+using 12 locales
+initializing index
+0	initialized partitions in 2.51186e+07 microseconds
+0	started batch indexers in 60678.0 microseconds
+0	stopped batch indexers in 4.43707e+08 microseconds
+indexing complete in 4.43768e+08 microseconds
+---querying for 2
+count = 376
+local query in 532.0 microseconds
+---querying for 3
+count = 1002
+query in 2.35509e+06 microseconds
+---querying for 3 AND 2
+count = 4
+query in 48545.0 microseconds
+---querying for 3 OR 2
+count = 1996
+query in 4.70851e+06 microseconds
+---querying for missing term
+count = 0
+query in 51641.0 microseconds
+using 13 locales
+initializing index
+0	initialized partitions in 2.65265e+07 microseconds
+0	started batch indexers in 14096.0 microseconds
+0	stopped batch indexers in 4.50827e+08 microseconds
+indexing complete in 4.50841e+08 microseconds
+---querying for 2
+count = 376
+local query in 538.0 microseconds
+---querying for 3
+count = 1019
+query in 2.59017e+06 microseconds
+---querying for 3 AND 2
+count = 5
+query in 55254.0 microseconds
+---querying for 3 OR 2
+count = 1993
+query in 5.1545e+06 microseconds
+---querying for missing term
+count = 0
+query in 54162.0 microseconds
+using 14 locales
+initializing index
+0	initialized partitions in 2.86895e+07 microseconds
+0	started batch indexers in 17061.0 microseconds
+0	stopped batch indexers in 4.82214e+08 microseconds
+indexing complete in 4.82231e+08 microseconds
+---querying for 2
+count = 376
+local query in 531.0 microseconds
+---querying for 3
+count = 1005
+query in 3.01357e+06 microseconds
+---querying for 3 AND 2
+count = 5
+query in 70435.0 microseconds
+---querying for 3 OR 2
+count = 2018
+query in 6.02494e+06 microseconds
+---querying for missing term
+count = 0
+query in 61364.0 microseconds
+using 15 locales
+initializing index
+0	initialized partitions in 3.08745e+07 microseconds
+0	started batch indexers in 39312.0 microseconds
+0	stopped batch indexers in 5.38639e+08 microseconds
+indexing complete in 5.38678e+08 microseconds
+---querying for 2
+count = 376
+local query in 542.0 microseconds
+---querying for 3
+count = 1019
+query in 3.53047e+06 microseconds
+---querying for 3 AND 2
+count = 4
+query in 69664.0 microseconds
+---querying for 3 OR 2
+count = 2021
+query in 7.06448e+06 microseconds
+---querying for missing term
+count = 0
+query in 63621.0 microseconds
+using 16 locales
+initializing index
+0	initialized partitions in 3.22926e+07 microseconds
+0	started batch indexers in 46552.0 microseconds
+0	stopped batch indexers in 5.35446e+08 microseconds
+indexing complete in 5.35493e+08 microseconds
+---querying for 2
+count = 376
+local query in 552.0 microseconds
+---querying for 3
+count = 1026
+query in 3.74875e+06 microseconds
+---querying for 3 AND 2
+count = 5
+query in 62989.0 microseconds
+---querying for 3 OR 2
+count = 2044
+query in 7.42561e+06 microseconds
+---querying for missing term
+count = 0
+query in 72516.0 microseconds

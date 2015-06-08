@@ -1,0 +1,3076 @@
+using 1 locales
+initializing index
+0	initialized partitions in 839950.0 microseconds
+0	started batch indexers in 36.0 microseconds
+0	stopped batch indexers in 6.82416e+07 microseconds
+indexing complete in 6.82418e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 379.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 426.0,375
+---querying for 3 AND 2
+C,1, 515.0,0
+---querying for 3 OR 2
+D,1, 1071.0,751
+---querying for missing term
+E,1, 108.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 2.38249e+06 microseconds
+0	started batch indexers in 1608.0 microseconds
+0	stopped batch indexers in 9.0926e+07 microseconds
+indexing complete in 9.09278e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 419.0,376
+AL-1,2, 372.0,344
+---querying 2 on remote locales
+AR-0,2, 280128.0,1024
+---querying for 3
+B,2, 432013.0,702
+---querying for 3 AND 2
+C,2, 11206.0,0
+---querying for 3 OR 2
+D,2, 867306.0,1422
+---querying for missing term
+E,2, 13340.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.05555e+06 microseconds
+0	started batch indexers in 3571.0 microseconds
+0	stopped batch indexers in 8.99179e+07 microseconds
+indexing complete in 8.99217e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 386.0,376
+AL-1,3, 374.0,344
+AL-2,3, 371.0,353
+---querying 2 on remote locales
+AR-0,3, 485785.0,1024
+AR-0,3, 311041.0,1024
+---querying for 3
+B,3, 628762.0,863
+---querying for 3 AND 2
+C,3, 15097.0,3
+---querying for 3 OR 2
+D,3, 1.13022e+06,1589
+---querying for missing term
+E,3, 11253.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.34017e+06 microseconds
+0	started batch indexers in 4741.0 microseconds
+0	stopped batch indexers in 1.22337e+08 microseconds
+indexing complete in 1.22342e+08 microseconds
+---querying 2 on each locale
+AL-0,4, 434.0,376
+AL-1,4, 358.0,344
+AL-2,4, 378.0,353
+AL-3,4, 358.0,324
+---querying 2 on remote locales
+AR-0,4, 287696.0,1024
+AR-0,4, 295944.0,1024
+AR-0,4, 285236.0,1024
+---querying for 3
+B,4, 517154.0,770
+---querying for 3 AND 2
+C,4, 14422.0,3
+---querying for 3 OR 2
+D,4, 1.10711e+06,1649
+---querying for missing term
+E,4, 17990.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 830344.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.80478e+07 microseconds
+indexing complete in 6.8048e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 377.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 435.0,375
+---querying for 3 AND 2
+C,1, 514.0,0
+---querying for 3 OR 2
+D,1, 1021.0,751
+---querying for missing term
+E,1, 114.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.76125e+06 microseconds
+0	started batch indexers in 1813.0 microseconds
+0	stopped batch indexers in 9.29378e+07 microseconds
+indexing complete in 9.29398e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 397.0,376
+AL-1,2, 359.0,344
+---querying 2 on remote locales
+AR-0,2, 280031.0,1024
+---querying for 3
+B,2, 441828.0,702
+---querying for 3 AND 2
+C,2, 14660.0,0
+---querying for 3 OR 2
+D,2, 1.22513e+06,1422
+---querying for missing term
+E,2, 27136.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 2.84965e+06 microseconds
+0	started batch indexers in 3078.0 microseconds
+0	stopped batch indexers in 9.19373e+07 microseconds
+indexing complete in 9.19406e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 397.0,376
+AL-1,3, 384.0,344
+AL-2,3, 358.0,353
+---querying 2 on remote locales
+AR-0,3, 301736.0,1024
+AR-0,3, 477629.0,1024
+---querying for 3
+B,3, 818461.0,817
+---querying for 3 AND 2
+C,3, 14709.0,3
+---querying for 3 OR 2
+D,3, 1.14702e+06,1579
+---querying for missing term
+E,3, 11195.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.69027e+06 microseconds
+0	started batch indexers in 9863.0 microseconds
+0	stopped batch indexers in 9.56085e+07 microseconds
+indexing complete in 9.56186e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 428.0,376
+AL-1,4, 379.0,344
+AL-2,4, 392.0,353
+AL-3,4, 384.0,324
+---querying 2 on remote locales
+AR-0,4, 309302.0,1024
+AR-0,4, 375205.0,1024
+AR-0,4, 296766.0,1024
+---querying for 3
+B,4, 774238.0,926
+---querying for 3 AND 2
+C,4, 74644.0,3
+---querying for 3 OR 2
+D,4, 1.65228e+06,1703
+---querying for missing term
+E,4, 55515.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 837058.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.69562e+07 microseconds
+indexing complete in 6.69564e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 373.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 437.0,375
+---querying for 3 AND 2
+C,1, 516.0,0
+---querying for 3 OR 2
+D,1, 1025.0,751
+---querying for missing term
+E,1, 123.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.67155e+06 microseconds
+0	started batch indexers in 2145.0 microseconds
+0	stopped batch indexers in 9.06791e+07 microseconds
+indexing complete in 9.06815e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 391.0,376
+AL-1,2, 379.0,344
+---querying 2 on remote locales
+AR-0,2, 295462.0,1024
+---querying for 3
+B,2, 774778.0,702
+---querying for 3 AND 2
+C,2, 11252.0,0
+---querying for 3 OR 2
+D,2, 1.03709e+06,1422
+---querying for missing term
+E,2, 10247.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.34252e+06 microseconds
+0	started batch indexers in 3590.0 microseconds
+0	stopped batch indexers in 9.17609e+07 microseconds
+indexing complete in 9.17648e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 384.0,376
+AL-1,3, 390.0,344
+AL-2,3, 357.0,353
+---querying 2 on remote locales
+AR-0,3, 402562.0,1024
+AR-0,3, 342076.0,1024
+---querying for 3
+B,3, 1.15514e+06,1038
+---querying for 3 AND 2
+C,3, 260725.0,3
+---querying for 3 OR 2
+D,3, 1.70851e+06,1572
+---querying for missing term
+E,3, 10500.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.17443e+06 microseconds
+0	started batch indexers in 5552.0 microseconds
+0	stopped batch indexers in 8.97832e+07 microseconds
+indexing complete in 8.9789e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 442.0,376
+AL-1,4, 387.0,344
+AL-2,4, 378.0,353
+AL-3,4, 379.0,324
+---querying 2 on remote locales
+AR-0,4, 284648.0,1024
+AR-0,4, 308779.0,1024
+AR-0,4, 307746.0,1024
+---querying for 3
+B,4, 619302.0,798
+---querying for 3 AND 2
+C,4, 26358.0,3
+---querying for 3 OR 2
+D,4, 993298.0,1605
+---querying for missing term
+E,4, 23195.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 837609.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.79527e+07 microseconds
+indexing complete in 6.79529e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 383.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 430.0,375
+---querying for 3 AND 2
+C,1, 501.0,0
+---querying for 3 OR 2
+D,1, 1057.0,751
+---querying for missing term
+E,1, 120.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.93049e+06 microseconds
+0	started batch indexers in 1791.0 microseconds
+0	stopped batch indexers in 8.66059e+07 microseconds
+indexing complete in 8.66079e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 400.0,376
+AL-1,2, 372.0,344
+---querying 2 on remote locales
+AR-0,2, 274366.0,1024
+---querying for 3
+B,2, 441188.0,702
+---querying for 3 AND 2
+C,2, 11064.0,0
+---querying for 3 OR 2
+D,2, 870414.0,1422
+---querying for missing term
+E,2, 10111.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.00037e+06 microseconds
+0	started batch indexers in 8930.0 microseconds
+0	stopped batch indexers in 9.09672e+07 microseconds
+indexing complete in 9.09763e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 390.0,376
+AL-1,3, 372.0,344
+AL-2,3, 415.0,353
+---querying 2 on remote locales
+AR-0,3, 272123.0,1024
+AR-0,3, 419475.0,1024
+---querying for 3
+B,3, 533821.0,781
+---querying for 3 AND 2
+C,3, 14937.0,3
+---querying for 3 OR 2
+D,3, 1.21208e+06,1678
+---querying for missing term
+E,3, 10850.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.87326e+06 microseconds
+0	started batch indexers in 4521.0 microseconds
+0	stopped batch indexers in 9.55962e+07 microseconds
+indexing complete in 9.5601e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 420.0,376
+AL-1,4, 397.0,344
+AL-2,4, 413.0,353
+AL-3,4, 365.0,324
+---querying 2 on remote locales
+AR-0,4, 476086.0,1024
+AR-0,4, 421222.0,1024
+AR-0,4, 317408.0,1024
+---querying for 3
+B,4, 579000.0,841
+---querying for 3 AND 2
+C,4, 17243.0,3
+---querying for 3 OR 2
+D,4, 1.00956e+06,1587
+---querying for missing term
+E,4, 11730.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 847801.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.82238e+07 microseconds
+indexing complete in 6.8224e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 373.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 435.0,375
+---querying for 3 AND 2
+C,1, 497.0,0
+---querying for 3 OR 2
+D,1, 1003.0,751
+---querying for missing term
+E,1, 92.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 2.0418e+06 microseconds
+0	started batch indexers in 1645.0 microseconds
+0	stopped batch indexers in 8.87675e+07 microseconds
+indexing complete in 8.87694e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 404.0,376
+AL-1,2, 384.0,344
+---querying 2 on remote locales
+AR-0,2, 567749.0,1024
+---querying for 3
+B,2, 1.29638e+06,702
+---querying for 3 AND 2
+C,2, 11563.0,0
+---querying for 3 OR 2
+D,2, 1.82128e+06,1422
+---querying for missing term
+E,2, 10599.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.34958e+06 microseconds
+0	started batch indexers in 3287.0 microseconds
+0	stopped batch indexers in 9.15606e+07 microseconds
+indexing complete in 9.15641e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 386.0,376
+AL-1,3, 358.0,344
+AL-2,3, 368.0,353
+---querying 2 on remote locales
+AR-0,3, 387418.0,1024
+AR-0,3, 282172.0,1024
+---querying for 3
+B,3, 1.37379e+06,916
+---querying for 3 AND 2
+C,3, 14710.0,3
+---querying for 3 OR 2
+D,3, 1.2478e+06,1528
+---querying for missing term
+E,3, 81937.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.01397e+06 microseconds
+0	started batch indexers in 4750.0 microseconds
+0	stopped batch indexers in 9.70701e+07 microseconds
+indexing complete in 9.70751e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 457.0,376
+AL-1,4, 378.0,344
+AL-2,4, 429.0,353
+AL-3,4, 375.0,324
+---querying 2 on remote locales
+AR-0,4, 304303.0,1024
+AR-0,4, 475339.0,1024
+AR-0,4, 321521.0,1024
+---querying for 3
+B,4, 519713.0,829
+---querying for 3 AND 2
+C,4, 15027.0,3
+---querying for 3 OR 2
+D,4, 1.06532e+06,1611
+---querying for missing term
+E,4, 13214.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 834621.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.7366e+07 microseconds
+indexing complete in 6.73662e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 380.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 431.0,375
+---querying for 3 AND 2
+C,1, 513.0,0
+---querying for 3 OR 2
+D,1, 1088.0,751
+---querying for missing term
+E,1, 131.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 2.19869e+06 microseconds
+0	started batch indexers in 1725.0 microseconds
+0	stopped batch indexers in 9.51938e+07 microseconds
+indexing complete in 9.51957e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 404.0,376
+AL-1,2, 359.0,344
+---querying 2 on remote locales
+AR-0,2, 256595.0,1024
+---querying for 3
+B,2, 424084.0,702
+---querying for 3 AND 2
+C,2, 14234.0,0
+---querying for 3 OR 2
+D,2, 886042.0,1422
+---querying for missing term
+E,2, 12119.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 2.9656e+06 microseconds
+0	started batch indexers in 3307.0 microseconds
+0	stopped batch indexers in 8.95351e+07 microseconds
+indexing complete in 8.95387e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 385.0,376
+AL-1,3, 397.0,344
+AL-2,3, 377.0,353
+---querying 2 on remote locales
+AR-0,3, 297629.0,1024
+AR-0,3, 281213.0,1024
+---querying for 3
+B,3, 478338.0,749
+---querying for 3 AND 2
+C,3, 33820.0,3
+---querying for 3 OR 2
+D,3, 963720.0,1495
+---querying for missing term
+E,3, 11033.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.82304e+06 microseconds
+0	started batch indexers in 4622.0 microseconds
+0	stopped batch indexers in 9.7557e+07 microseconds
+indexing complete in 9.75618e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 443.0,376
+AL-1,4, 359.0,344
+AL-2,4, 371.0,353
+AL-3,4, 357.0,324
+---querying 2 on remote locales
+AR-0,4, 294309.0,1024
+AR-0,4, 321096.0,1024
+AR-0,4, 272272.0,1024
+---querying for 3
+B,4, 549219.0,821
+---querying for 3 AND 2
+C,4, 15218.0,3
+---querying for 3 OR 2
+D,4, 1.42845e+06,1750
+---querying for missing term
+E,4, 11053.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 847921.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.78575e+07 microseconds
+indexing complete in 6.78577e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 375.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 403.0,375
+---querying for 3 AND 2
+C,1, 571.0,0
+---querying for 3 OR 2
+D,1, 1058.0,751
+---querying for missing term
+E,1, 113.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 2.11574e+06 microseconds
+0	started batch indexers in 1811.0 microseconds
+0	stopped batch indexers in 8.49383e+07 microseconds
+indexing complete in 8.49403e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 405.0,376
+AL-1,2, 357.0,344
+---querying 2 on remote locales
+AR-0,2, 288097.0,1024
+---querying for 3
+B,2, 480552.0,702
+---querying for 3 AND 2
+C,2, 14849.0,0
+---querying for 3 OR 2
+D,2, 868697.0,1422
+---querying for missing term
+E,2, 18291.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 2.78193e+06 microseconds
+0	started batch indexers in 3507.0 microseconds
+0	stopped batch indexers in 9.45234e+07 microseconds
+indexing complete in 9.45272e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 385.0,376
+AL-1,3, 384.0,344
+AL-2,3, 348.0,353
+---querying 2 on remote locales
+AR-0,3, 305252.0,1024
+AR-0,3, 301560.0,1024
+---querying for 3
+B,3, 1.39734e+06,792
+---querying for 3 AND 2
+C,3, 105146.0,3
+---querying for 3 OR 2
+D,3, 1.09917e+06,1554
+---querying for missing term
+E,3, 13292.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.72204e+06 microseconds
+0	started batch indexers in 4341.0 microseconds
+0	stopped batch indexers in 9.33457e+07 microseconds
+indexing complete in 9.33502e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 427.0,376
+AL-1,4, 381.0,344
+AL-2,4, 400.0,353
+AL-3,4, 353.0,324
+---querying 2 on remote locales
+AR-0,4, 556095.0,1024
+AR-0,4, 296992.0,1024
+AR-0,4, 678575.0,1024
+---querying for 3
+B,4, 1.05072e+06,986
+---querying for 3 AND 2
+C,4, 27298.0,3
+---querying for 3 OR 2
+D,4, 1.38423e+06,1799
+---querying for missing term
+E,4, 53693.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 856751.0 microseconds
+0	started batch indexers in 35.0 microseconds
+0	stopped batch indexers in 6.81573e+07 microseconds
+indexing complete in 6.81575e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 378.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 452.0,375
+---querying for 3 AND 2
+C,1, 512.0,0
+---querying for 3 OR 2
+D,1, 1027.0,751
+---querying for missing term
+E,1, 97.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.78465e+06 microseconds
+0	started batch indexers in 1608.0 microseconds
+0	stopped batch indexers in 8.82294e+07 microseconds
+indexing complete in 8.82313e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 398.0,376
+AL-1,2, 378.0,344
+---querying 2 on remote locales
+AR-0,2, 261221.0,1024
+---querying for 3
+B,2, 547495.0,702
+---querying for 3 AND 2
+C,2, 10656.0,0
+---querying for 3 OR 2
+D,2, 1.01204e+06,1422
+---querying for missing term
+E,2, 16889.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 4.03627e+06 microseconds
+0	started batch indexers in 9776.0 microseconds
+0	stopped batch indexers in 9.38456e+07 microseconds
+indexing complete in 9.38556e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 387.0,376
+AL-1,3, 382.0,344
+AL-2,3, 398.0,353
+---querying 2 on remote locales
+AR-0,3, 273320.0,1024
+AR-0,3, 282516.0,1024
+---querying for 3
+B,3, 1.16619e+06,938
+---querying for 3 AND 2
+C,3, 15705.0,3
+---querying for 3 OR 2
+D,3, 1.05442e+06,1555
+---querying for missing term
+E,3, 12133.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.4261e+06 microseconds
+0	started batch indexers in 4782.0 microseconds
+0	stopped batch indexers in 9.39458e+07 microseconds
+indexing complete in 9.39508e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 454.0,376
+AL-1,4, 383.0,344
+AL-2,4, 397.0,353
+AL-3,4, 367.0,324
+---querying 2 on remote locales
+AR-0,4, 305181.0,1024
+AR-0,4, 320147.0,1024
+AR-0,4, 281165.0,1024
+---querying for 3
+B,4, 795116.0,861
+---querying for 3 AND 2
+C,4, 15909.0,3
+---querying for 3 OR 2
+D,4, 1.32152e+06,1621
+---querying for missing term
+E,4, 18173.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 973332.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.72398e+07 microseconds
+indexing complete in 6.724e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 394.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 423.0,375
+---querying for 3 AND 2
+C,1, 521.0,0
+---querying for 3 OR 2
+D,1, 996.0,751
+---querying for missing term
+E,1, 132.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.74814e+06 microseconds
+0	started batch indexers in 1788.0 microseconds
+0	stopped batch indexers in 8.67087e+07 microseconds
+indexing complete in 8.67107e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 392.0,376
+AL-1,2, 372.0,344
+---querying 2 on remote locales
+AR-0,2, 278022.0,1024
+---querying for 3
+B,2, 409107.0,702
+---querying for 3 AND 2
+C,2, 18245.0,0
+---querying for 3 OR 2
+D,2, 851202.0,1422
+---querying for missing term
+E,2, 10434.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.20738e+06 microseconds
+0	started batch indexers in 3146.0 microseconds
+0	stopped batch indexers in 9.52096e+07 microseconds
+indexing complete in 9.5213e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 400.0,376
+AL-1,3, 378.0,344
+AL-2,3, 364.0,353
+---querying 2 on remote locales
+AR-0,3, 386856.0,1024
+AR-0,3, 440851.0,1024
+---querying for 3
+B,3, 1.12803e+06,865
+---querying for 3 AND 2
+C,3, 34169.0,3
+---querying for 3 OR 2
+D,3, 1.32748e+06,1521
+---querying for missing term
+E,3, 43314.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 6.24819e+06 microseconds
+0	started batch indexers in 8039.0 microseconds
+0	stopped batch indexers in 1.06379e+08 microseconds
+indexing complete in 1.06388e+08 microseconds
+---querying 2 on each locale
+AL-0,4, 423.0,376
+AL-1,4, 371.0,344
+AL-2,4, 391.0,353
+AL-3,4, 377.0,324
+---querying 2 on remote locales
+AR-0,4, 361004.0,1024
+AR-0,4, 300516.0,1024
+AR-0,4, 293327.0,1024
+---querying for 3
+B,4, 902031.0,1020
+---querying for 3 AND 2
+C,4, 15974.0,3
+---querying for 3 OR 2
+D,4, 1.32271e+06,1698
+---querying for missing term
+E,4, 16712.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 833397.0 microseconds
+0	started batch indexers in 35.0 microseconds
+0	stopped batch indexers in 6.85007e+07 microseconds
+indexing complete in 6.85009e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 375.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 411.0,375
+---querying for 3 AND 2
+C,1, 507.0,0
+---querying for 3 OR 2
+D,1, 1017.0,751
+---querying for missing term
+E,1, 92.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 2.05582e+06 microseconds
+0	started batch indexers in 1626.0 microseconds
+0	stopped batch indexers in 8.45816e+07 microseconds
+indexing complete in 8.45834e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 427.0,376
+AL-1,2, 392.0,344
+---querying 2 on remote locales
+AR-0,2, 250212.0,1024
+---querying for 3
+B,2, 637504.0,702
+---querying for 3 AND 2
+C,2, 19307.0,0
+---querying for 3 OR 2
+D,2, 867364.0,1422
+---querying for missing term
+E,2, 10754.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 2.81385e+06 microseconds
+0	started batch indexers in 3144.0 microseconds
+0	stopped batch indexers in 9.21207e+07 microseconds
+indexing complete in 9.2124e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 388.0,376
+AL-1,3, 369.0,344
+AL-2,3, 365.0,353
+---querying 2 on remote locales
+AR-0,3, 276071.0,1024
+AR-0,3, 297362.0,1024
+---querying for 3
+B,3, 618483.0,801
+---querying for 3 AND 2
+C,3, 15938.0,3
+---querying for 3 OR 2
+D,3, 935319.0,1465
+---querying for missing term
+E,3, 10880.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.80716e+06 microseconds
+0	started batch indexers in 10162.0 microseconds
+0	stopped batch indexers in 1.13433e+08 microseconds
+indexing complete in 1.13443e+08 microseconds
+---querying 2 on each locale
+AL-0,4, 382.0,376
+AL-1,4, 416.0,344
+AL-2,4, 407.0,353
+AL-3,4, 351.0,324
+---querying 2 on remote locales
+AR-0,4, 297804.0,1024
+AR-0,4, 291949.0,1024
+AR-0,4, 574829.0,1024
+---querying for 3
+B,4, 804637.0,988
+---querying for 3 AND 2
+C,4, 27759.0,3
+---querying for 3 OR 2
+D,4, 1.14958e+06,1616
+---querying for missing term
+E,4, 11754.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 904174.0 microseconds
+0	started batch indexers in 35.0 microseconds
+0	stopped batch indexers in 6.72915e+07 microseconds
+indexing complete in 6.72917e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 381.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 412.0,375
+---querying for 3 AND 2
+C,1, 522.0,0
+---querying for 3 OR 2
+D,1, 1077.0,751
+---querying for missing term
+E,1, 122.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.88813e+06 microseconds
+0	started batch indexers in 1694.0 microseconds
+0	stopped batch indexers in 8.62475e+07 microseconds
+indexing complete in 8.62494e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 397.0,376
+AL-1,2, 360.0,344
+---querying 2 on remote locales
+AR-0,2, 357255.0,1024
+---querying for 3
+B,2, 406077.0,702
+---querying for 3 AND 2
+C,2, 10832.0,0
+---querying for 3 OR 2
+D,2, 868348.0,1422
+---querying for missing term
+E,2, 11390.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.27046e+06 microseconds
+0	started batch indexers in 3009.0 microseconds
+0	stopped batch indexers in 9.34665e+07 microseconds
+indexing complete in 9.34697e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 385.0,376
+AL-1,3, 382.0,344
+AL-2,3, 377.0,353
+---querying 2 on remote locales
+AR-0,3, 316572.0,1024
+AR-0,3, 482051.0,1024
+---querying for 3
+B,3, 862429.0,948
+---querying for 3 AND 2
+C,3, 14389.0,3
+---querying for 3 OR 2
+D,3, 949958.0,1517
+---querying for missing term
+E,3, 14832.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.27982e+06 microseconds
+0	started batch indexers in 7594.0 microseconds
+0	stopped batch indexers in 9.27886e+07 microseconds
+indexing complete in 9.27964e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 449.0,376
+AL-1,4, 382.0,344
+AL-2,4, 359.0,353
+AL-3,4, 356.0,324
+---querying 2 on remote locales
+AR-0,4, 719790.0,1024
+AR-0,4, 284553.0,1024
+AR-0,4, 380338.0,1024
+---querying for 3
+B,4, 843425.0,951
+---querying for 3 AND 2
+C,4, 162538.0,3
+---querying for 3 OR 2
+D,4, 1.6888e+06,1954
+---querying for missing term
+E,4, 17692.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 956925.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.75962e+07 microseconds
+indexing complete in 6.75964e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 448.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 405.0,375
+---querying for 3 AND 2
+C,1, 496.0,0
+---querying for 3 OR 2
+D,1, 1001.0,751
+---querying for missing term
+E,1, 129.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.68914e+06 microseconds
+0	started batch indexers in 1874.0 microseconds
+0	stopped batch indexers in 8.77734e+07 microseconds
+indexing complete in 8.77755e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 420.0,376
+AL-1,2, 361.0,344
+---querying 2 on remote locales
+AR-0,2, 372853.0,1024
+---querying for 3
+B,2, 461010.0,702
+---querying for 3 AND 2
+C,2, 14575.0,0
+---querying for 3 OR 2
+D,2, 844636.0,1422
+---querying for missing term
+E,2, 11876.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.22465e+06 microseconds
+0	started batch indexers in 7217.0 microseconds
+0	stopped batch indexers in 9.56042e+07 microseconds
+indexing complete in 9.56116e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 399.0,376
+AL-1,3, 353.0,344
+AL-2,3, 387.0,353
+---querying 2 on remote locales
+AR-0,3, 284057.0,1024
+AR-0,3, 299329.0,1024
+---querying for 3
+B,3, 881001.0,851
+---querying for 3 AND 2
+C,3, 15162.0,3
+---querying for 3 OR 2
+D,3, 1.72623e+06,1919
+---querying for missing term
+E,3, 16661.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.01197e+06 microseconds
+0	started batch indexers in 9525.0 microseconds
+0	stopped batch indexers in 9.25054e+07 microseconds
+indexing complete in 9.25152e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 430.0,376
+AL-1,4, 384.0,344
+AL-2,4, 391.0,353
+AL-3,4, 360.0,324
+---querying 2 on remote locales
+AR-0,4, 386423.0,1024
+AR-0,4, 278553.0,1024
+AR-0,4, 295084.0,1024
+---querying for 3
+B,4, 537678.0,799
+---querying for 3 AND 2
+C,4, 17448.0,3
+---querying for 3 OR 2
+D,4, 1.33593e+06,1706
+---querying for missing term
+E,4, 13730.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 1.09241e+06 microseconds
+0	started batch indexers in 35.0 microseconds
+0	stopped batch indexers in 6.74443e+07 microseconds
+indexing complete in 6.74445e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 386.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 405.0,375
+---querying for 3 AND 2
+C,1, 492.0,0
+---querying for 3 OR 2
+D,1, 1042.0,751
+---querying for missing term
+E,1, 159.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.88098e+06 microseconds
+0	started batch indexers in 4962.0 microseconds
+0	stopped batch indexers in 9.2744e+07 microseconds
+indexing complete in 9.27492e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 395.0,376
+AL-1,2, 361.0,344
+---querying 2 on remote locales
+AR-0,2, 651816.0,1024
+---querying for 3
+B,2, 474414.0,702
+---querying for 3 AND 2
+C,2, 10339.0,0
+---querying for 3 OR 2
+D,2, 837630.0,1422
+---querying for missing term
+E,2, 10996.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.07954e+06 microseconds
+0	started batch indexers in 3093.0 microseconds
+0	stopped batch indexers in 8.94528e+07 microseconds
+indexing complete in 8.94561e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 388.0,376
+AL-1,3, 354.0,344
+AL-2,3, 371.0,353
+---querying 2 on remote locales
+AR-0,3, 264386.0,1024
+AR-0,3, 289193.0,1024
+---querying for 3
+B,3, 648775.0,852
+---querying for 3 AND 2
+C,3, 14754.0,3
+---querying for 3 OR 2
+D,3, 940546.0,1496
+---querying for missing term
+E,3, 11524.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.72399e+06 microseconds
+0	started batch indexers in 4408.0 microseconds
+0	stopped batch indexers in 9.42947e+07 microseconds
+indexing complete in 9.42993e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 388.0,376
+AL-1,4, 387.0,344
+AL-2,4, 377.0,353
+AL-3,4, 377.0,324
+---querying 2 on remote locales
+AR-0,4, 414102.0,1024
+AR-0,4, 297302.0,1024
+AR-0,4, 296312.0,1024
+---querying for 3
+B,4, 862727.0,923
+---querying for 3 AND 2
+C,4, 14561.0,3
+---querying for 3 OR 2
+D,4, 1.41354e+06,1816
+---querying for missing term
+E,4, 13155.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 837897.0 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.73543e+07 microseconds
+indexing complete in 6.73545e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 385.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 401.0,375
+---querying for 3 AND 2
+C,1, 503.0,0
+---querying for 3 OR 2
+D,1, 1000.0,751
+---querying for missing term
+E,1, 142.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.689e+06 microseconds
+0	started batch indexers in 1742.0 microseconds
+0	stopped batch indexers in 8.4566e+07 microseconds
+indexing complete in 8.45679e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 397.0,376
+AL-1,2, 374.0,344
+---querying 2 on remote locales
+AR-0,2, 313541.0,1024
+---querying for 3
+B,2, 428846.0,702
+---querying for 3 AND 2
+C,2, 10893.0,0
+---querying for 3 OR 2
+D,2, 866184.0,1422
+---querying for missing term
+E,2, 10473.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 2.88325e+06 microseconds
+0	started batch indexers in 3165.0 microseconds
+0	stopped batch indexers in 8.74063e+07 microseconds
+indexing complete in 8.74097e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 379.0,376
+AL-1,3, 382.0,344
+AL-2,3, 380.0,353
+---querying 2 on remote locales
+AR-0,3, 279799.0,1024
+AR-0,3, 274932.0,1024
+---querying for 3
+B,3, 501469.0,771
+---querying for 3 AND 2
+C,3, 20443.0,3
+---querying for 3 OR 2
+D,3, 1.61604e+06,1643
+---querying for missing term
+E,3, 10980.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.50244e+06 microseconds
+0	started batch indexers in 36209.0 microseconds
+0	stopped batch indexers in 9.40982e+07 microseconds
+indexing complete in 9.41347e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 428.0,376
+AL-1,4, 376.0,344
+AL-2,4, 384.0,353
+AL-3,4, 362.0,324
+---querying 2 on remote locales
+AR-0,4, 424442.0,1024
+AR-0,4, 339410.0,1024
+AR-0,4, 269417.0,1024
+---querying for 3
+B,4, 846634.0,954
+---querying for 3 AND 2
+C,4, 19867.0,3
+---querying for 3 OR 2
+D,4, 1.04817e+06,1640
+---querying for missing term
+E,4, 53163.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 839024.0 microseconds
+0	started batch indexers in 35.0 microseconds
+0	stopped batch indexers in 6.72152e+07 microseconds
+indexing complete in 6.72154e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 373.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 404.0,375
+---querying for 3 AND 2
+C,1, 496.0,0
+---querying for 3 OR 2
+D,1, 1049.0,751
+---querying for missing term
+E,1, 122.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.75718e+06 microseconds
+0	started batch indexers in 1554.0 microseconds
+0	stopped batch indexers in 8.73949e+07 microseconds
+indexing complete in 8.73967e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 396.0,376
+AL-1,2, 398.0,344
+---querying 2 on remote locales
+AR-0,2, 285932.0,1024
+---querying for 3
+B,2, 423017.0,702
+---querying for 3 AND 2
+C,2, 10301.0,0
+---querying for 3 OR 2
+D,2, 934172.0,1422
+---querying for missing term
+E,2, 12723.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.21201e+06 microseconds
+0	started batch indexers in 2979.0 microseconds
+0	stopped batch indexers in 9.52959e+07 microseconds
+indexing complete in 9.5299e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 388.0,376
+AL-1,3, 356.0,344
+AL-2,3, 356.0,353
+---querying 2 on remote locales
+AR-0,3, 304268.0,1024
+AR-0,3, 295292.0,1024
+---querying for 3
+B,3, 489125.0,758
+---querying for 3 AND 2
+C,3, 23341.0,3
+---querying for 3 OR 2
+D,3, 1.25709e+06,1656
+---querying for missing term
+E,3, 10555.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.22877e+06 microseconds
+0	started batch indexers in 4956.0 microseconds
+0	stopped batch indexers in 9.68363e+07 microseconds
+indexing complete in 9.68415e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 431.0,376
+AL-1,4, 381.0,344
+AL-2,4, 380.0,353
+AL-3,4, 358.0,324
+---querying 2 on remote locales
+AR-0,4, 408435.0,1024
+AR-0,4, 651421.0,1024
+AR-0,4, 335194.0,1024
+---querying for 3
+B,4, 514110.0,792
+---querying for 3 AND 2
+C,4, 15272.0,3
+---querying for 3 OR 2
+D,4, 1.50427e+06,1704
+---querying for missing term
+E,4, 14775.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 918557.0 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.71109e+07 microseconds
+indexing complete in 6.71111e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 376.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 408.0,375
+---querying for 3 AND 2
+C,1, 566.0,0
+---querying for 3 OR 2
+D,1, 1034.0,751
+---querying for missing term
+E,1, 99.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 2.03051e+06 microseconds
+0	started batch indexers in 1870.0 microseconds
+0	stopped batch indexers in 9.16305e+07 microseconds
+indexing complete in 9.16326e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 397.0,376
+AL-1,2, 486.0,344
+---querying 2 on remote locales
+AR-0,2, 260474.0,1024
+---querying for 3
+B,2, 419617.0,702
+---querying for 3 AND 2
+C,2, 11296.0,0
+---querying for 3 OR 2
+D,2, 832716.0,1422
+---querying for missing term
+E,2, 10137.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.12317e+06 microseconds
+0	started batch indexers in 3213.0 microseconds
+0	stopped batch indexers in 9.72884e+07 microseconds
+indexing complete in 9.72918e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 387.0,376
+AL-1,3, 375.0,344
+AL-2,3, 409.0,353
+---querying 2 on remote locales
+AR-0,3, 275106.0,1024
+AR-0,3, 302473.0,1024
+---querying for 3
+B,3, 580001.0,795
+---querying for 3 AND 2
+C,3, 14711.0,3
+---querying for 3 OR 2
+D,3, 1.09399e+06,1596
+---querying for missing term
+E,3, 19476.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.4211e+06 microseconds
+0	started batch indexers in 5154.0 microseconds
+0	stopped batch indexers in 9.08749e+07 microseconds
+indexing complete in 9.08803e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 460.0,376
+AL-1,4, 385.0,344
+AL-2,4, 389.0,353
+AL-3,4, 362.0,324
+---querying 2 on remote locales
+AR-0,4, 488428.0,1024
+AR-0,4, 479825.0,1024
+AR-0,4, 410888.0,1024
+---querying for 3
+B,4, 901532.0,925
+---querying for 3 AND 2
+C,4, 21553.0,3
+---querying for 3 OR 2
+D,4, 1.97003e+06,1837
+---querying for missing term
+E,4, 21522.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 838945.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.74077e+07 microseconds
+indexing complete in 6.74079e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 402.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 403.0,375
+---querying for 3 AND 2
+C,1, 554.0,0
+---querying for 3 OR 2
+D,1, 1054.0,751
+---querying for missing term
+E,1, 120.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.77692e+06 microseconds
+0	started batch indexers in 1736.0 microseconds
+0	stopped batch indexers in 8.05071e+07 microseconds
+indexing complete in 8.0509e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 394.0,376
+AL-1,2, 402.0,344
+---querying 2 on remote locales
+AR-0,2, 260493.0,1024
+---querying for 3
+B,2, 451601.0,702
+---querying for 3 AND 2
+C,2, 12390.0,0
+---querying for 3 OR 2
+D,2, 965433.0,1422
+---querying for missing term
+E,2, 10989.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.25108e+06 microseconds
+0	started batch indexers in 3147.0 microseconds
+0	stopped batch indexers in 9.28656e+07 microseconds
+indexing complete in 9.2869e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 387.0,376
+AL-1,3, 414.0,344
+AL-2,3, 424.0,353
+---querying 2 on remote locales
+AR-0,3, 266772.0,1024
+AR-0,3, 293080.0,1024
+---querying for 3
+B,3, 469092.0,756
+---querying for 3 AND 2
+C,3, 22830.0,3
+---querying for 3 OR 2
+D,3, 1.23909e+06,1569
+---querying for missing term
+E,3, 11038.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.15518e+06 microseconds
+0	started batch indexers in 4669.0 microseconds
+0	stopped batch indexers in 9.28669e+07 microseconds
+indexing complete in 9.28718e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 426.0,376
+AL-1,4, 364.0,344
+AL-2,4, 372.0,353
+AL-3,4, 366.0,324
+---querying 2 on remote locales
+AR-0,4, 284914.0,1024
+AR-0,4, 287649.0,1024
+AR-0,4, 449130.0,1024
+---querying for 3
+B,4, 830425.0,987
+---querying for 3 AND 2
+C,4, 30072.0,3
+---querying for 3 OR 2
+D,4, 1.30034e+06,1653
+---querying for missing term
+E,4, 16319.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 838811.0 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.6968e+07 microseconds
+indexing complete in 6.69683e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 394.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 419.0,375
+---querying for 3 AND 2
+C,1, 514.0,0
+---querying for 3 OR 2
+D,1, 1019.0,751
+---querying for missing term
+E,1, 123.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.72911e+06 microseconds
+0	started batch indexers in 1667.0 microseconds
+0	stopped batch indexers in 9.20878e+07 microseconds
+indexing complete in 9.20897e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 395.0,376
+AL-1,2, 377.0,344
+---querying 2 on remote locales
+AR-0,2, 278040.0,1024
+---querying for 3
+B,2, 610605.0,702
+---querying for 3 AND 2
+C,2, 25379.0,0
+---querying for 3 OR 2
+D,2, 870425.0,1422
+---querying for missing term
+E,2, 13842.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 2.92317e+06 microseconds
+0	started batch indexers in 3319.0 microseconds
+0	stopped batch indexers in 9.2086e+07 microseconds
+indexing complete in 9.20895e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 387.0,376
+AL-1,3, 388.0,344
+AL-2,3, 388.0,353
+---querying 2 on remote locales
+AR-0,3, 296786.0,1024
+AR-0,3, 389211.0,1024
+---querying for 3
+B,3, 470247.0,745
+---querying for 3 AND 2
+C,3, 22169.0,3
+---querying for 3 OR 2
+D,3, 1.07652e+06,1561
+---querying for missing term
+E,3, 10673.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.1454e+06 microseconds
+0	started batch indexers in 4384.0 microseconds
+0	stopped batch indexers in 1.29603e+08 microseconds
+indexing complete in 1.29608e+08 microseconds
+---querying 2 on each locale
+AL-0,4, 438.0,376
+AL-1,4, 393.0,344
+AL-2,4, 384.0,353
+AL-3,4, 359.0,324
+---querying 2 on remote locales
+AR-0,4, 483330.0,1024
+AR-0,4, 304885.0,1024
+AR-0,4, 298194.0,1024
+---querying for 3
+B,4, 929412.0,927
+---querying for 3 AND 2
+C,4, 30982.0,3
+---querying for 3 OR 2
+D,4, 2.17078e+06,1887
+---querying for missing term
+E,4, 15867.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 849731.0 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.81581e+07 microseconds
+indexing complete in 6.81583e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 376.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 436.0,375
+---querying for 3 AND 2
+C,1, 516.0,0
+---querying for 3 OR 2
+D,1, 1044.0,751
+---querying for missing term
+E,1, 100.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.8804e+06 microseconds
+0	started batch indexers in 1674.0 microseconds
+0	stopped batch indexers in 9.41917e+07 microseconds
+indexing complete in 9.41936e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 390.0,376
+AL-1,2, 399.0,344
+---querying 2 on remote locales
+AR-0,2, 264459.0,1024
+---querying for 3
+B,2, 469784.0,702
+---querying for 3 AND 2
+C,2, 11859.0,0
+---querying for 3 OR 2
+D,2, 937870.0,1422
+---querying for missing term
+E,2, 10270.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.86185e+06 microseconds
+0	started batch indexers in 8780.0 microseconds
+0	stopped batch indexers in 9.29181e+07 microseconds
+indexing complete in 9.29271e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 400.0,376
+AL-1,3, 381.0,344
+AL-2,3, 360.0,353
+---querying 2 on remote locales
+AR-0,3, 278005.0,1024
+AR-0,3, 317921.0,1024
+---querying for 3
+B,3, 788299.0,797
+---querying for 3 AND 2
+C,3, 19267.0,3
+---querying for 3 OR 2
+D,3, 1.0138e+06,1557
+---querying for missing term
+E,3, 13805.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.3302e+06 microseconds
+0	started batch indexers in 4672.0 microseconds
+0	stopped batch indexers in 1.06066e+08 microseconds
+indexing complete in 1.06071e+08 microseconds
+---querying 2 on each locale
+AL-0,4, 420.0,376
+AL-1,4, 382.0,344
+AL-2,4, 375.0,353
+AL-3,4, 363.0,324
+---querying 2 on remote locales
+AR-0,4, 302167.0,1024
+AR-0,4, 324226.0,1024
+AR-0,4, 310804.0,1024
+---querying for 3
+B,4, 620706.0,843
+---querying for 3 AND 2
+C,4, 29944.0,3
+---querying for 3 OR 2
+D,4, 1.22949e+06,1606
+---querying for missing term
+E,4, 11291.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 839367.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.7484e+07 microseconds
+indexing complete in 6.74842e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 373.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 402.0,375
+---querying for 3 AND 2
+C,1, 582.0,0
+---querying for 3 OR 2
+D,1, 1109.0,751
+---querying for missing term
+E,1, 100.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 2.12156e+06 microseconds
+0	started batch indexers in 1660.0 microseconds
+0	stopped batch indexers in 9.13776e+07 microseconds
+indexing complete in 9.13795e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 395.0,376
+AL-1,2, 349.0,344
+---querying 2 on remote locales
+AR-0,2, 279028.0,1024
+---querying for 3
+B,2, 909163.0,702
+---querying for 3 AND 2
+C,2, 18649.0,0
+---querying for 3 OR 2
+D,2, 1.03096e+06,1422
+---querying for missing term
+E,2, 12207.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.12519e+06 microseconds
+0	started batch indexers in 3079.0 microseconds
+0	stopped batch indexers in 9.69687e+07 microseconds
+indexing complete in 9.6972e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 385.0,376
+AL-1,3, 377.0,344
+AL-2,3, 370.0,353
+---querying 2 on remote locales
+AR-0,3, 435241.0,1024
+AR-0,3, 296757.0,1024
+---querying for 3
+B,3, 788288.0,928
+---querying for 3 AND 2
+C,3, 52290.0,3
+---querying for 3 OR 2
+D,3, 1.21774e+06,1549
+---querying for missing term
+E,3, 10683.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 3.78341e+06 microseconds
+0	started batch indexers in 4856.0 microseconds
+0	stopped batch indexers in 9.41148e+07 microseconds
+indexing complete in 9.41199e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 503.0,376
+AL-1,4, 358.0,344
+AL-2,4, 366.0,353
+AL-3,4, 351.0,324
+---querying 2 on remote locales
+AR-0,4, 306398.0,1024
+AR-0,4, 287430.0,1024
+AR-0,4, 305935.0,1024
+---querying for 3
+B,4, 1.04964e+06,1021
+---querying for 3 AND 2
+C,4, 155812.0,3
+---querying for 3 OR 2
+D,4, 1.6697e+06,1839
+---querying for missing term
+E,4, 12120.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 918863.0 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.71672e+07 microseconds
+indexing complete in 6.71674e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 379.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 438.0,375
+---querying for 3 AND 2
+C,1, 515.0,0
+---querying for 3 OR 2
+D,1, 1035.0,751
+---querying for missing term
+E,1, 101.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.74187e+06 microseconds
+0	started batch indexers in 1599.0 microseconds
+0	stopped batch indexers in 8.73114e+07 microseconds
+indexing complete in 8.73132e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 423.0,376
+AL-1,2, 355.0,344
+---querying 2 on remote locales
+AR-0,2, 266536.0,1024
+---querying for 3
+B,2, 428276.0,702
+---querying for 3 AND 2
+C,2, 10710.0,0
+---querying for 3 OR 2
+D,2, 849301.0,1422
+---querying for missing term
+E,2, 11852.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.76252e+06 microseconds
+0	started batch indexers in 3463.0 microseconds
+0	stopped batch indexers in 9.20239e+07 microseconds
+indexing complete in 9.20276e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 387.0,376
+AL-1,3, 359.0,344
+AL-2,3, 371.0,353
+---querying 2 on remote locales
+AR-0,3, 300698.0,1024
+AR-0,3, 298000.0,1024
+---querying for 3
+B,3, 496477.0,760
+---querying for 3 AND 2
+C,3, 29660.0,3
+---querying for 3 OR 2
+D,3, 1.25813e+06,1579
+---querying for missing term
+E,3, 10978.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.58188e+06 microseconds
+0	started batch indexers in 16339.0 microseconds
+0	stopped batch indexers in 1.00438e+08 microseconds
+indexing complete in 1.00455e+08 microseconds
+---querying 2 on each locale
+AL-0,4, 460.0,376
+AL-1,4, 359.0,344
+AL-2,4, 378.0,353
+AL-3,4, 364.0,324
+---querying 2 on remote locales
+AR-0,4, 327902.0,1024
+AR-0,4, 301803.0,1024
+AR-0,4, 294342.0,1024
+---querying for 3
+B,4, 530232.0,792
+---querying for 3 AND 2
+C,4, 14468.0,3
+---querying for 3 OR 2
+D,4, 1.13214e+06,1662
+---querying for missing term
+E,4, 24985.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 838318.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.73023e+07 microseconds
+indexing complete in 6.73025e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 372.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 432.0,375
+---querying for 3 AND 2
+C,1, 504.0,0
+---querying for 3 OR 2
+D,1, 1054.0,751
+---querying for missing term
+E,1, 96.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.8052e+06 microseconds
+0	started batch indexers in 6319.0 microseconds
+0	stopped batch indexers in 9.07577e+07 microseconds
+indexing complete in 9.07643e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 398.0,376
+AL-1,2, 359.0,344
+---querying 2 on remote locales
+AR-0,2, 265484.0,1024
+---querying for 3
+B,2, 409124.0,702
+---querying for 3 AND 2
+C,2, 92056.0,0
+---querying for 3 OR 2
+D,2, 841663.0,1422
+---querying for missing term
+E,2, 13637.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.73661e+06 microseconds
+0	started batch indexers in 3210.0 microseconds
+0	stopped batch indexers in 9.58445e+07 microseconds
+indexing complete in 9.58479e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 385.0,376
+AL-1,3, 357.0,344
+AL-2,3, 373.0,353
+---querying 2 on remote locales
+AR-0,3, 268753.0,1024
+AR-0,3, 296935.0,1024
+---querying for 3
+B,3, 496868.0,763
+---querying for 3 AND 2
+C,3, 16016.0,3
+---querying for 3 OR 2
+D,3, 1.02164e+06,1477
+---querying for missing term
+E,3, 17098.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.16049e+06 microseconds
+0	started batch indexers in 5009.0 microseconds
+0	stopped batch indexers in 9.97603e+07 microseconds
+indexing complete in 9.97655e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 492.0,376
+AL-1,4, 368.0,344
+AL-2,4, 378.0,353
+AL-3,4, 358.0,324
+---querying 2 on remote locales
+AR-0,4, 281111.0,1024
+AR-0,4, 294859.0,1024
+AR-0,4, 295337.0,1024
+---querying for 3
+B,4, 865409.0,840
+---querying for 3 AND 2
+C,4, 142539.0,3
+---querying for 3 OR 2
+D,4, 1.6511e+06,1703
+---querying for missing term
+E,4, 11089.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 846051.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.77476e+07 microseconds
+indexing complete in 6.77478e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 378.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 409.0,375
+---querying for 3 AND 2
+C,1, 542.0,0
+---querying for 3 OR 2
+D,1, 1038.0,751
+---querying for missing term
+E,1, 113.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.67542e+06 microseconds
+0	started batch indexers in 3012.0 microseconds
+0	stopped batch indexers in 8.97313e+07 microseconds
+indexing complete in 8.97346e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 402.0,376
+AL-1,2, 376.0,344
+---querying 2 on remote locales
+AR-0,2, 268260.0,1024
+---querying for 3
+B,2, 712727.0,702
+---querying for 3 AND 2
+C,2, 87566.0,0
+---querying for 3 OR 2
+D,2, 952489.0,1422
+---querying for missing term
+E,2, 14335.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.03397e+06 microseconds
+0	started batch indexers in 3369.0 microseconds
+0	stopped batch indexers in 8.93781e+07 microseconds
+indexing complete in 8.93817e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 390.0,376
+AL-1,3, 364.0,344
+AL-2,3, 381.0,353
+---querying 2 on remote locales
+AR-0,3, 263715.0,1024
+AR-0,3, 323789.0,1024
+---querying for 3
+B,3, 918234.0,861
+---querying for 3 AND 2
+C,3, 91693.0,3
+---querying for 3 OR 2
+D,3, 1.3229e+06,1728
+---querying for missing term
+E,3, 475817.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.90111e+06 microseconds
+0	started batch indexers in 4876.0 microseconds
+0	stopped batch indexers in 9.0719e+07 microseconds
+indexing complete in 9.0724e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 460.0,376
+AL-1,4, 371.0,344
+AL-2,4, 349.0,353
+AL-3,4, 359.0,324
+---querying 2 on remote locales
+AR-0,4, 291989.0,1024
+AR-0,4, 291479.0,1024
+AR-0,4, 302125.0,1024
+---querying for 3
+B,4, 689737.0,874
+---querying for 3 AND 2
+C,4, 15344.0,3
+---querying for 3 OR 2
+D,4, 1.22794e+06,1681
+---querying for missing term
+E,4, 11190.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 850384.0 microseconds
+0	started batch indexers in 67.0 microseconds
+0	stopped batch indexers in 6.76854e+07 microseconds
+indexing complete in 6.76857e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 375.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 405.0,375
+---querying for 3 AND 2
+C,1, 514.0,0
+---querying for 3 OR 2
+D,1, 1043.0,751
+---querying for missing term
+E,1, 97.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.743e+06 microseconds
+0	started batch indexers in 1711.0 microseconds
+0	stopped batch indexers in 8.85148e+07 microseconds
+indexing complete in 8.85168e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 433.0,376
+AL-1,2, 366.0,344
+---querying 2 on remote locales
+AR-0,2, 301307.0,1024
+---querying for 3
+B,2, 898661.0,702
+---querying for 3 AND 2
+C,2, 10697.0,0
+---querying for 3 OR 2
+D,2, 873732.0,1422
+---querying for missing term
+E,2, 10384.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.03864e+06 microseconds
+0	started batch indexers in 9113.0 microseconds
+0	stopped batch indexers in 9.10415e+07 microseconds
+indexing complete in 9.10508e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 399.0,376
+AL-1,3, 409.0,344
+AL-2,3, 373.0,353
+---querying 2 on remote locales
+AR-0,3, 310868.0,1024
+AR-0,3, 317149.0,1024
+---querying for 3
+B,3, 480494.0,756
+---querying for 3 AND 2
+C,3, 16474.0,3
+---querying for 3 OR 2
+D,3, 1.80636e+06,1698
+---querying for missing term
+E,3, 10579.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.05804e+06 microseconds
+0	started batch indexers in 4653.0 microseconds
+0	stopped batch indexers in 9.38238e+07 microseconds
+indexing complete in 9.38287e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 386.0,376
+AL-1,4, 379.0,344
+AL-2,4, 381.0,353
+AL-3,4, 359.0,324
+---querying 2 on remote locales
+AR-0,4, 325652.0,1024
+AR-0,4, 297482.0,1024
+AR-0,4, 311040.0,1024
+---querying for 3
+B,4, 495077.0,817
+---querying for 3 AND 2
+C,4, 18060.0,3
+---querying for 3 OR 2
+D,4, 1.55422e+06,1767
+---querying for missing term
+E,4, 93367.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 1.11462e+06 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.77358e+07 microseconds
+indexing complete in 6.7736e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 372.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 421.0,375
+---querying for 3 AND 2
+C,1, 526.0,0
+---querying for 3 OR 2
+D,1, 1084.0,751
+---querying for missing term
+E,1, 106.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.84815e+06 microseconds
+0	started batch indexers in 1670.0 microseconds
+0	stopped batch indexers in 9.14842e+07 microseconds
+indexing complete in 9.14861e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 425.0,376
+AL-1,2, 375.0,344
+---querying 2 on remote locales
+AR-0,2, 265684.0,1024
+---querying for 3
+B,2, 434080.0,702
+---querying for 3 AND 2
+C,2, 11084.0,0
+---querying for 3 OR 2
+D,2, 1.60988e+06,1422
+---querying for missing term
+E,2, 13499.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.82938e+06 microseconds
+0	started batch indexers in 3247.0 microseconds
+0	stopped batch indexers in 8.94418e+07 microseconds
+indexing complete in 8.94452e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 384.0,376
+AL-1,3, 375.0,344
+AL-2,3, 366.0,353
+---querying 2 on remote locales
+AR-0,3, 629239.0,1024
+AR-0,3, 302320.0,1024
+---querying for 3
+B,3, 786000.0,778
+---querying for 3 AND 2
+C,3, 29841.0,3
+---querying for 3 OR 2
+D,3, 1.07222e+06,1558
+---querying for missing term
+E,3, 10645.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.64169e+06 microseconds
+0	started batch indexers in 10993.0 microseconds
+0	stopped batch indexers in 9.46637e+07 microseconds
+indexing complete in 9.46749e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 519.0,376
+AL-1,4, 380.0,344
+AL-2,4, 407.0,353
+AL-3,4, 356.0,324
+---querying 2 on remote locales
+AR-0,4, 301426.0,1024
+AR-0,4, 299946.0,1024
+AR-0,4, 285033.0,1024
+---querying for 3
+B,4, 734938.0,816
+---querying for 3 AND 2
+C,4, 27007.0,3
+---querying for 3 OR 2
+D,4, 1.63496e+06,1762
+---querying for missing term
+E,4, 11138.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 834936.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.74402e+07 microseconds
+indexing complete in 6.74404e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 378.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 407.0,375
+---querying for 3 AND 2
+C,1, 551.0,0
+---querying for 3 OR 2
+D,1, 1044.0,751
+---querying for missing term
+E,1, 94.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.74509e+06 microseconds
+0	started batch indexers in 2532.0 microseconds
+0	stopped batch indexers in 9.05295e+07 microseconds
+indexing complete in 9.05322e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 406.0,376
+AL-1,2, 362.0,344
+---querying 2 on remote locales
+AR-0,2, 270274.0,1024
+---querying for 3
+B,2, 485939.0,702
+---querying for 3 AND 2
+C,2, 12214.0,0
+---querying for 3 OR 2
+D,2, 1.46095e+06,1422
+---querying for missing term
+E,2, 18103.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.53287e+06 microseconds
+0	started batch indexers in 3053.0 microseconds
+0	stopped batch indexers in 9.60667e+07 microseconds
+indexing complete in 9.607e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 393.0,376
+AL-1,3, 384.0,344
+AL-2,3, 359.0,353
+---querying 2 on remote locales
+AR-0,3, 280098.0,1024
+AR-0,3, 281485.0,1024
+---querying for 3
+B,3, 584295.0,834
+---querying for 3 AND 2
+C,3, 15097.0,3
+---querying for 3 OR 2
+D,3, 1.01576e+06,1497
+---querying for missing term
+E,3, 18070.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.50342e+06 microseconds
+0	started batch indexers in 4516.0 microseconds
+0	stopped batch indexers in 9.936e+07 microseconds
+indexing complete in 9.93647e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 430.0,376
+AL-1,4, 372.0,344
+AL-2,4, 361.0,353
+AL-3,4, 365.0,324
+---querying 2 on remote locales
+AR-0,4, 436271.0,1024
+AR-0,4, 285270.0,1024
+AR-0,4, 305425.0,1024
+---querying for 3
+B,4, 839775.0,911
+---querying for 3 AND 2
+C,4, 18880.0,3
+---querying for 3 OR 2
+D,4, 996776.0,1596
+---querying for missing term
+E,4, 11709.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 833856.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.79074e+07 microseconds
+indexing complete in 6.79076e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 377.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 428.0,375
+---querying for 3 AND 2
+C,1, 516.0,0
+---querying for 3 OR 2
+D,1, 1082.0,751
+---querying for missing term
+E,1, 106.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.6903e+06 microseconds
+0	started batch indexers in 1570.0 microseconds
+0	stopped batch indexers in 8.6352e+07 microseconds
+indexing complete in 8.63538e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 428.0,376
+AL-1,2, 351.0,344
+---querying 2 on remote locales
+AR-0,2, 283995.0,1024
+---querying for 3
+B,2, 548567.0,702
+---querying for 3 AND 2
+C,2, 10409.0,0
+---querying for 3 OR 2
+D,2, 874114.0,1422
+---querying for missing term
+E,2, 10233.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.56753e+06 microseconds
+0	started batch indexers in 3367.0 microseconds
+0	stopped batch indexers in 9.09779e+07 microseconds
+indexing complete in 9.09815e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 385.0,376
+AL-1,3, 360.0,344
+AL-2,3, 379.0,353
+---querying 2 on remote locales
+AR-0,3, 465697.0,1024
+AR-0,3, 306040.0,1024
+---querying for 3
+B,3, 695195.0,775
+---querying for 3 AND 2
+C,3, 17256.0,3
+---querying for 3 OR 2
+D,3, 1.40628e+06,1742
+---querying for missing term
+E,3, 10866.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.46867e+06 microseconds
+0	started batch indexers in 4947.0 microseconds
+0	stopped batch indexers in 9.93888e+07 microseconds
+indexing complete in 9.9394e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 440.0,376
+AL-1,4, 380.0,344
+AL-2,4, 390.0,353
+AL-3,4, 392.0,324
+---querying 2 on remote locales
+AR-0,4, 281944.0,1024
+AR-0,4, 528942.0,1024
+AR-0,4, 281427.0,1024
+---querying for 3
+B,4, 740701.0,950
+---querying for 3 AND 2
+C,4, 16483.0,3
+---querying for 3 OR 2
+D,4, 1.81025e+06,1846
+---querying for missing term
+E,4, 14563.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 836910.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.74782e+07 microseconds
+indexing complete in 6.74784e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 375.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 454.0,375
+---querying for 3 AND 2
+C,1, 511.0,0
+---querying for 3 OR 2
+D,1, 1024.0,751
+---querying for missing term
+E,1, 100.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.80811e+06 microseconds
+0	started batch indexers in 7940.0 microseconds
+0	stopped batch indexers in 9.3111e+07 microseconds
+indexing complete in 9.31191e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 394.0,376
+AL-1,2, 363.0,344
+---querying 2 on remote locales
+AR-0,2, 270224.0,1024
+---querying for 3
+B,2, 426686.0,702
+---querying for 3 AND 2
+C,2, 19242.0,0
+---querying for 3 OR 2
+D,2, 905756.0,1422
+---querying for missing term
+E,2, 15669.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.13771e+06 microseconds
+0	started batch indexers in 10056.0 microseconds
+0	stopped batch indexers in 9.74825e+07 microseconds
+indexing complete in 9.74928e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 384.0,376
+AL-1,3, 355.0,344
+AL-2,3, 386.0,353
+---querying 2 on remote locales
+AR-0,3, 282526.0,1024
+AR-0,3, 298413.0,1024
+---querying for 3
+B,3, 1.36384e+06,897
+---querying for 3 AND 2
+C,3, 17325.0,3
+---querying for 3 OR 2
+D,3, 1.03042e+06,1544
+---querying for missing term
+E,3, 11607.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.90364e+06 microseconds
+0	started batch indexers in 5586.0 microseconds
+0	stopped batch indexers in 1.04071e+08 microseconds
+indexing complete in 1.04077e+08 microseconds
+---querying 2 on each locale
+AL-0,4, 432.0,376
+AL-1,4, 391.0,344
+AL-2,4, 361.0,353
+AL-3,4, 366.0,324
+---querying 2 on remote locales
+AR-0,4, 301176.0,1024
+AR-0,4, 293459.0,1024
+AR-0,4, 323524.0,1024
+---querying for 3
+B,4, 534989.0,822
+---querying for 3 AND 2
+C,4, 30384.0,3
+---querying for 3 OR 2
+D,4, 988878.0,1636
+---querying for missing term
+E,4, 11250.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 830087.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.79926e+07 microseconds
+indexing complete in 6.79928e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 376.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 436.0,375
+---querying for 3 AND 2
+C,1, 512.0,0
+---querying for 3 OR 2
+D,1, 1024.0,751
+---querying for missing term
+E,1, 121.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.67442e+06 microseconds
+0	started batch indexers in 2086.0 microseconds
+0	stopped batch indexers in 9.09388e+07 microseconds
+indexing complete in 9.09411e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 398.0,376
+AL-1,2, 362.0,344
+---querying 2 on remote locales
+AR-0,2, 658803.0,1024
+---querying for 3
+B,2, 1.98555e+06,702
+---querying for 3 AND 2
+C,2, 10728.0,0
+---querying for 3 OR 2
+D,2, 877178.0,1422
+---querying for missing term
+E,2, 13357.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 2.95355e+06 microseconds
+0	started batch indexers in 3212.0 microseconds
+0	stopped batch indexers in 9.11495e+07 microseconds
+indexing complete in 9.11529e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 382.0,376
+AL-1,3, 360.0,344
+AL-2,3, 379.0,353
+---querying 2 on remote locales
+AR-0,3, 278114.0,1024
+AR-0,3, 314490.0,1024
+---querying for 3
+B,3, 472782.0,749
+---querying for 3 AND 2
+C,3, 18076.0,3
+---querying for 3 OR 2
+D,3, 978072.0,1527
+---querying for missing term
+E,3, 98535.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.90857e+06 microseconds
+0	started batch indexers in 4442.0 microseconds
+0	stopped batch indexers in 1.04622e+08 microseconds
+indexing complete in 1.04627e+08 microseconds
+---querying 2 on each locale
+AL-0,4, 426.0,376
+AL-1,4, 402.0,344
+AL-2,4, 387.0,353
+AL-3,4, 372.0,324
+---querying 2 on remote locales
+AR-0,4, 306189.0,1024
+AR-0,4, 345824.0,1024
+AR-0,4, 630084.0,1024
+---querying for 3
+B,4, 793565.0,950
+---querying for 3 AND 2
+C,4, 15662.0,3
+---querying for 3 OR 2
+D,4, 1.27778e+06,1732
+---querying for missing term
+E,4, 12210.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 837306.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.72852e+07 microseconds
+indexing complete in 6.72854e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 376.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 403.0,375
+---querying for 3 AND 2
+C,1, 529.0,0
+---querying for 3 OR 2
+D,1, 1067.0,751
+---querying for missing term
+E,1, 118.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.70961e+06 microseconds
+0	started batch indexers in 5767.0 microseconds
+0	stopped batch indexers in 8.43936e+07 microseconds
+indexing complete in 8.43996e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 422.0,376
+AL-1,2, 401.0,344
+---querying 2 on remote locales
+AR-0,2, 299675.0,1024
+---querying for 3
+B,2, 561228.0,702
+---querying for 3 AND 2
+C,2, 18468.0,0
+---querying for 3 OR 2
+D,2, 932326.0,1422
+---querying for missing term
+E,2, 10330.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.33664e+06 microseconds
+0	started batch indexers in 3630.0 microseconds
+0	stopped batch indexers in 9.01043e+07 microseconds
+indexing complete in 9.01082e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 383.0,376
+AL-1,3, 373.0,344
+AL-2,3, 357.0,353
+---querying 2 on remote locales
+AR-0,3, 268128.0,1024
+AR-0,3, 446879.0,1024
+---querying for 3
+B,3, 516698.0,776
+---querying for 3 AND 2
+C,3, 14857.0,3
+---querying for 3 OR 2
+D,3, 1.1415e+06,1541
+---querying for missing term
+E,3, 11140.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.7094e+06 microseconds
+0	started batch indexers in 4680.0 microseconds
+0	stopped batch indexers in 9.21008e+07 microseconds
+indexing complete in 9.21058e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 433.0,376
+AL-1,4, 367.0,344
+AL-2,4, 353.0,353
+AL-3,4, 364.0,324
+---querying 2 on remote locales
+AR-0,4, 324267.0,1024
+AR-0,4, 294824.0,1024
+AR-0,4, 331386.0,1024
+---querying for 3
+B,4, 1.31458e+06,928
+---querying for 3 AND 2
+C,4, 14884.0,3
+---querying for 3 OR 2
+D,4, 1.44231e+06,1683
+---querying for missing term
+E,4, 11073.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 838842.0 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.76715e+07 microseconds
+indexing complete in 6.76717e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 382.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 406.0,375
+---querying for 3 AND 2
+C,1, 515.0,0
+---querying for 3 OR 2
+D,1, 1044.0,751
+---querying for missing term
+E,1, 118.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.99815e+06 microseconds
+0	started batch indexers in 1812.0 microseconds
+0	stopped batch indexers in 8.89928e+07 microseconds
+indexing complete in 8.89948e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 421.0,376
+AL-1,2, 364.0,344
+---querying 2 on remote locales
+AR-0,2, 364631.0,1024
+---querying for 3
+B,2, 451128.0,702
+---querying for 3 AND 2
+C,2, 18333.0,0
+---querying for 3 OR 2
+D,2, 842330.0,1422
+---querying for missing term
+E,2, 10298.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.70315e+06 microseconds
+0	started batch indexers in 3266.0 microseconds
+0	stopped batch indexers in 9.30983e+07 microseconds
+indexing complete in 9.31018e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 412.0,376
+AL-1,3, 385.0,344
+AL-2,3, 401.0,353
+---querying 2 on remote locales
+AR-0,3, 283039.0,1024
+AR-0,3, 292535.0,1024
+---querying for 3
+B,3, 689495.0,844
+---querying for 3 AND 2
+C,3, 14228.0,3
+---querying for 3 OR 2
+D,3, 1.44505e+06,1669
+---querying for missing term
+E,3, 11667.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.161e+06 microseconds
+0	started batch indexers in 4943.0 microseconds
+0	stopped batch indexers in 9.09073e+07 microseconds
+indexing complete in 9.09125e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 455.0,376
+AL-1,4, 359.0,344
+AL-2,4, 400.0,353
+AL-3,4, 382.0,324
+---querying 2 on remote locales
+AR-0,4, 310646.0,1024
+AR-0,4, 305193.0,1024
+AR-0,4, 303389.0,1024
+---querying for 3
+B,4, 990006.0,989
+---querying for 3 AND 2
+C,4, 18657.0,3
+---querying for 3 OR 2
+D,4, 1.00583e+06,1598
+---querying for missing term
+E,4, 14218.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 839085.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.82304e+07 microseconds
+indexing complete in 6.82306e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 397.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 412.0,375
+---querying for 3 AND 2
+C,1, 510.0,0
+---querying for 3 OR 2
+D,1, 1015.0,751
+---querying for missing term
+E,1, 137.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.91735e+06 microseconds
+0	started batch indexers in 2800.0 microseconds
+0	stopped batch indexers in 9.14265e+07 microseconds
+indexing complete in 9.14295e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 397.0,376
+AL-1,2, 380.0,344
+---querying 2 on remote locales
+AR-0,2, 341779.0,1024
+---querying for 3
+B,2, 426231.0,702
+---querying for 3 AND 2
+C,2, 10510.0,0
+---querying for 3 OR 2
+D,2, 861833.0,1422
+---querying for missing term
+E,2, 10327.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.02033e+06 microseconds
+0	started batch indexers in 5946.0 microseconds
+0	stopped batch indexers in 8.63149e+07 microseconds
+indexing complete in 8.63211e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 389.0,376
+AL-1,3, 368.0,344
+AL-2,3, 357.0,353
+---querying 2 on remote locales
+AR-0,3, 284538.0,1024
+AR-0,3, 292870.0,1024
+---querying for 3
+B,3, 790268.0,946
+---querying for 3 AND 2
+C,3, 15296.0,3
+---querying for 3 OR 2
+D,3, 1.26722e+06,1574
+---querying for missing term
+E,3, 11870.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.78478e+06 microseconds
+0	started batch indexers in 116406.0 microseconds
+0	stopped batch indexers in 9.72529e+07 microseconds
+indexing complete in 9.73696e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 431.0,376
+AL-1,4, 384.0,344
+AL-2,4, 405.0,353
+AL-3,4, 367.0,324
+---querying 2 on remote locales
+AR-0,4, 278200.0,1024
+AR-0,4, 374325.0,1024
+AR-0,4, 367344.0,1024
+---querying for 3
+B,4, 521012.0,802
+---querying for 3 AND 2
+C,4, 18223.0,3
+---querying for 3 OR 2
+D,4, 1.88585e+06,1700
+---querying for missing term
+E,4, 11047.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 1.03073e+06 microseconds
+0	started batch indexers in 33.0 microseconds
+0	stopped batch indexers in 6.77875e+07 microseconds
+indexing complete in 6.77877e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 374.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 404.0,375
+---querying for 3 AND 2
+C,1, 497.0,0
+---querying for 3 OR 2
+D,1, 1045.0,751
+---querying for missing term
+E,1, 131.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.90184e+06 microseconds
+0	started batch indexers in 1776.0 microseconds
+0	stopped batch indexers in 8.80417e+07 microseconds
+indexing complete in 8.80437e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 537.0,376
+AL-1,2, 369.0,344
+---querying 2 on remote locales
+AR-0,2, 275106.0,1024
+---querying for 3
+B,2, 404466.0,702
+---querying for 3 AND 2
+C,2, 11014.0,0
+---querying for 3 OR 2
+D,2, 868042.0,1422
+---querying for missing term
+E,2, 12879.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.32738e+06 microseconds
+0	started batch indexers in 3462.0 microseconds
+0	stopped batch indexers in 9.29639e+07 microseconds
+indexing complete in 9.29676e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 386.0,376
+AL-1,3, 376.0,344
+AL-2,3, 402.0,353
+---querying 2 on remote locales
+AR-0,3, 280941.0,1024
+AR-0,3, 287674.0,1024
+---querying for 3
+B,3, 466793.0,733
+---querying for 3 AND 2
+C,3, 49656.0,3
+---querying for 3 OR 2
+D,3, 1.43814e+06,1780
+---querying for missing term
+E,3, 68292.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.06769e+06 microseconds
+0	started batch indexers in 4994.0 microseconds
+0	stopped batch indexers in 9.78315e+07 microseconds
+indexing complete in 9.78367e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 428.0,376
+AL-1,4, 396.0,344
+AL-2,4, 348.0,353
+AL-3,4, 382.0,324
+---querying 2 on remote locales
+AR-0,4, 502515.0,1024
+AR-0,4, 304857.0,1024
+AR-0,4, 281398.0,1024
+---querying for 3
+B,4, 768812.0,951
+---querying for 3 AND 2
+C,4, 14628.0,3
+---querying for 3 OR 2
+D,4, 1.35563e+06,1735
+---querying for missing term
+E,4, 105389.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 880299.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.75332e+07 microseconds
+indexing complete in 6.75334e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 375.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 405.0,375
+---querying for 3 AND 2
+C,1, 492.0,0
+---querying for 3 OR 2
+D,1, 1041.0,751
+---querying for missing term
+E,1, 117.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.67684e+06 microseconds
+0	started batch indexers in 2011.0 microseconds
+0	stopped batch indexers in 8.8876e+07 microseconds
+indexing complete in 8.88783e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 404.0,376
+AL-1,2, 372.0,344
+---querying 2 on remote locales
+AR-0,2, 282197.0,1024
+---querying for 3
+B,2, 405621.0,702
+---querying for 3 AND 2
+C,2, 25396.0,0
+---querying for 3 OR 2
+D,2, 857215.0,1422
+---querying for missing term
+E,2, 31231.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 2.84995e+06 microseconds
+0	started batch indexers in 3246.0 microseconds
+0	stopped batch indexers in 9.31921e+07 microseconds
+indexing complete in 9.31956e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 389.0,376
+AL-1,3, 394.0,344
+AL-2,3, 349.0,353
+---querying 2 on remote locales
+AR-0,3, 309361.0,1024
+AR-0,3, 302560.0,1024
+---querying for 3
+B,3, 467895.0,734
+---querying for 3 AND 2
+C,3, 23207.0,3
+---querying for 3 OR 2
+D,3, 1.04985e+06,1545
+---querying for missing term
+E,3, 11060.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 5.40972e+06 microseconds
+0	started batch indexers in 5570.0 microseconds
+0	stopped batch indexers in 9.37599e+07 microseconds
+indexing complete in 9.37657e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 424.0,376
+AL-1,4, 390.0,344
+AL-2,4, 424.0,353
+AL-3,4, 368.0,324
+---querying 2 on remote locales
+AR-0,4, 277802.0,1024
+AR-0,4, 282873.0,1024
+AR-0,4, 303030.0,1024
+---querying for 3
+B,4, 494466.0,804
+---querying for 3 AND 2
+C,4, 16585.0,3
+---querying for 3 OR 2
+D,4, 1.29885e+06,1652
+---querying for missing term
+E,4, 11245.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 838862.0 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.75665e+07 microseconds
+indexing complete in 6.75667e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 377.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 426.0,375
+---querying for 3 AND 2
+C,1, 554.0,0
+---querying for 3 OR 2
+D,1, 1069.0,751
+---querying for missing term
+E,1, 98.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.79357e+06 microseconds
+0	started batch indexers in 1920.0 microseconds
+0	stopped batch indexers in 8.01545e+07 microseconds
+indexing complete in 8.01567e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 409.0,376
+AL-1,2, 377.0,344
+---querying 2 on remote locales
+AR-0,2, 273425.0,1024
+---querying for 3
+B,2, 639084.0,702
+---querying for 3 AND 2
+C,2, 10373.0,0
+---querying for 3 OR 2
+D,2, 1.11592e+06,1422
+---querying for missing term
+E,2, 10605.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.25151e+06 microseconds
+0	started batch indexers in 3375.0 microseconds
+0	stopped batch indexers in 9.02231e+07 microseconds
+indexing complete in 9.02267e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 392.0,376
+AL-1,3, 362.0,344
+AL-2,3, 413.0,353
+---querying 2 on remote locales
+AR-0,3, 267726.0,1024
+AR-0,3, 273564.0,1024
+---querying for 3
+B,3, 870360.0,831
+---querying for 3 AND 2
+C,3, 15259.0,3
+---querying for 3 OR 2
+D,3, 1.00738e+06,1539
+---querying for missing term
+E,3, 14931.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.42416e+06 microseconds
+0	started batch indexers in 27450.0 microseconds
+0	stopped batch indexers in 9.33236e+07 microseconds
+indexing complete in 9.33513e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 437.0,376
+AL-1,4, 379.0,344
+AL-2,4, 387.0,353
+AL-3,4, 378.0,324
+---querying 2 on remote locales
+AR-0,4, 290906.0,1024
+AR-0,4, 298595.0,1024
+AR-0,4, 313291.0,1024
+---querying for 3
+B,4, 679404.0,888
+---querying for 3 AND 2
+C,4, 20275.0,3
+---querying for 3 OR 2
+D,4, 967520.0,1577
+---querying for missing term
+E,4, 72256.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 1.083e+06 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.74177e+07 microseconds
+indexing complete in 6.74179e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 374.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 408.0,375
+---querying for 3 AND 2
+C,1, 492.0,0
+---querying for 3 OR 2
+D,1, 1019.0,751
+---querying for missing term
+E,1, 133.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.7979e+06 microseconds
+0	started batch indexers in 2013.0 microseconds
+0	stopped batch indexers in 8.96441e+07 microseconds
+indexing complete in 8.96464e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 397.0,376
+AL-1,2, 403.0,344
+---querying 2 on remote locales
+AR-0,2, 283983.0,1024
+---querying for 3
+B,2, 473409.0,702
+---querying for 3 AND 2
+C,2, 10779.0,0
+---querying for 3 OR 2
+D,2, 871185.0,1422
+---querying for missing term
+E,2, 10111.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.22109e+06 microseconds
+0	started batch indexers in 3536.0 microseconds
+0	stopped batch indexers in 9.64376e+07 microseconds
+indexing complete in 9.64414e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 393.0,376
+AL-1,3, 371.0,344
+AL-2,3, 387.0,353
+---querying 2 on remote locales
+AR-0,3, 280234.0,1024
+AR-0,3, 287115.0,1024
+---querying for 3
+B,3, 1.00813e+06,854
+---querying for 3 AND 2
+C,3, 125708.0,3
+---querying for 3 OR 2
+D,3, 1.11609e+06,1541
+---querying for missing term
+E,3, 10569.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.34154e+06 microseconds
+0	started batch indexers in 4456.0 microseconds
+0	stopped batch indexers in 9.19275e+07 microseconds
+indexing complete in 9.19321e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 529.0,376
+AL-1,4, 381.0,344
+AL-2,4, 376.0,353
+AL-3,4, 352.0,324
+---querying 2 on remote locales
+AR-0,4, 539158.0,1024
+AR-0,4, 295814.0,1024
+AR-0,4, 289035.0,1024
+---querying for 3
+B,4, 840765.0,977
+---querying for 3 AND 2
+C,4, 16423.0,3
+---querying for 3 OR 2
+D,4, 1.14117e+06,1607
+---querying for missing term
+E,4, 25374.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 833403.0 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.80386e+07 microseconds
+indexing complete in 6.80388e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 403.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 414.0,375
+---querying for 3 AND 2
+C,1, 497.0,0
+---querying for 3 OR 2
+D,1, 1011.0,751
+---querying for missing term
+E,1, 131.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.67105e+06 microseconds
+0	started batch indexers in 1913.0 microseconds
+0	stopped batch indexers in 8.3915e+07 microseconds
+indexing complete in 8.39172e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 398.0,376
+AL-1,2, 373.0,344
+---querying 2 on remote locales
+AR-0,2, 258658.0,1024
+---querying for 3
+B,2, 445477.0,702
+---querying for 3 AND 2
+C,2, 13343.0,0
+---querying for 3 OR 2
+D,2, 919183.0,1422
+---querying for missing term
+E,2, 10569.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.13479e+06 microseconds
+0	started batch indexers in 3172.0 microseconds
+0	stopped batch indexers in 9.54779e+07 microseconds
+indexing complete in 9.54812e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 390.0,376
+AL-1,3, 368.0,344
+AL-2,3, 400.0,353
+---querying 2 on remote locales
+AR-0,3, 301625.0,1024
+AR-0,3, 287685.0,1024
+---querying for 3
+B,3, 492135.0,766
+---querying for 3 AND 2
+C,3, 15326.0,3
+---querying for 3 OR 2
+D,3, 947875.0,1487
+---querying for missing term
+E,3, 20521.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.87776e+06 microseconds
+0	started batch indexers in 12072.0 microseconds
+0	stopped batch indexers in 9.38556e+07 microseconds
+indexing complete in 9.38679e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 423.0,376
+AL-1,4, 365.0,344
+AL-2,4, 366.0,353
+AL-3,4, 364.0,324
+---querying 2 on remote locales
+AR-0,4, 267495.0,1024
+AR-0,4, 295398.0,1024
+AR-0,4, 315830.0,1024
+---querying for 3
+B,4, 511058.0,775
+---querying for 3 AND 2
+C,4, 15394.0,3
+---querying for 3 OR 2
+D,4, 1.11575e+06,1686
+---querying for missing term
+E,4, 16766.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 839317.0 microseconds
+0	started batch indexers in 34.0 microseconds
+0	stopped batch indexers in 6.74535e+07 microseconds
+indexing complete in 6.74537e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 381.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 419.0,375
+---querying for 3 AND 2
+C,1, 514.0,0
+---querying for 3 OR 2
+D,1, 1036.0,751
+---querying for missing term
+E,1, 109.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.77574e+06 microseconds
+0	started batch indexers in 1501.0 microseconds
+0	stopped batch indexers in 9.04109e+07 microseconds
+indexing complete in 9.04126e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 399.0,376
+AL-1,2, 376.0,344
+---querying 2 on remote locales
+AR-0,2, 257088.0,1024
+---querying for 3
+B,2, 835297.0,702
+---querying for 3 AND 2
+C,2, 13598.0,0
+---querying for 3 OR 2
+D,2, 905653.0,1422
+---querying for missing term
+E,2, 11590.0,0
+using 3 locales
+initializing index
+0	initialized partitions in 3.87862e+06 microseconds
+0	started batch indexers in 3667.0 microseconds
+0	stopped batch indexers in 9.85448e+07 microseconds
+indexing complete in 9.85486e+07 microseconds
+---querying 2 on each locale
+AL-0,3, 470.0,376
+AL-1,3, 401.0,344
+AL-2,3, 375.0,353
+---querying 2 on remote locales
+AR-0,3, 293463.0,1024
+AR-0,3, 259274.0,1024
+---querying for 3
+B,3, 739694.0,761
+---querying for 3 AND 2
+C,3, 15290.0,3
+---querying for 3 OR 2
+D,3, 1.40455e+06,1584
+---querying for missing term
+E,3, 16168.0,0
+using 4 locales
+initializing index
+0	initialized partitions in 4.33939e+06 microseconds
+0	started batch indexers in 7595.0 microseconds
+0	stopped batch indexers in 9.03377e+07 microseconds
+indexing complete in 9.03455e+07 microseconds
+---querying 2 on each locale
+AL-0,4, 382.0,376
+AL-1,4, 356.0,344
+AL-2,4, 354.0,353
+AL-3,4, 396.0,324
+---querying 2 on remote locales
+AR-0,4, 334011.0,1024
+AR-0,4, 308459.0,1024
+AR-0,4, 287390.0,1024
+---querying for 3
+B,4, 520563.0,827
+---querying for 3 AND 2
+C,4, 14793.0,3
+---querying for 3 OR 2
+D,4, 1.54293e+06,1744
+---querying for missing term
+E,4, 11370.0,0
+using 1 locales
+initializing index
+0	initialized partitions in 837371.0 microseconds
+0	started batch indexers in 32.0 microseconds
+0	stopped batch indexers in 6.77589e+07 microseconds
+indexing complete in 6.77591e+07 microseconds
+---querying 2 on each locale
+AL-0,1, 376.0,376
+---querying 2 on remote locales
+---querying for 3
+B,1, 400.0,375
+---querying for 3 AND 2
+C,1, 488.0,0
+---querying for 3 OR 2
+D,1, 1072.0,751
+---querying for missing term
+E,1, 118.0,0
+using 2 locales
+initializing index
+0	initialized partitions in 1.94091e+06 microseconds
+0	started batch indexers in 6301.0 microseconds
+0	stopped batch indexers in 8.92711e+07 microseconds
+indexing complete in 8.92777e+07 microseconds
+---querying 2 on each locale
+AL-0,2, 403.0,376
+AL-1,2, 360.0,344
+---querying 2 on remote locales
+AR-0,2, 369073.0,1024
+---querying for 3
+B,2, 423979.0,702
+---querying for 3 AND 2
+C,2, 10526.0,0
+---querying for 3 OR 2
+D,2, 853910.0,1422
+---querying for missing term
+E,2, 10198.0,0
