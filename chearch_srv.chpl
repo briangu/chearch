@@ -1,4 +1,4 @@
-use BatchIndexer, Logging, Memory, LibEv, IO, Random, SearchIndex, Time;
+use Logging, Memory, LibEv, IO, Random, SearchIndex, SyntheticDataIndexer, Time;
 
 // ****
 // NOTE: this is very much in progress
@@ -16,45 +16,34 @@ config const port: c_int = 3033;
 config const post_load_test: bool = false;
 config const load_from_partitions: bool = true;
 
-// TODO: we need to know which client context this is so that we can maintain parsing context
-//       is the fd enough?
-export proc handle_received_data(fd: c_int, buffer: c_string, read: size_t, buffer_size: size_t) {
+export proc handle_received_data(fd: c_int, tcp_buffer: c_string, read: size_t, buffer_size: size_t) {
+  // is the fd unique enough to bind a multi-handle processing context to?
 
-  // writeln("from chpl: " + buffer);
-  // accumulate string buffer
-  var word = buffer;
-  var trimmedWord: string = "";
-  writeln("word: ", word);
+  // simulate processing the query
+  var buffer = new InstructionBuffer(32);
+  var writer = new InstructionWriter(buffer);
+  buffer.clear();
+  writer.write_push();
+  writer.write_term(2);
 
-  for i in 1..word.length {
-    var ch = word.substring(i);
-    if (ch != "\r" && ch != "\n") {
-      writeln("ch: ", word.substring(i));
-      trimmedWord += word.substring(i);
-    }
+  forall result in query(new Query(buffer)) {
+    writeln(result);
   }
 
-  //  writeln("trimmedWord: ", trimmedWord);
-  if (trimmedWord == "dump") {
-    // dumpPartition(partitionForWord("dog"));
-  } else {
-    writeln("<adding>");
-    writeln("</adding>");
-  }
-  send(fd, buffer, read, 0);
+  send(fd, tcp_buffer, read, 0);
 }
 
 proc main() {
 
-  writeln("creating socket...");
+  info("creating socket...");
   var sd: ev_fd = initialize_socket(port);
-  writeln("socket id = ", sd);
+  debug("socket id = ", sd);
   if (sd == -1) {
-   writeln("socket error");
+   error("socket error");
    return -1;
   }
 
-  writeln("initializing index");
+  info("initializing index");
   initPartitions();
 
   // POPULATE THE INDEX
@@ -68,7 +57,7 @@ proc main() {
   t.stop();
   timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
-  writeln("initializing event loop...");
+  info("initializing event loop...");
 
   // port c_accept_cb, c_read_cb
   var w_accept: ev_io = new ev_io();
@@ -78,4 +67,6 @@ proc main() {
   while (1) {
    ev_loop_fn(EV_DEFAULT, 0);
   }
+
+  return 0;
 }
