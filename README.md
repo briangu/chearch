@@ -132,7 +132,7 @@ General setup is expecting an OSX brew installation:
     
 Chapel (http://chapel.cray.com/download.html)
 
-	brea install chapel
+    brew install chapel
 
 COMPILING
 
