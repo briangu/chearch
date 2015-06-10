@@ -137,22 +137,41 @@ module MemorySegment {
       return externalDocumentIds[documentIndex];
     }
 
-    // use an array of DocumentIdPoolBankSubPool so that we don't have to allocate everything up front
-    var documentIdPool: [0..3] DocumentIdPoolBank = [
-      new DocumentIdPoolBank(1 << 1, 1 << 23), // 2 + 2 + 1 + 27 = 32 = 2 + 2 + 1 + 23 + 4
-      new DocumentIdPoolBank(1 << 4, 1 << 20), // 2 + 2 + 4 + 24 = 32 = 2 + 2 + 4 + 20 + 4
-      new DocumentIdPoolBank(1 << 7, 1 << 17), // 2 + 2 + 7 + 21 = 32 = 2 + 2 + 4 + 17 + 4
-      new DocumentIdPoolBank(1 << 11, 1 << 13) // 2 + 2 + 11 + 17 = 32 = 2 + 2 + 4 + 13 + 4
-    ];
+    // ************************
+    // BUG: by having an array of objects it causes Chapel to use N-1 CPUs at 100%
+    // ************************
+    // // use an array of DocumentIdPoolBankSubPool so that we don't have to allocate everything up front
+    // var documentIdPool: [0..3] DocumentIdPoolBank = [
+    //   new DocumentIdPoolBank(1 << 1, 1 << 23), // 2 + 2 + 1 + 27 = 32 = 2 + 2 + 1 + 23 + 4
+    //   new DocumentIdPoolBank(1 << 4, 1 << 20), // 2 + 2 + 4 + 24 = 32 = 2 + 2 + 4 + 20 + 4
+    //   new DocumentIdPoolBank(1 << 7, 1 << 17), // 2 + 2 + 7 + 21 = 32 = 2 + 2 + 4 + 17 + 4
+    //   new DocumentIdPoolBank(1 << 11, 1 << 13) // 2 + 2 + 11 + 17 = 32 = 2 + 2 + 4 + 13 + 4
+    // ];
+
+    var documentIdPool0 = new DocumentIdPoolBank(1 << 1, 1 << 23);
+    var documentIdPool1 = new DocumentIdPoolBank(1 << 4, 1 << 20);
+    var documentIdPool2 = new DocumentIdPoolBank(1 << 7, 1 << 17);
+    var documentIdPool3 = new DocumentIdPoolBank(1 << 11, 1 << 13);
+
+    inline proc documentIdPool(idx: int): DocumentIdPoolBank {
+      select idx {
+        when 0 do return documentIdPool0;
+        when 1 do return documentIdPool1;
+        when 2 do return documentIdPool2;
+        when 3 do return documentIdPool3;
+      }
+      halt("unhandled document id pool index");
+      return nil;
+    }
 
     inline proc getDocumentIdPoolEntry(poolIndex: DocIdPoolIndex): DocumentIdPoolBankEntry {
       var (poolBankIndex, poolBankSubIndex, entryIndex, entryPos) = splitDocumentIdPoolIndex(poolIndex);
-      return documentIdPool[poolBankIndex].subPool[poolBankSubIndex].entries[entryIndex];
+      return documentIdPool(poolBankIndex).subPool[poolBankSubIndex].entries[entryIndex];
     }
 
     inline proc getDocumentIdPoolEntryDocId(poolIndex: DocIdPoolIndex): DocId {
       var (poolBankIndex, poolBankSubIndex, entryIndex, entryPos) = splitDocumentIdPoolIndex(poolIndex);
-      return documentIdPool[poolBankIndex].subPool[poolBankSubIndex].entries[entryIndex].documentIds[entryPos];
+      return documentIdPool(poolBankIndex).subPool[poolBankSubIndex].entries[entryIndex].documentIds[entryPos];
     }
 
     proc allocateNewDocIdInDocumentIdPool(docId: DocId): DocIdPoolIndex {
@@ -176,7 +195,7 @@ module MemorySegment {
     proc setDocIdAtNextDocumentIdPoolIndex(poolIndex: DocIdPoolIndex, docId: DocId): DocIdPoolIndex {
       var (poolBankIndex, poolBankSubIndex, entryIndex, entryPos) = splitDocumentIdPoolIndex(poolIndex);
       
-      var pool = documentIdPool[poolBankIndex];
+      var pool = documentIdPool(poolBankIndex);
 
       entryPos += 1;
 
@@ -185,7 +204,7 @@ module MemorySegment {
         // then we should bump to the next pool size
         if (poolBankIndex < 3) {
           poolBankIndex += 1;
-          pool = documentIdPool[poolBankIndex];
+          pool = documentIdPool(poolBankIndex);
         }
 
         pool.entryCount += 1;

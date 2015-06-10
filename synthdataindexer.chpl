@@ -76,7 +76,7 @@ module SyntheticDataIndexer {
 
     for loc in Locales {
       on loc {
-        local {
+        local { // TODO: local probably not needed here
           batchIndexers[here.id] = new BatchIndexer();
         }
         batchIndexers[here.id].startWorker();
