@@ -58,4 +58,23 @@ module Search {
       return NullOperand[here.id];
     }
   }
+
+  // DevNull segment: you can insert anytime you like, but you can never retrieve
+  class DevNullSegment : Segment {
+    inline proc isSegmentFull(): bool {
+      return false;
+    }
+
+    proc addDocument(terms: [?D] IndexTerm, externalDocId: ExternalDocId): bool {
+      return true;
+    }
+
+    iter query(query: Query): QueryResult {
+      yield new QueryResult();
+    }
+
+    proc operandForTerm(term: Term): Operand {
+      return NullOperand[here.id];
+    }
+  }
 }

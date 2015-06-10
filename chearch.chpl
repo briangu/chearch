@@ -14,15 +14,9 @@ proc main() {
   writeln("initializing index");
   initPartitions();
 
-  // batch load the index from storage
+  indexSyntheticDocuments();
+
   var t: Timer;
-  t.start();
-
-  startBatchIndexers();
-  waitForBatchIndexers();
-
-  t.stop();
-  writeln("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
   writeln("---querying 2 on each locale");
   {

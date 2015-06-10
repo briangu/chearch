@@ -76,16 +76,9 @@ proc main() {
   info("initializing index");
   initPartitions();
 
-  // POPULATE THE INDEX
+  indexSyntheticDocuments();
 
   var t: Timer;
-  t.start();
-
-  startBatchIndexers();
-  waitForBatchIndexers();
-
-  t.stop();
-  timing("indexing complete in ",t.elapsed(TimeUnits.microseconds), " microseconds");
 
   info("initializing event loop...");
 

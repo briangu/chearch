@@ -9,23 +9,10 @@ module SyntheticDataIndexer {
   config const maxTermsPerDocument = 10;
   config const maxTermsIds = 16384; // max number of terms across all docs
 
-  class BatchIndexer {
-    var release$: single bool;
+  class SyntheticDataIndexer {
     var t: Timer;
 
-    proc startWorker() {
-      begin {
-        worker();
-      }
-    }
-
-    proc waitForIndexer() {
-      debug("waiting...");
-      release$;
-      debug("done waiting...");
-    }
-
-    proc worker() {
+    proc work() {
       local {
         var seed = (17 * here.id * 2) + 1;
         var randStreamSeeded: RandomStream = new RandomStream(seed);
@@ -61,46 +48,27 @@ module SyntheticDataIndexer {
           baseExternalId += termIdStep;
         }
       }
-
-      release$ = true;
     }
   }
 
-  const SyntheticDataSpace = {0..Locales.size-1};
-  const SyntheticDataReplicatedSpace = SyntheticDataSpace dmapped ReplicatedDist();
-  var batchIndexers: [SyntheticDataReplicatedSpace] BatchIndexer;
-
-  proc startBatchIndexers() {
+  proc indexSyntheticDocuments() {
     var t: Timer;
     t.start();
 
+    // TODO: once the overall CPU hog problem is understood,
+    //       put back running these indexers as workers in begin blocks 
+    //       add back: startIndexers, waitForIndexers
     forall loc in Locales {
       on loc {
-        local { // TODO: local probably not needed here
-          var worker = new BatchIndexer();
-          worker.worker();
+        local {
+          var worker = new SyntheticDataIndexer();
+          worker.work();
           delete worker;
         }
       }
     }
     
     t.stop();
-    timing("started batch indexers in ",t.elapsed(TimeUnits.microseconds), " microseconds");
-  }
-
-  proc waitForBatchIndexers() {
-    var t: Timer;
-    t.start();
-
-    // for loc in Locales {
-    //   on loc {
-    //     batchIndexers[here.id].waitForIndexer();
-    //     delete batchIndexers[here.id];
-    //     batchIndexers[here.id] = nil;
-    //   }
-    // }
-    
-    t.stop();
-    timing("stopped batch indexers in ",t.elapsed(TimeUnits.microseconds), " microseconds");
+    timing("finished indexing in ",t.elapsed(TimeUnits.microseconds), " microseconds");
   }
 }
