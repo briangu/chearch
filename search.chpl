@@ -55,7 +55,7 @@ module Search {
 
     proc operandForTerm(term: Term): Operand {
       halt("not implemented");
-      return new Operand();
+      return NullOperand[here.id];
     }
   }
 }

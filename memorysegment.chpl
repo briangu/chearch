@@ -148,6 +148,7 @@ module MemorySegment {
     //   new DocumentIdPoolBank(1 << 11, 1 << 13) // 2 + 2 + 11 + 17 = 32 = 2 + 2 + 4 + 13 + 4
     // ];
 
+    // BUG: using only a single pool causes the engine to get screwed up, even if the pool is big enough
     var documentIdPool0 = new DocumentIdPoolBank(1 << 1, 1 << 23);
     var documentIdPool1 = new DocumentIdPoolBank(1 << 4, 1 << 20);
     var documentIdPool2 = new DocumentIdPoolBank(1 << 7, 1 << 17);

@@ -74,12 +74,13 @@ module SyntheticDataIndexer {
     var t: Timer;
     t.start();
 
-    for loc in Locales {
+    forall loc in Locales {
       on loc {
         local { // TODO: local probably not needed here
-          batchIndexers[here.id] = new BatchIndexer();
+          var worker = new BatchIndexer();
+          worker.worker();
+          delete worker;
         }
-        batchIndexers[here.id].startWorker();
       }
     }
     
@@ -91,13 +92,13 @@ module SyntheticDataIndexer {
     var t: Timer;
     t.start();
 
-    for loc in Locales {
-      on loc {
-        batchIndexers[here.id].waitForIndexer();
-        delete batchIndexers[here.id];
-        batchIndexers[here.id] = nil;
-      }
-    }
+    // for loc in Locales {
+    //   on loc {
+    //     batchIndexers[here.id].waitForIndexer();
+    //     delete batchIndexers[here.id];
+    //     batchIndexers[here.id] = nil;
+    //   }
+    // }
     
     t.stop();
     timing("stopped batch indexers in ",t.elapsed(TimeUnits.microseconds), " microseconds");
