@@ -36,22 +36,31 @@ export proc handle_received_data(fd: c_int, tcp_buffer: c_ptr(c_char), read: siz
     buffer.buffer[i] = tcp_buffer[i+1]: ChasmOp;
   }
 
+  const record_size: uint = 5;
+  const record_count: uint = 32;
+
+  var cArray = c_calloc(c_char, record_size * record_count);
+  var count = 0: uint;
   for result in query(new Query(buffer)) {
+    if (count >= record_count) {
+      break;
+    }
+
     writeln(result);
 
-    // TODO: we need a real buffering solution here
-    tcp_buffer[0] = (result.term >> 24): c_char;
-    tcp_buffer[1] = ((result.term >> 16) & 0xFF): c_char;
-    tcp_buffer[2] = ((result.term >> 8) & 0xFF): c_char;
-    tcp_buffer[3] = (result.term & 0xFF): c_char;
-    // tcp_buffer[4] = result.textLocation: c_char;
+    var offset = count * record_size;
+    cArray[offset + 0] = (result.term >> 24): c_char;
+    cArray[offset + 1] = ((result.term >> 16) & 0xFF): c_char;
+    cArray[offset + 2] = ((result.term >> 8) & 0xFF): c_char;
+    cArray[offset + 3] = (result.term & 0xFF): c_char;
+    cArray[offset + 4] = result.textLocation: c_char;
     // tcp_buffer[5] = result.externalDocId <<
-
-    // TODO: sending repeatedly here causes the app to crash
-    // send(fd, tcp_buffer, 4, 0);
+    count += 1;
   }
 
-  send(fd, tcp_buffer, 4, 0);
+  send(fd, cArray, count * record_size, 0);
+
+  c_free(cArray);
 }
 
 proc main() {
