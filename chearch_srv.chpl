@@ -1,4 +1,5 @@
-use Logging, Memory, LibEv, IO, Random, SearchIndex, SyntheticDataIndexer, Time;
+// use Logging, Memory, LibEv, IO, Random, SearchIndex, SyntheticDataIndexer, Time;
+use Logging, LibEv, IO, SearchIndex, Time;
 
 // ****
 // NOTE: this is very much in progress
@@ -16,9 +17,8 @@ config const port: c_int = 3033;
 config const post_load_test: bool = false;
 config const load_from_partitions: bool = true;
 
+// TODO: is the fd unique enough to bind a multi-handle processing context to?
 export proc handle_received_data(fd: c_int, tcp_buffer: c_string, read: size_t, buffer_size: size_t) {
-  // is the fd unique enough to bind a multi-handle processing context to?
-
   // simulate processing the query
   var buffer = new InstructionBuffer(32);
   var writer = new InstructionWriter(buffer);
@@ -34,14 +34,6 @@ export proc handle_received_data(fd: c_int, tcp_buffer: c_string, read: size_t, 
 }
 
 proc main() {
-
-  info("creating socket...");
-  var sd: ev_fd = initialize_socket(port);
-  debug("socket id = ", sd);
-  if (sd == -1) {
-   error("socket error");
-   return -1;
-  }
 
   info("initializing index");
   initPartitions();
@@ -59,13 +51,22 @@ proc main() {
 
   info("initializing event loop...");
 
+  info("creating socket...");
+  var sd: ev_fd = initialize_socket(port);
+  debug("socket id = ", sd);
+  if (sd == -1) {
+    error("socket error");
+    return -1;
+  }
+
   // port c_accept_cb, c_read_cb
-  var w_accept: ev_io = new ev_io();
+  var w_accept = new ev_io();
   ev_io_init(w_accept, c_accept_cb, sd, EV_READ);
   ev_io_start(EV_DEFAULT, w_accept);
 
   while (1) {
-   ev_loop_fn(EV_DEFAULT, 0);
+    ev_loop_fn(EV_DEFAULT, 0); // EVLOOP_NONBLOCK
+    // chpl_task_yield();
   }
 
   return 0;
