@@ -15,7 +15,7 @@ module Chasm {
   class InstructionBuffer {
     var count: uint;
     var buffer: [0..count-1] ChasmOp;
-    var offset: uint = 0: uint;
+    var offset = 0: uint;
 
     inline proc atEnd(): bool {
       return (offset >= count);

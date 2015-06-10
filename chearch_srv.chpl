@@ -10,26 +10,48 @@ extern proc initialize_socket(port: c_int): c_int;
 // trampolines
 extern var c_accept_cb: opaque;
 
-extern proc send(sockfd:c_int, buffer: c_string, len: size_t, flags: c_int);
+extern proc send(sockfd:c_int, buffer: c_ptr(c_char), len: size_t, flags: c_int);
 
 config const port: c_int = 3033;
 config const post_load_test: bool = false;
 config const load_from_partitions: bool = true;
 
 // TODO: is the fd unique enough to bind a multi-handle processing context to?
-export proc handle_received_data(fd: c_int, tcp_buffer: c_string, read: size_t, buffer_size: size_t) {
-  // simulate processing the query
-  var buffer = new InstructionBuffer(32);
-  var writer = new InstructionWriter(buffer);
-  buffer.clear();
-  writer.write_push();
-  writer.write_term(2);
+export proc handle_received_data(fd: c_int, tcp_buffer: c_ptr(c_char), read: size_t, buffer_size: size_t) {
+  var instructionCount = tcp_buffer[0]: uint(8);
 
-  forall result in query(new Query(buffer)) {
-    writeln(result);
+  if (read > (256 + 1)) {
+    error("received query that was bigger than we can handle");
+    return;
   }
 
-  send(fd, tcp_buffer, read, 0);
+  if (read < (instructionCount - 1): size_t) {
+    // TODO: not all of the data is here.  the instructions may be split over multiple request buffers
+    error("not yet implemented: spanning over multiple request buffers");
+    return;
+  }
+
+  var buffer = new InstructionBuffer(instructionCount);
+  for i in 0..instructionCount-1 {
+    buffer.buffer[i] = tcp_buffer[i+1]: ChasmOp;
+  }
+
+  for result in query(new Query(buffer)) {
+    writeln(result);
+
+    // TODO: we need a real buffering solution here
+    tcp_buffer[0] = (result.term >> 24): c_char;
+    tcp_buffer[1] = ((result.term >> 16) & 0xFF): c_char;
+    tcp_buffer[2] = ((result.term >> 8) & 0xFF): c_char;
+    tcp_buffer[3] = (result.term & 0xFF): c_char;
+    // tcp_buffer[4] = result.textLocation: c_char;
+    // tcp_buffer[5] = result.externalDocId <<
+
+    // TODO: sending repeatedly here causes the app to crash
+    // send(fd, tcp_buffer, 4, 0);
+  }
+
+  send(fd, tcp_buffer, 4, 0);
 }
 
 proc main() {
