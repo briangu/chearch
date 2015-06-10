@@ -1,5 +1,4 @@
-// use Logging, Memory, LibEv, IO, Random, SearchIndex, SyntheticDataIndexer, Time;
-use Logging, LibEv, IO, SearchIndex, Time;
+use Logging, Memory, LibEv, IO, Random, SearchIndex, SyntheticDataIndexer, Time;
 
 // ****
 // NOTE: this is very much in progress
@@ -65,8 +64,7 @@ proc main() {
   ev_io_start(EV_DEFAULT, w_accept);
 
   while (1) {
-    ev_loop_fn(EV_DEFAULT, 0); // EVLOOP_NONBLOCK
-    // chpl_task_yield();
+    ev_loop_fn(EV_DEFAULT, 0);
   }
 
   return 0;
