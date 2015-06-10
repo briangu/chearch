@@ -8,14 +8,17 @@ CHEARCH_FILES=search.chpl synthdataindexer.chpl logging.chpl searchindex.chpl ch
 
 all: chearch 
 
+tcp_server:
+	$(CC) $(CFLAGS) -c -o tcp_server.o tcp/tcp_server.c
+
 helloworld:
-	chpl --print-passes --no-local --fast -o bin/helloworld test/helloworld.chpl search.chpl
+	chpl --print-passes --fast -o bin/helloworld test/helloworld.chpl search.chpl
 
 chearch:
-	chpl --print-passes --no-local --fast -o bin/chearch chearch.chpl $(CHEARCH_FILES)
+	chpl --print-passes --fast -o bin/chearch chearch.chpl $(CHEARCH_FILES)
 
 chearch_srv: tcp_server.o
-	chpl --print-passes --no-local --fast tcp/tcp_server.h tcp/tcp_server.c tcp/callbacks.h tcp/callbacks.c -I$(IDIR) -L$(LDIR) $(LIBS) -o bin/chearch tcp/libev.chpl chearch_srv.chpl  $(CHEARCH_FILES)
+	chpl --print-passes --fast tcp/tcp_server.h tcp_server.o tcp/callbacks.h tcp/callbacks.c -I$(IDIR) -L$(LDIR) $(LIBS) -o bin/chearch_srv tcp/libev.chpl chearch_srv.chpl  $(CHEARCH_FILES)
 
 chearch_test:
 	chpl --print-passes --no-local -o bin/chearch_test test/chearch_test.chpl search.chpl
