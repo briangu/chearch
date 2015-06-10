@@ -36,8 +36,8 @@ export proc handle_received_data(fd: c_int, tcp_buffer: c_ptr(c_char), read: siz
     buffer.buffer[i] = tcp_buffer[i+1]: ChasmOp;
   }
 
-  const record_size: uint = 5;
-  const record_count: uint = 32;
+  const record_size: uint = 4 + 1 + 8;
+  const record_count: uint = 8;
 
   var cArray = c_calloc(c_char, record_size * record_count);
   var count = 0: uint;
@@ -49,12 +49,20 @@ export proc handle_received_data(fd: c_int, tcp_buffer: c_ptr(c_char), read: siz
     writeln(result);
 
     var offset = count * record_size;
-    cArray[offset + 0] = (result.term >> 24): c_char;
-    cArray[offset + 1] = ((result.term >> 16) & 0xFF): c_char;
-    cArray[offset + 2] = ((result.term >> 8) & 0xFF): c_char;
-    cArray[offset + 3] = (result.term & 0xFF): c_char;
-    cArray[offset + 4] = result.textLocation: c_char;
-    // tcp_buffer[5] = result.externalDocId <<
+
+    for i in 1..4 {
+      cArray[offset] = ((result.term >> (32 - 8*i)) & 0xFF): c_char;
+      offset += 1;
+    }
+    
+    cArray[offset] = result.textLocation: c_char;
+    offset += 1;
+    
+    for i in 1..8 {
+      cArray[offset] = ((result.externalDocId >> (64 - 8*i)) & 0xFF): c_char;
+      offset += 1;
+    }
+
     count += 1;
   }
 
