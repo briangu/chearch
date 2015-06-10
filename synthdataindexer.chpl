@@ -66,9 +66,9 @@ module SyntheticDataIndexer {
     }
   }
 
-  const Space = {0..Locales.size-1};
-  const ReplicatedSpace = Space dmapped ReplicatedDist();
-  var batchIndexers: [ReplicatedSpace] BatchIndexer;
+  const SyntheticDataSpace = {0..Locales.size-1};
+  const SyntheticDataReplicatedSpace = SyntheticDataSpace dmapped ReplicatedDist();
+  var batchIndexers: [SyntheticDataReplicatedSpace] BatchIndexer;
 
   proc startBatchIndexers() {
     var t: Timer;
@@ -94,6 +94,8 @@ module SyntheticDataIndexer {
     for loc in Locales {
       on loc {
         batchIndexers[here.id].waitForIndexer();
+        delete batchIndexers[here.id];
+        batchIndexers[here.id] = nil;
       }
     }
     
