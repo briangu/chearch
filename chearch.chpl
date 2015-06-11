@@ -1,5 +1,7 @@
 use Logging, SearchIndex, SyntheticDataIndexer, Time;
 
+config const peformAR = true;
+
 /**
   This is server-less mode of Chearch that should eventually have a repl
 */
@@ -55,8 +57,8 @@ proc main() {
   // perform sample queries
   var writer = new InstructionWriter(buffer);
 
-  writeln("---querying 2 on remote locales");
-  {
+  if (peformAR) {
+    writeln("---querying 2 on remote locales");
     for loc in Locales {
       if (loc.id == here.id) {
         continue;
