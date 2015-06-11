@@ -1,1 +1,1 @@
-grep "^AR" perf_run.txt | tr " " "," > $1_AR.csv
+grep "^AR" $1 | tr " " "," | cut -f 4- -d ',' | python ../find_min.py $1 >> ../out/AR.csv
