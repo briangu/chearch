@@ -11,28 +11,28 @@ class InstructionBuffer {
   var buffer: [0..count-1] ChasmOp;
   var offset = 0: uint;
 
-  inline proc atEnd(): bool {
+  proc atEnd(): bool {
     return (offset >= count);
   }
 
-  inline proc rewind() {
+  proc rewind() {
     offset = 0;
   }
 
-  inline proc clear() {
+  proc clear() {
     buffer = 0;
     offset = 0;
   }
 
-  inline proc advance() {
+  proc advance() {
     offset += 1;
   }
 
-  inline proc canAdvance(increment: uint): bool {
+  proc canAdvance(increment: uint): bool {
     return (offset + increment) <= count;
   }
 
-  inline proc read(): ChasmOp {
+  proc read(): ChasmOp {
     if (atEnd()) {
       writeln("extended past instructions array end.");
       return 0;
@@ -42,7 +42,7 @@ class InstructionBuffer {
     return op;
   }
 
-  inline proc write(op: ChasmOp): bool {
+  proc write(op: ChasmOp): bool {
     if (atEnd()) {
       writeln("write is out of instruction space at offset ", offset, " for op code ", op);
       return false;
@@ -63,18 +63,18 @@ record InstructionReader {
     this.instructions.rewind();
   }
 
-  inline proc atEnd(): bool {
+  proc atEnd(): bool {
     return instructions.atEnd();
   }
 
-  inline proc read(): ChasmOp {
+  proc read(): ChasmOp {
     writeln("reading");
     return instructions.read();
   }
 
   // read the next 4 bytes from high to low order and create a Term
   // if something goes wrong while readNext we just use 0s in those slots and fail later.
-  inline proc readTerm(): Term {
+  proc readTerm(): Term {
     return 
       ((instructions.read(): Term) << 24) | 
       ((instructions.read(): Term) << 16) | 
@@ -147,17 +147,46 @@ proc main() {
   var reader = new InstructionReader(buffer);
 
   while (!reader.atEnd()) {
-/* FAILS to increment offset inside reader?
-    select reader.read() {
-      when 0 do writeln("zero");
-      when 1 do writeln("one");
-    }
-*/
+// FAILS to increment offset inside reader?
+    // select reader.read() {
+    //   when 0 do writeln("zero");
+    //   when 1 do writeln("one");
+    // }
+
     // works if you breakout the read and assign it to op
-    var op = reader.read();
+    var op: uint(8) = reader.read();
     select op {
       when 0 do writeln("zero");
       when 1 do writeln("one");
     }
   }
+
+  /*
+    while (tmp_chpl8) {
+    _ref_tmp__chpl3 = &reader_chpl3;
+    chpl_check_nil(_ref_tmp__chpl3, INT64(151), "select_read.chpl");
+    call_tmp_chpl9 = read_chpl2(_ref_tmp__chpl3);
+    call_tmp_chpl10 = ((uint8_t)(INT64(0)));
+    call_tmp_chpl11 = (call_tmp_chpl9 == call_tmp_chpl10);
+    if (call_tmp_chpl11) {
+      wide_string_from_c_string(&call_tmp_chpl12, "zero", INT64(0), INT64(0), INT64(152), "select_read.chpl");
+      writeln_chpl6(call_tmp_chpl12, INT64(152), "select_read.chpl");
+    } else {
+      _ref_tmp__chpl4 = &reader_chpl3;
+      chpl_check_nil(_ref_tmp__chpl4, INT64(151), "select_read.chpl");
+      call_tmp_chpl13 = read_chpl2(_ref_tmp__chpl4);
+      call_tmp_chpl14 = ((uint8_t)(INT64(1)));
+      call_tmp_chpl15 = (call_tmp_chpl13 == call_tmp_chpl14);
+      if (call_tmp_chpl15) {
+        wide_string_from_c_string(&call_tmp_chpl16, "one", INT64(0), INT64(0), INT64(153), "select_read.chpl");
+        writeln_chpl6(call_tmp_chpl16, INT64(153), "select_read.chpl");
+      }
+    }
+    _ref_tmp__chpl5 = &reader_chpl3;
+    chpl_check_nil(_ref_tmp__chpl5, INT64(149), "select_read.chpl");
+    call_tmp_chpl17 = atEnd_chpl2(_ref_tmp__chpl5);
+    call_tmp_chpl18 = (! call_tmp_chpl17);
+    tmp_chpl8 = call_tmp_chpl18;
+  }
+*/
 }
