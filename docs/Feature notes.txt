@@ -1,72 +1,12 @@
 Feature notes:
 
-    // ************************
-    // BUG: by having an array of objects it causes Chapel to use N-1 CPUs at 100%
-    // ************************
-    // // use an array of DocumentIdPoolBankSubPool so that we don't have to allocate everything up front
-    // var documentIdPool: [0..3] DocumentIdPoolBank = [
-    //   new DocumentIdPoolBank(1 << 1, 1 << 23), // 2 + 2 + 1 + 27 = 32 = 2 + 2 + 1 + 23 + 4
-    //   new DocumentIdPoolBank(1 << 4, 1 << 20), // 2 + 2 + 4 + 24 = 32 = 2 + 2 + 4 + 20 + 4
-    //   new DocumentIdPoolBank(1 << 7, 1 << 17), // 2 + 2 + 7 + 21 = 32 = 2 + 2 + 4 + 17 + 4
-    //   new DocumentIdPoolBank(1 << 11, 1 << 13) // 2 + 2 + 11 + 17 = 32 = 2 + 2 + 4 + 13 + 4
-    // ];
 
-
-....
-
-doesn't preserve type of count
-
-  class InstructionBuffer {
-    var count: uint;
-    var buffer: [0..#count] ChasmOp;
-    var offset = 0: uint;
-
-...
 
 
 compiling on pi
 mkdir -p standard/gen/linux32-gnu
 cd standard/gen/linux32-gnu && ( /home/ubuntu/scm/chapel-1.11.0/util/config/makeSysBasicTypes > SysCTypes.chpl || { rm -f SysCTypes.chpl && false ; } )
 make[2]: [all] Error 1 (ignored)
-
-...
-
-./Operands.chpl:96: internal error: INL0175 chpl Version 1.11.0
-make: *** [helloworld] Error 1
-
-    inline proc advance() {
-      if (!hasValue()) {
-        halt("union iterated past end of operands ", opA, opB);
-      }
-
-      curOp.advance();
-      curOp = nextOperand();
-    }
-
-....
-
-doesn't work with read after select
-
-    while (!reader.atEnd()) {
-      var op = reader.read();
-      select op {
-        when CHASM_HALT do break;
-        when CHASM_PUSH {
-          writeln("CHASM_PUSH");
-          var term = reader.readTerm();
-          writeln("pushing term ", term);
-          push(segment.operandForTerm(term));
-        }
-        when CHASM_AND  do push(new IntersectionOperand(pop(), pop()));
-        when CHASM_OR   do push(new UnionOperand(pop(), pop()));
-      }
-    }
-
-
-...
-
-const value is on Locale that instantiated it (likely 0)
-
 
 ...
 
@@ -131,68 +71,6 @@ search.chpl:557: error: halt reached - zippered associative array does not match
 
 ...
 
-search.chpl:519: In iterator 'query':
-search.chpl:537: error: invalid use of 'yield' within 'on' in serial iterator
-make: *** [chearch] Error 1
-
-....
-
-running locally with one host requires inernet
-time ./bin/chearch -nl 1
-
-[tw-mbp-bguarraci chearch (_bg_numeric)]$ time ./bin/chearch -nl 1
-AMUDP sendPacket returning an error code: AM_ERR_RESOURCE (Problem with requested resource)
-  from function sendPacket
-  at /Users/bguarraci/src/chapel-1.11.0/third-party/gasnet/GASNet-1.24.0/other/amudp/amudp_reqrep.cpp:97
-  reason: No route to host
-initializing index
-AMUDP AMUDP_RequestGeneric returning an error code: AM_ERR_RESOURCE (Problem with requested resource)
-  at /Users/bguarraci/src/chapel-1.11.0/third-party/gasnet/GASNet-1.24.0/other/amudp/amudp_reqrep.cpp:1214
-
-GASNet gasnetc_AMRequestMediumM encountered an AM Error: AM_ERR_RESOURCE(3)
-  at /Users/bguarraci/src/chapel-1.11.0/third-party/gasnet/GASNet-1.24.0/udp-conduit/gasnet_core.c:690
-GASNet gasnetc_AMRequestMediumM returning an error code: GASNET_ERR_RESOURCE (Problem with requested resource)
-  at /Users/bguarraci/src/chapel-1.11.0/third-party/gasnet/GASNet-1.24.0/udp-conduit/gasnet_core.c:694
-ERROR calling: gasnet_AMRequestMedium0(node, FORK, info, info_size)
- at: comm-gasnet.c:989
- error: GASNET_ERR_RESOURCE (Problem with requested resource)
-
-....
-
-  crashes with ?D in body
-  
-  proc query(query: Query, ref results: [?D] QueryResult) {
-    var localeResults: [Locales.domain] [?D] QueryResult;
-
-    coforall loc in Locales {
-      on loc {
-        var localResults: [?D] QueryResult;
-        var lq: Query = new Query();
-        lq.term = query.term;
-        local {
-          for i in Partitions.domain {
-            var mgr = Partitions[i];
-            if (mgr != nil) {
-              var localResults: [1] QueryResult;
-              mgr.query(lq, localResults);
-            }
-          }
-        }
-        localeResults[here.id] = localResults;
-      }
-    }
-
-    var count = 0;
-    for resList in localeResults {
-      for res in resList {
-        results[count] = res;
-        count += 1;
-      }
-    }
-  }
-
-...
-
 search.chpl:312: error: 'TermEntry' used before defined (first used here)
 
     inline proc sortTermsByDocumentIdCount(termA: TermEntry, termB, TermEntry): (TermEntry, TermEntry) {
@@ -200,35 +78,6 @@ search.chpl:312: error: 'TermEntry' used before defined (first used here)
       var larger = if (smaller == termA) then termB else termA;
       return (smaller, larger);
     }
-
-
-.....
-
-// BUG: declaring use IO, Memory here causes chpl compiler segv
-
-
-....
-
-  // can't yield inside on in 1.11.0
-  //
-  // iter documentIdsForWord(word: string) {
-  //   var entry = entryForWord(word);
-  //   if (entry != nil) {
-  //     on entry {
-  //       var node = entry.documentIdNode;
-  //       while (node != nil) {
-  //         var startIdx = node.documents.size - node.documentCount.read();
-  //         for i in startIdx..node.documents.size-1 {
-  //           var docId = node.documents[i];
-  //           if (docId > 0) {
-  //             yield docId;
-  //           }
-  //         }
-  //         node = node.next;
-  //       }
-  //     }
-  //   }
-  // }
 
 ...
 
@@ -244,80 +93,6 @@ error: compiling generated source
 
 warning: --specialize was set, but CHPL_TARGET_ARCH is 'unknown'. If you want any specialization to occur please set CHPL_TARGET_ARCH to a proper value.
 
-....
-
-/*
-
-determine number of locales
-create map from hash to locale
-
-read a list of words
-for each word:
-  find hash
-  map hash to a locale
-  send word to mapped locale
-
-via repl:
-  ask for a word
-  find hash
-  map hash to a locale
-  get word info (e.g. count) from locale
-  print word info
-
-*/
-
-....
-
-Collision between ev_loop struct and function name:
-
-
-In file included from /tmp/chpl-bguarraci-91221.deleteme/_main.c:1:
-/tmp/chpl-bguarraci-91221.deleteme/chpl__header.h:237:9: error: must use 'struct' tag to refer to type 'ev_loop'
-typedef ev_loop *c_ptr_ev_loop;
-        ^
-        struct
-/opt/local/Cellar/libev/4.15/include/ev.h:826:20: note: struct 'ev_loop' is hidden by a non-type declaration of 'ev_loop' here
-    EV_INLINE void ev_loop   (EV_P_ int flags) { ev_run   (EV_A_ flags); }
-                   ^
-In file included from /tmp/chpl-bguarraci-91221.deleteme/_main.c:1:
-/tmp/chpl-bguarraci-91221.deleteme/chpl__header.h:269:9: error: must use 'struct' tag to refer to type 'ev_loop'
-typedef ev_loop *_ref_ev_loop;
-        ^
-        struct
-/opt/local/Cellar/libev/4.15/include/ev.h:826:20: note: struct 'ev_loop' is hidden by a non-type declaration of 'ev_loop' here
-    EV_INLINE void ev_loop   (EV_P_ int flags) { ev_run   (EV_A_ flags); }
-                   ^
-2 errors generated.
-make[1]: *** [/tmp/chpl-bguarraci-91221.deleteme/chpl_tcp_server.tmp] Error 1
-error: compiling generated source [mysystem.cpp:43]
-make: *** [chpl_tcp_server] Error 1
-
-...
-
-  // $CHPL_HOME/modules/internal/ChapelArray.chpl:2534: error: cannot iterate over values of type int(64) [functionResolution.cpp:2401]
-  for i in word.length {
-    // BUG: $CHPL_HOME/modules/internal/ChapelArray.chpl:2534: error: cannot iterate over values of type int(64) [functionResolution.cpp:2401]
-
-    writeln("ch: ", word.substring(i));
-  }
-
-  for i in word.length {
-    // BUG: $CHPL_HOME/modules/internal/ChapelArray.chpl:2534: error: cannot iterate over values of type int(64) [functionResolution.cpp:2401]
-
-    writeln("ch: ", substring(i));
-  }
-
-  for i in word.length {
-    writeln("ch: ", word[i];
-  }
-
-...
-
-associative array domains:
-do associative array domains automatically get added?
-is adding to an associative array thread/task safe?
-
-
 ...
 
 $CHPL_HOME/modules/standard/IO.chpl:1691: error: sync/single variables cannot currently be written - apply readFE/readFF() to those variables first
@@ -327,20 +102,6 @@ var count$: sync int = 0;
 coforall i in 1..1000 {
   writeln(i, " => ", count$);
   count$ += 1;
-}
-
-....
-
-count is treated as a constant
-
-var indexing$: sync bool = false;
-var count: int = 0;
-
-coforall i in 1..1000 {
-  var baton = indexing$;
-  writeln(i, " => ", count);
-  count = count + 1;
-  indexing$ = true;
 }
 
 ....

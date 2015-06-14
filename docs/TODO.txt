@@ -8,12 +8,3 @@ AST for queries
 cosine compare of documents (http://en.wikipedia.org/wiki/Cosine_similarity)
 TF-IDF
 keep track of global document count to facilitate term frequency
-
-(+ (& a b) c)
-
-class Node {
-  
-  
-}
-
-
