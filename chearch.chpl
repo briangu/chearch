@@ -9,7 +9,7 @@ proc main() {
 
   // simple class to escape the const intents of forall
   class Counter {
-    var count: uint;
+    var count: atomic uint;
   }
 
   writeln("using ", Locales.size, " locales");
@@ -38,13 +38,13 @@ proc main() {
             if (result.term != 2) {
               halt("term not 2 ", result);
             }
-            counts.count += 1;
+            counts.count.add(1);
           }
           t.stop();
 
           delete buffer;
         }
-        writeln("AL-", here.id, ",", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+        writeln("AL-", here.id, ",", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count.read());
       }
     }
   }
@@ -68,7 +68,7 @@ proc main() {
       var queryTimes: [1..1024] real; 
 
       for termIdStep in queryTimes.domain {
-        counts.count = 0;
+        counts.count.write(0);
 
         var localeKnownTermId = (baselocaleKnownTermId + termIdStep - 1): Term;
 
@@ -81,7 +81,7 @@ proc main() {
           if (result.term != localeKnownTermId) {
             halt("term not ", localeKnownTermId, " got ", result);
           }
-          counts.count += 1;
+          counts.count.add(1);
         }
         t.stop();
         queryTimes[termIdStep] = t.elapsed(TimeUnits.microseconds);
@@ -92,7 +92,7 @@ proc main() {
 
   writeln("---querying for 3");
   {
-    counts.count = 0;
+    counts.count.write(0);
 
     buffer.clear();
     writer.write_push();
@@ -104,15 +104,15 @@ proc main() {
       if (result.term != 3) {
         halt("term not 3 ", result);
       }
-      counts.count += 1;
+      counts.count.add(1);
     }
     t.stop();
-    writeln("B,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    writeln("B,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count.read());
   }
 
   writeln("---querying for 3 AND 2");
   {
-    counts.count = 0;
+    counts.count.write(0);
 
     buffer.clear();
     writer.write_push();
@@ -127,15 +127,15 @@ proc main() {
       if ((result.term != 3) && (result.term != 2)) {
         halt("term not 3 or 2 ", result);
       }
-      counts.count += 1;
+      counts.count.add(1);
     }
     t.stop();
-    writeln("C,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    writeln("C,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count.read());
   }
 
   writeln("---querying for 3 OR 2");
   {
-    counts.count = 0;
+    counts.count.write(0);
 
     buffer.clear();
     writer.write_push();
@@ -150,15 +150,15 @@ proc main() {
       if ((result.term != 3) && (result.term != 2)) {
         halt("term not 3 or 2 ", result);
       }
-      counts.count += 1;
+      counts.count.add(1);
     }
     t.stop();
-    writeln("D,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    writeln("D,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count.read());
   }
 
   writeln("---querying for missing term");
   {
-    counts.count = 0;
+    counts.count.write(0);
 
     buffer.clear();
     writer.write_push();
@@ -168,13 +168,13 @@ proc main() {
     t.start();
     forall result in query(new Query(buffer)) {
       writeln(result);
-      counts.count += 1;
+      counts.count.add(1);
     }
     t.stop();
-    if (counts.count > 0) {
+    if (counts.count.read() > 0) {
       halt("counts > 0!");
     }
-    writeln("E,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count);
+    writeln("E,", Locales.size, ", ", t.elapsed(TimeUnits.microseconds), ",", counts.count.read());
   }
 
   delete buffer;
